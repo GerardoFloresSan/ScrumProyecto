@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "5313956212",
+    "firebase_url": "https://proyectoscrum-2d2e3.firebaseio.com",
+    "project_id": "proyectoscrum-2d2e3",
+    "storage_bucket": "proyectoscrum-2d2e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:5313956212:android:bce9bd3380ac59d1608421",
+        "android_client_info": {
+          "package_name": "com.example.scrumproyect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "5313956212-c9vni3dplkr0arg5vtcb1ad6r18ffdnu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOnxhbLWpxX7sXeqZJl9WAYOLjmjcm3ro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "5313956212-c9vni3dplkr0arg5vtcb1ad6r18ffdnu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
