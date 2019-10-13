@@ -1,32 +1,30 @@
 package com.example.scrumproyect
 
-import androidx.appcompat.app.AppCompatActivity
+import android.annotation.SuppressLint
 import android.os.Bundle
 import org.json.JSONException
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import org.json.JSONObject
 import kotlinx.android.synthetic.main.activity_login.*
 import android.widget.Toast
 import android.content.Intent
 import androidx.annotation.Nullable
+import com.example.scrumproyect.view.ui.base.BaseActivity
 import com.facebook.*
 import java.util.*
 import com.facebook.CallbackManager
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     private var callbackManager: CallbackManager? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+    override fun getView() = R.layout.activity_login
 
+    override fun onCreate() {
+        super.onCreate()
         callbackManager = CallbackManager.Factory.create()
         login_button.setReadPermissions(Arrays.asList("email","public_profile"))
         checkLoginStatus()
-
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
@@ -47,6 +45,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n", "CheckResult")
     private fun loadUserProfile(newAccessToken: AccessToken) {
         val request = GraphRequest.newMeRequest(
             newAccessToken
@@ -58,8 +57,8 @@ class LoginActivity : AppCompatActivity() {
                 val id = `object`.getString("id")
                 val image_url = "https://graph.facebook.com/$id/picture?type=normal"
 
-                profile_email.setText(email)
-                profile_name.setText("$first_name $last_name")
+                profile_email.text = email
+                profile_name.text = "$first_name $last_name"
                 val requestOptions = RequestOptions()
                 requestOptions.dontAnimate()
 
