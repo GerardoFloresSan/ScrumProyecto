@@ -35,7 +35,6 @@ abstract class BaseActivity : AppCompatActivity() {
     protected var drawerLayout: DrawerLayout? = null
     private var drawerToggle: ActionBarDrawerToggle? = null
     protected var navigationView: NavigationView? = null
-    protected var dialog: MaterialDialog? = null
 
     /*protected val component by lazy { Orchestrator.presenterComponent }*/
 
@@ -52,17 +51,14 @@ abstract class BaseActivity : AppCompatActivity() {
         ScrumActivity.removeActivity(this)
     }
 
-    fun getContext() = this
-
     @SuppressLint("PrivateResource")
     protected fun setSupportActionBar(title: String): ActionBar {
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         val white = ContextCompat.getColor(this, android.R.color.white)
-        val black = ContextCompat.getColor(this, android.R.color.black)
 
-        toolbar?.setTitleTextColor(black)
+        toolbar?.setTitleTextColor(white)
 
         val drawable = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_white_24dp)
 
@@ -153,10 +149,6 @@ abstract class BaseActivity : AppCompatActivity() {
         fun onNavigationItemSelected(item: MenuItem)
     }
 
-    fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
-    }
-
     fun activeAllWrappers() {
         activeAllWrappers(findViewById(android.R.id.content))
     }
@@ -177,34 +169,5 @@ abstract class BaseActivity : AppCompatActivity() {
 
     fun hideAllWrappers() {
         activeAllWrappers(findViewById(android.R.id.content))
-    }
-
-    fun showLoading() {
-        hideLoading()
-        dialog = MaterialDialog.Builder(this)
-            .title("Cargando...")
-            .content("Espera un momento")
-            .progress(true, 0)
-            .cancelable(false)
-            .show()
-    }
-
-    fun hideLoading() {
-        if (dialog == null) return
-        dialog?.dismiss()
-        dialog = null
-    }
-
-    private fun getErrorDialog(message: String) = MaterialDialog.Builder(this)
-        .title("Advertencia")
-        .content(message)
-        .positiveText("Ok")
-
-    fun showError(message: String) {
-        getErrorDialog(message).show()
-    }
-
-    fun showError(message: Int){
-        showError(getString(message))
     }
 }

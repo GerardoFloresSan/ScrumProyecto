@@ -6,12 +6,13 @@ import com.example.scrumproyect.LoginActivity
 import com.example.scrumproyect.R
 import com.example.scrumproyect.view.ui.application.ScrumActivity
 import com.example.scrumproyect.view.ui.base.BaseActivity
+import com.example.scrumproyect.view.ui.base.ScrumBaseActivity
 import com.example.scrumproyect.view.ui.fragment.BlankFragment
 import com.example.scrumproyect.view.ui.fragment.BlankFragment2
 import kotlinx.android.synthetic.main.app_bar_main2.*
 import com.example.scrumproyect.view.ui.extensions.startActivity
 
-class Main2Activity : BaseActivity() {
+class Main2Activity : ScrumBaseActivity() {
     private var current = 0
     private var fragments = ArrayList<Fragment>()
     override fun getView() = R.layout.activity_main2

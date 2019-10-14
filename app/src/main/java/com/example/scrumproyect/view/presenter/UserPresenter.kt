@@ -1,48 +1,56 @@
 package com.example.scrumproyect.view.presenter
 
-import com.example.scrumproyect.data.entity.ProductEntity
+import android.util.Log
+import com.example.scrumproyect.BuildConfig
+import com.example.scrumproyect.data.entity.CommentEntity
+import com.example.scrumproyect.data.entity.UserEntity
 import com.example.scrumproyect.view.presenter.base.BasePresenter
 import com.google.android.gms.tasks.OnFailureListener
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import io.paperdb.Paper
 import java.io.Serializable
 
-class ProductPresenter : BasePresenter<ProductPresenter.View>() {
+class UserPresenter : BasePresenter<UserPresenter.View>() {
     private var fireBaseFireStore =  FirebaseFirestore.getInstance()
 
-    fun syncProduct() {
+    fun login() {
         view?.showLoading()
 
-        val getTask = fireBaseFireStore.collection("products").get()
-        val products = arrayListOf<ProductEntity>()
-
-        getTask.addOnSuccessListener {
+        val loginTask = FirebaseAuth.getInstance().signInWithEmailAndPassword("alonsopantigoso91@gmail.com", "qwerty1234")
+        loginTask.addOnSuccessListener {
             view.takeIf { view != null }.apply {
                 view?.hideLoading()
-                it.forEach { snapshot ->
-                    val productE = snapshot.toObject(ProductEntity::class.java)
-                    productE.idM = snapshot.id
-                    products.add(productE)
-
+                it.user?.let { it1 ->
+                    Paper.book(BuildConfig.FLAVOR).write("user", UserEntity().apply {
+                        id = it1.uid
+                        email = it1.email!!
+                    })
+                    Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).id)
+                    Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).email)
+                    view?.successSchedule(0)
                 }
-                view?.successSchedule(0, products)
             }
         }
-        getTask.addOnFailureListener(getSimpleFailureListener())
+        loginTask.addOnFailureListener(getSimpleFailureListener())
     }
 
-    fun addProduct(product: ProductEntity) {
-        view?.showLoading()
-        val refTask = fireBaseFireStore.collection("products")
-            .add(product)
+    fun getUser(user: FirebaseUser) {
+        val userRef = fireBaseFireStore.collection("user").get()
 
-        refTask.addOnSuccessListener {
+        userRef.addOnSuccessListener {
             view.takeIf { view != null }.apply {
                 view?.hideLoading()
-                view?.successSchedule(1)
+                Paper.book(BuildConfig.FLAVOR).write("user", UserEntity().apply {
+                    id = user.uid
+                    email = user.email!!
+                })
+                view?.successSchedule(0)
             }
         }
-        refTask.addOnFailureListener(getSimpleFailureListener())
+        userRef.addOnFailureListener(getSimpleFailureListener())
     }
 
     private fun getSimpleFailureListener(): OnFailureListener {

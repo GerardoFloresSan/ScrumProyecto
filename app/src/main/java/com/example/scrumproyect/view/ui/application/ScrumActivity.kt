@@ -7,6 +7,7 @@ import com.example.scrumproyect.di.component.AppComponent
 /*import com.example.scrumproyect.di.component.DaggerPresenterComponent*/
 import com.example.scrumproyect.di.module.AppModule
 import com.google.android.gms.security.ProviderInstaller
+import io.paperdb.Paper
 import java.lang.Exception
 import java.util.*
 
@@ -14,6 +15,7 @@ open class ScrumActivity : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        Paper.init(this)
 
         /*appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()*/
 

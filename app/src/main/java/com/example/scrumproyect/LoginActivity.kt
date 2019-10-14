@@ -9,12 +9,21 @@ import kotlinx.android.synthetic.main.activity_login.*
 import android.widget.Toast
 import android.content.Intent
 import androidx.annotation.Nullable
-import com.example.scrumproyect.view.ui.base.BaseActivity
+import com.example.scrumproyect.view.presenter.UserPresenter
+import com.example.scrumproyect.view.ui.extensions.startActivity
+import com.example.scrumproyect.view.ui.base.ScrumBaseActivity
 import com.facebook.*
 import java.util.*
 import com.facebook.CallbackManager
+import io.paperdb.Paper
+import java.io.Serializable
 
-class LoginActivity : BaseActivity() {
+class LoginActivity : ScrumBaseActivity() , UserPresenter.View{
+    override fun successSchedule(flag: Int, vararg args: Serializable) {
+        startActivity(MainActivity::class.java)
+    }
+
+    private val presenter = UserPresenter()
 
     private var callbackManager: CallbackManager? = null
 
@@ -24,7 +33,20 @@ class LoginActivity : BaseActivity() {
         super.onCreate()
         callbackManager = CallbackManager.Factory.create()
         login_button.setReadPermissions(Arrays.asList("email","public_profile"))
+        login_test.setOnClickListener {
+            presenter.login()
+        }
         checkLoginStatus()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.attachView(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.detachView()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
@@ -54,7 +76,7 @@ class LoginActivity : BaseActivity() {
                 val first_name = `object`.getString("first_name")
                 val last_name = `object`.getString("last_name")
                 val email = `object`.getString("email")
-                val id = `object`.getString("id")
+                val id = `object`.getString("idM")
                 val image_url = "https://graph.facebook.com/$id/picture?type=normal"
 
                 profile_email.text = email
@@ -71,7 +93,7 @@ class LoginActivity : BaseActivity() {
         }
 
         val parameters = Bundle()
-        parameters.putString("fields", "first_name,last_name,email,id")
+        parameters.putString("fields", "first_name,last_name,email,idM")
         request.parameters = parameters
         request.executeAsync()
 

@@ -1,45 +1,44 @@
 package com.example.scrumproyect.view.presenter
 
-import com.example.scrumproyect.domain.model.Product
+import com.example.scrumproyect.data.entity.CommentEntity
 import com.example.scrumproyect.view.presenter.base.BasePresenter
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.firestore.FirebaseFirestore
 import java.io.Serializable
 
-class CommentPresenter : BasePresenter<ProductPresenter.View>() {
+class CommentPresenter : BasePresenter<CommentPresenter.View>() {
     private var fireBaseFireStore =  FirebaseFirestore.getInstance()
 
-    fun syncProduct() {
+    fun syncComment(id: String) {
         view?.showLoading()
 
-        val getTask = fireBaseFireStore.collection("products").get()
-        val products = arrayListOf<Product>()
+        val getTask = fireBaseFireStore.collection("products").document(id).collection("comments").get()
+        val comments = arrayListOf<CommentEntity>()
 
         getTask.addOnSuccessListener {
             view.takeIf { view != null }.apply {
                 view?.hideLoading()
                 it.forEach { snapshot ->
-                    val productE = snapshot.toObject(Product::class.java)
-                    productE.id = snapshot.id
-                    products.add(productE)
+                    val commentE = snapshot.toObject(CommentEntity::class.java)
+                    commentE.id = snapshot.id
+                    comments.add(commentE)
 
                 }
-                view?.successSchedule(0, products)
+                view?.successSchedule(0, comments)
             }
         }
         getTask.addOnFailureListener(getSimpleFailureListener())
     }
 
-    fun addProduct(product: Product) {
+    fun addComment(id: String, comment: CommentEntity) {
         view?.showLoading()
-        val refTask = fireBaseFireStore.collection("products")
-            .add(product)
+        val refTask = fireBaseFireStore.collection("products").document(id).collection("comments").add(comment)
 
         refTask.addOnSuccessListener {
             view.takeIf { view != null }.apply {
                 view?.hideLoading()
-                view?.successSchedule(1)
+                view?.successSchedule(1, comment)
             }
         }
         refTask.addOnFailureListener(getSimpleFailureListener())
