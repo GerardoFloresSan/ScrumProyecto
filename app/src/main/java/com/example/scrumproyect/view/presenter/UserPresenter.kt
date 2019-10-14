@@ -5,7 +5,9 @@ import com.example.scrumproyect.BuildConfig
 import com.example.scrumproyect.data.entity.CommentEntity
 import com.example.scrumproyect.data.entity.UserEntity
 import com.example.scrumproyect.view.presenter.base.BasePresenter
+import com.facebook.AccessToken
 import com.google.android.gms.tasks.OnFailureListener
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
@@ -35,6 +37,29 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
             }
         }
         loginTask.addOnFailureListener(getSimpleFailureListener())
+    }
+
+    fun loginFaceBook(accessToken: AccessToken) {
+        view?.showLoading()
+
+        val credential = FacebookAuthProvider.getCredential(accessToken.token)
+        val authTask = FirebaseAuth.getInstance().signInWithCredential(credential)
+        authTask.addOnSuccessListener {
+            view.takeIf { view != null }.apply {
+                view?.hideLoading()
+                it.user?.let { it1 ->
+                    Paper.book(BuildConfig.FLAVOR).write("user", UserEntity().apply {
+                        id = it1.uid
+                        email = it1.email!!
+                    })
+                    Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).id)
+                    Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).email)
+                    view?.successSchedule(0)
+                }
+            }
+        }
+
+        authTask.addOnFailureListener(getSimpleFailureListener())
     }
 
     fun getUser(user: FirebaseUser) {

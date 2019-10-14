@@ -8,12 +8,14 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_login.*
 import android.widget.Toast
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import androidx.annotation.Nullable
 import com.example.scrumproyect.view.presenter.UserPresenter
 import com.example.scrumproyect.view.ui.extensions.startActivity
 import com.example.scrumproyect.view.ui.base.ScrumBaseActivity
+import com.example.scrumproyect.view.ui.utils.FacebookHelper
 import com.facebook.*
 import java.util.*
 import com.facebook.CallbackManager
@@ -23,34 +25,33 @@ import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import io.paperdb.Paper
 import java.io.Serializable
+import kotlin.math.log
 
 class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
 
-    override fun successSchedule(flag: Int, vararg args: Serializable) {
-        startActivity(MainActivity::class.java)
-    }
-
     private val presenter = UserPresenter()
     private var callbackManager: CallbackManager? = null
-    private var loginButton: LoginButton? = null
+    /*private var loginButton: LoginButton? = null*/
     private var firebaseAuth: FirebaseAuth? = null
     private var firebaseAuthListener: FirebaseAuth.AuthStateListener? = null
 
-    private var progressBar: ProgressBar? = null
+    /*private var progressBar: ProgressBar? = null*/
 
     override fun getView() = R.layout.activity_login
 
     override fun onCreate() {
         super.onCreate()
         callbackManager = CallbackManager.Factory.create()
-        loginButton!!.setReadPermissions(Arrays.asList("email"))
+        loginButton!!.setReadPermissions(Arrays.asList("email", "public_profile"))
         login_test.setOnClickListener {
             presenter.login()
         }
 
+        FacebookHelper.init(this)
         loginButton!!.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
-                handleFacebookAccessToken(loginResult.accessToken)
+                presenter.loginFaceBook(loginResult.accessToken)
+                /*handleFacebookAccessToken(loginResult.accessToken)*/
             }
 
             override fun onCancel() {
@@ -58,6 +59,8 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
             }
 
             override fun onError(error: FacebookException) {
+                @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+                Log.d("facebook error", error.message)
                 Toast.makeText(applicationContext, R.string.error_login, Toast.LENGTH_SHORT).show()
             }
         })
@@ -117,6 +120,10 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
     override fun onStop() {
         super.onStop()
         firebaseAuth!!.removeAuthStateListener(firebaseAuthListener!!)
+    }
+
+    override fun successSchedule(flag: Int, vararg args: Serializable) {
+        startActivity(MainActivity::class.java)
     }
 
 }
