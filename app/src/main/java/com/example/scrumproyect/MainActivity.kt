@@ -1,6 +1,6 @@
 package com.example.scrumproyect
 
-import android.util.Log
+import android.content.Intent
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.scrumproyect.data.entity.ProductEntity
 import com.example.scrumproyect.view.presenter.ProductPresenter
@@ -9,11 +9,13 @@ import com.example.scrumproyect.view.ui.activity.DetailProductActivity
 import com.example.scrumproyect.view.ui.adapter.ProductAdapter
 import com.example.scrumproyect.view.ui.base.ScrumBaseActivity
 import com.example.scrumproyect.view.ui.extensions.startActivity
+import com.facebook.login.LoginManager
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.Serializable
 
 
-class MainActivity : ScrumBaseActivity(), ProductPresenter.View  {
+class MainActivity : ScrumBaseActivity(), ProductPresenter.View {
 
     private val presenter = ProductPresenter()
 
@@ -31,6 +33,9 @@ class MainActivity : ScrumBaseActivity(), ProductPresenter.View  {
         fab.setOnClickListener {
             startActivity(AddProductActivity::class.java)
         }
+        logout.setOnClickListener {
+            logoutSesion()
+        }
     }
 
     override fun onPause() {
@@ -47,5 +52,17 @@ class MainActivity : ScrumBaseActivity(), ProductPresenter.View  {
                 startActivity(DetailProductActivity::class.java, it)
             }
         }
+    }
+
+    private fun goLoginScreen() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    }
+
+    fun logoutSesion() {
+        FirebaseAuth.getInstance().signOut()
+        LoginManager.getInstance().logOut()
+        goLoginScreen()
     }
 }
