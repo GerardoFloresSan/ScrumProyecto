@@ -8,6 +8,8 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_login.*
 import android.widget.Toast
 import android.content.Intent
+import android.view.View
+import android.widget.ProgressBar
 import androidx.annotation.Nullable
 import com.example.scrumproyect.view.presenter.UserPresenter
 import com.example.scrumproyect.view.ui.extensions.startActivity
@@ -15,28 +17,60 @@ import com.example.scrumproyect.view.ui.base.ScrumBaseActivity
 import com.facebook.*
 import java.util.*
 import com.facebook.CallbackManager
+import com.facebook.login.LoginResult
+import com.facebook.login.widget.LoginButton
+import com.google.firebase.auth.FacebookAuthProvider
+import com.google.firebase.auth.FirebaseAuth
 import io.paperdb.Paper
 import java.io.Serializable
 
-class LoginActivity : ScrumBaseActivity() , UserPresenter.View{
+class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
+
     override fun successSchedule(flag: Int, vararg args: Serializable) {
         startActivity(MainActivity::class.java)
     }
 
     private val presenter = UserPresenter()
-
     private var callbackManager: CallbackManager? = null
+    private var loginButton: LoginButton? = null
+    private var firebaseAuth: FirebaseAuth? = null
+    private var firebaseAuthListener: FirebaseAuth.AuthStateListener? = null
+
+    private var progressBar: ProgressBar? = null
 
     override fun getView() = R.layout.activity_login
 
     override fun onCreate() {
         super.onCreate()
         callbackManager = CallbackManager.Factory.create()
-        login_button.setReadPermissions(Arrays.asList("email","public_profile"))
+        loginButton!!.setReadPermissions(Arrays.asList("email"))
         login_test.setOnClickListener {
             presenter.login()
         }
-        checkLoginStatus()
+
+        loginButton!!.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(loginResult: LoginResult) {
+                handleFacebookAccessToken(loginResult.accessToken)
+            }
+
+            override fun onCancel() {
+                Toast.makeText(applicationContext, R.string.cancel_login, Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onError(error: FacebookException) {
+                Toast.makeText(applicationContext, R.string.error_login, Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        firebaseAuth = FirebaseAuth.getInstance()
+
+        firebaseAuthListener = FirebaseAuth.AuthStateListener {
+            val user = it.currentUser
+            if (user != null) {
+                goMainScreen()
+            }
+        }
+
     }
 
     override fun onResume() {
@@ -49,59 +83,40 @@ class LoginActivity : ScrumBaseActivity() , UserPresenter.View{
         presenter.detachView()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
-        callbackManager?.onActivityResult(requestCode, resultCode, data)
-        super.onActivityResult(requestCode, resultCode, data)
-    }
 
+    private fun handleFacebookAccessToken(accessToken: AccessToken) {
+        progressBar!!.visibility = View.VISIBLE
+        loginButton!!.visibility = View.GONE
 
-    var tokenTracker: AccessTokenTracker = object : AccessTokenTracker() {
-        override fun onCurrentAccessTokenChanged(oldAccessToken: AccessToken, currentAccessToken: AccessToken?) {
-            if (currentAccessToken == null) {
-                profile_name.setText("")
-                profile_email.setText("")
-                profile_pic.setImageResource(0)
-                Toast.makeText(this@LoginActivity, "User Logged out", Toast.LENGTH_LONG).show()
-            } else
-                loadUserProfile(currentAccessToken)
-        }
-    }
-
-    @SuppressLint("SetTextI18n", "CheckResult")
-    private fun loadUserProfile(newAccessToken: AccessToken) {
-        val request = GraphRequest.newMeRequest(
-            newAccessToken
-        ) { `object`, response ->
-            try {
-                val first_name = `object`.getString("first_name")
-                val last_name = `object`.getString("last_name")
-                val email = `object`.getString("email")
-                val id = `object`.getString("idM")
-                val image_url = "https://graph.facebook.com/$id/picture?type=normal"
-
-                profile_email.text = email
-                profile_name.text = "$first_name $last_name"
-                val requestOptions = RequestOptions()
-                requestOptions.dontAnimate()
-
-                Glide.with(this@LoginActivity).load(image_url).into(profile_pic)
-
-
-            } catch (e: JSONException) {
-                e.printStackTrace()
+        val credential = FacebookAuthProvider.getCredential(accessToken.token)
+        firebaseAuth!!.signInWithCredential(credential).addOnCompleteListener(this) { task ->
+            if (!task.isSuccessful) {
+                Toast.makeText(applicationContext, R.string.firebase_error_login, Toast.LENGTH_LONG).show()
             }
-        }
-
-        val parameters = Bundle()
-        parameters.putString("fields", "first_name,last_name,email,idM")
-        request.parameters = parameters
-        request.executeAsync()
-
-    }
-
-    private fun checkLoginStatus() {
-        if (AccessToken.getCurrentAccessToken() != null) {
-            loadUserProfile(AccessToken.getCurrentAccessToken())
+            progressBar!!.visibility = View.GONE
+            loginButton!!.visibility = View.VISIBLE
         }
     }
+
+    private fun goMainScreen() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        callbackManager!!.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        firebaseAuth!!.addAuthStateListener(firebaseAuthListener!!)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        firebaseAuth!!.removeAuthStateListener(firebaseAuthListener!!)
+    }
+
 }
