@@ -6,6 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    flavorDimensions "default"
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
     defaultConfig {
@@ -24,10 +25,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
