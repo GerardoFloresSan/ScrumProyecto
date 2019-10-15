@@ -48,22 +48,10 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
         }
 
         FacebookHelper.init(this)
-        loginButton!!.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
-            override fun onSuccess(loginResult: LoginResult) {
-                presenter.loginFaceBook(loginResult.accessToken)
-                /*handleFacebookAccessToken(loginResult.accessToken)*/
-            }
+        configureGoogleSignIn()
 
-            override fun onCancel() {
-                Toast.makeText(applicationContext, R.string.cancel_login, Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onError(error: FacebookException) {
-                @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-                Log.d("facebook error", error.message)
-                Toast.makeText(applicationContext, R.string.error_login, Toast.LENGTH_SHORT).show()
-            }
-        })
+        loginButtonFB.setOnClickListener { singInFacebook() }
+        loginButtonGmail.setOnClickListener { setupUI() }
 
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -73,9 +61,6 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
                 goMainScreen()
             }
         }
-
-        configureGoogleSignIn()
-        setupUI()
 
     }
 
@@ -142,6 +127,27 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
     private fun signIn() {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    fun singInFacebook() {
+        callbackManager = CallbackManager.Factory.create()
+
+        loginButton!!.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(loginResult: LoginResult) {
+                presenter.loginFaceBook(loginResult.accessToken)
+                /*handleFacebookAccessToken(loginResult.accessToken)*/
+            }
+
+            override fun onCancel() {
+                Toast.makeText(applicationContext, R.string.cancel_login, Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onError(error: FacebookException) {
+                @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+                Log.d("facebook error", error.message)
+                Toast.makeText(applicationContext, R.string.error_login, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {

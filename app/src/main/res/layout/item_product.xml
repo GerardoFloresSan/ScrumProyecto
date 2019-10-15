@@ -45,8 +45,10 @@
                 android:layout_gravity="bottom|end"
                 android:background="@color/colorPrimary"
                 android:tint="@color/colorWhite"
-                android:src="@drawable/ic_info_outline_white_24dp" tools:ignore="ContentDescription"/>
+                android:src="@drawable/ic_info_outline_white_24dp"
+                tools:ignore="ContentDescription"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
 </androidx.cardview.widget.CardView>

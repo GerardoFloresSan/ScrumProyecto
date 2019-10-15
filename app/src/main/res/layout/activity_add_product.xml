@@ -55,7 +55,7 @@
                             android:nextFocusDown="@+id/description"
                             android:textColor="@color/colorWhite"
                             android:textSize="20sp"
-                            app:theme="@style/WhiteTheme" />
+                            app:theme="@style/WhiteTheme"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,51 +85,79 @@
                         android:nextFocusDown="@+id/password"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
-                        app:theme="@style/DarkThemeTheme" />
+                        app:theme="@style/DarkThemeTheme"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
-<!--            <LinearLayout
+
+            <!--            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingBottom="5dp"
+                                android:paddingEnd="20dp"
+                                android:paddingStart="20dp"
+                                android:paddingTop="10dp">
+
+                            <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dp"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:text="Agregar foto de galería"
+                                    android:textSize="11sp" />
+
+                            <RelativeLayout
+                                    android:layout_width="100dp"
+                                    android:layout_height="70dp"
+                                    android:background="@color/colorPrimaryDark">
+
+                                <ImageView
+                                        android:layout_width="35dp"
+                                        android:layout_height="35dp"
+                                        android:layout_centerInParent="true"
+                                        android:contentDescription="@null"
+                                        android:src="@drawable/add_camera" />
+
+                                <ImageView
+                                        android:id="@+id/image"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_alignParentTop="true"
+                                        android:scaleType="centerCrop" />
+
+                            </RelativeLayout>
+
+
+                        </LinearLayout>-->
+
+            <LinearLayout
+                    android:layout_margin="15dp"
+                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="20dp"
-                    android:paddingStart="20dp"
-                    android:paddingTop="10dp">
+                    android:layout_height="wrap_content">
 
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:text="Agregar foto de galería"
-                        android:textSize="11sp" />
-
-                <RelativeLayout
+                <Button
+                        android:background="@drawable/shape_circle_item"
+                        android:text="No es Humo"
+                        android:textColor="@color/colorWhite"
                         android:layout_width="100dp"
-                        android:layout_height="70dp"
-                        android:background="@color/colorPrimaryDark">
+                        android:layout_height="100dp"/>
+                <Button
+                        android:background="@drawable/shape_circle_item"
+                        android:text="Es humo"
+                        android:textColor="@color/colorWhite"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"/>
+                <Button
+                        android:background="@drawable/shape_circle_item"
+                        android:text="Es toxico"
+                        android:textColor="@color/colorWhite"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"/>
 
-                    <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:layout_centerInParent="true"
-                            android:contentDescription="@null"
-                            android:src="@drawable/add_camera" />
-
-                    <ImageView
-                            android:id="@+id/image"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:scaleType="centerCrop" />
-
-                </RelativeLayout>
-
-
-            </LinearLayout>-->
+            </LinearLayout>
 
 
 
