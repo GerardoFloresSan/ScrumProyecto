@@ -89,25 +89,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <Button
-                        android:text="No es Humo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                <Button
-                        android:text="Es humo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                <Button
-                        android:text="Es Toxico"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-            </LinearLayout>
 
             <!--            <LinearLayout
                                 android:layout_width="match_parent"
@@ -150,6 +131,34 @@
 
 
                         </LinearLayout>-->
+
+            <LinearLayout
+                    android:layout_margin="15dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <Button
+                        android:background="@drawable/shape_circle_item"
+                        android:text="No es Humo"
+                        android:textColor="@color/colorWhite"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"/>
+                <Button
+                        android:background="@drawable/shape_circle_item"
+                        android:text="Es humo"
+                        android:textColor="@color/colorWhite"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"/>
+                <Button
+                        android:background="@drawable/shape_circle_item"
+                        android:text="Es toxico"
+                        android:textColor="@color/colorWhite"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"/>
+
+            </LinearLayout>
+
 
 
         </LinearLayout>

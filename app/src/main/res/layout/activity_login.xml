@@ -7,19 +7,14 @@
         android:layout_height="match_parent"
         tools:context=".LoginActivity"
         android:gravity="center"
+        android:background="@drawable/quadradoscrum"
         android:orientation="vertical">
 
-    <ImageView
-            android:layout_weight="3"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:src="@drawable/scrumhelp"/>
-
     <LinearLayout
-            android:layout_weight="2"
+            android:background="@drawable/shape_login"
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="20dp">
 
@@ -30,14 +25,35 @@
                 android:layout_marginBottom="10dp"
                 android:textSize="16sp"/>
 
-        <com.facebook.login.widget.LoginButton
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+        <!--
+
+
+                        <Button
+                android:background="#39579a"
+                android:textColor="@color/colorWhite"
                 android:id="@+id/loginButton"
-                android:layout_width="wrap_content"
+                android:textAlignment="center"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
+                android:text="INGRESA CON FACEBOOK"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+
+        <Button
+                android:textColor="@color/colorWhite"
+                android:id="@+id/google_button"
+                android:background="#D44643"
+                android:textAlignment="center"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="INGRESA CON GMAIL"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+
+                   <com.facebook.login.widget.LoginButton
+                android:id="@+id/loginButton"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"/>
 
@@ -45,18 +61,68 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:id="@+id/google_button"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"/>
+        -->
+
+
+        <FrameLayout
+                android:id="@+id/facebookFragment"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"/>
+                android:layout_height="wrap_content">
+
+            <com.facebook.login.widget.LoginButton
+                    android:id="@+id/loginButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+
+            <Button
+                    android:background="#39579a"
+                    android:textColor="@color/colorWhite"
+                    android:id="@+id/loginButtonFB"
+                    android:textAlignment="center"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="INGRESA CON FACEBOOK"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+                android:id="@+id/gmailFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <com.google.android.gms.common.SignInButton
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/google_button"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"/>
+
+            <Button
+                    android:textColor="@color/colorWhite"
+                    android:id="@+id/loginButtonGmail"
+                    android:background="#D44643"
+                    android:textAlignment="center"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="INGRESA CON GMAIL"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"/>
+
+        </FrameLayout>
+
 
         <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/login_test"
                 android:text="test"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"/>
 
     </LinearLayout>
-
 </LinearLayout>
