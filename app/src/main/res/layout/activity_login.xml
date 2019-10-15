@@ -27,8 +27,7 @@
 
         <!--
 
-
-                        <Button
+         <Button
                 android:background="#39579a"
                 android:textColor="@color/colorWhite"
                 android:id="@+id/loginButton"
@@ -88,7 +87,7 @@
                     android:inputType="textAutoComplete|textAutoCorrect|textCapSentences"
                     android:nextFocusDown="@+id/description"
                     android:textSize="16sp"
-                    app:theme="@style/WhiteTheme"/>
+                    app:theme="@style/LoginTheme"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,7 +113,7 @@
                     android:inputType="textAutoComplete|textAutoCorrect|textCapSentences|textPassword"
                     android:nextFocusDown="@+id/description"
                     android:textSize="16sp"
-                    app:theme="@style/WhiteTheme"/>
+                    app:theme="@style/LoginTheme"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -220,4 +219,5 @@
                 android:layout_marginTop="25dp"/>
 
     </LinearLayout>
+
 </LinearLayout>
