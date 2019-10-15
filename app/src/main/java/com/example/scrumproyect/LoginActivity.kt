@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.scrumproyect.view.presenter.UserPresenter
+import com.example.scrumproyect.view.ui.activity.NewUserActivity
 import com.example.scrumproyect.view.ui.base.ScrumBaseActivity
 import com.example.scrumproyect.view.ui.extensions.startActivity
 import com.example.scrumproyect.view.ui.utils.FacebookHelper
@@ -52,6 +53,10 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
         loginButtonFB.setOnClickListener {
             loginButton.performClick()
 
+        }
+
+        newUser.setOnClickListener {
+            startActivity(NewUserActivity::class.java)
         }
 
         firebaseAuth = FirebaseAuth.getInstance()
