@@ -49,9 +49,9 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
         super.onCreate()
         callbackManager = CallbackManager.Factory.create()
         loginButton!!.setReadPermissions(Arrays.asList("email"))
-        login_test.setOnClickListener {
+        /*login_test.setOnClickListener {
             presenter.login()
-        }
+        }*/
 
         FacebookHelper.init(this)
         singInFacebook()
