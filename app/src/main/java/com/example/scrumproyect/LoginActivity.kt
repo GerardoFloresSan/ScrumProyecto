@@ -32,7 +32,7 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
     private var firebaseAuthListener: FirebaseAuth.AuthStateListener? = null
     private val googleApiClient: GoogleApiClient? = null
 
-    val RC_SIGN_IN: Int = 1
+    val RC_SIGN_IN: Int = 8767
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var mGoogleSignInOptions: GoogleSignInOptions
 
