@@ -4,7 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import com.example.scrumproyect.di.component.AppComponent
-/*import com.example.scrumproyect.di.component.DaggerPresenterComponent*/
+import com.example.scrumproyect.di.component.DaggerAppComponent
 import com.example.scrumproyect.di.module.AppModule
 import com.google.android.gms.security.ProviderInstaller
 import io.paperdb.Paper
@@ -16,8 +16,7 @@ open class ScrumActivity : Application() {
     override fun onCreate() {
         super.onCreate()
         Paper.init(this)
-
-        /*appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()*/
+        appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
 
         ProviderInstaller.installIfNeededAsync(this, object : ProviderInstaller.ProviderInstallListener {
 
@@ -35,7 +34,7 @@ open class ScrumActivity : Application() {
 
     companion object {
 
-        /*lateinit var appComponent: AppComponent*/
+        lateinit var appComponent: AppComponent
 
         private val activities = Stack<Activity>()
 

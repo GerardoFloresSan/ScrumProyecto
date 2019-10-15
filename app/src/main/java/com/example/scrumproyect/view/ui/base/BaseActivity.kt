@@ -36,8 +36,6 @@ abstract class BaseActivity : AppCompatActivity() {
     private var drawerToggle: ActionBarDrawerToggle? = null
     protected var navigationView: NavigationView? = null
 
-    /*protected val component by lazy { Orchestrator.presenterComponent }*/
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getView())

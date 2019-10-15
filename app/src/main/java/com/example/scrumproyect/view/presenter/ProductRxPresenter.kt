@@ -1,5 +1,6 @@
 package com.example.scrumproyect.view.presenter
 
+import com.example.scrumproyect.data.entity.ProductEntity
 import com.example.scrumproyect.domain.usecase.GetProduct
 import com.example.scrumproyect.view.presenter.base.BasePresenter
 import com.example.scrumproyect.view.viewModel.ProductViewModel
@@ -8,15 +9,15 @@ import java.io.Serializable
 
 class ProductRxPresenter(var getProduct: GetProduct) : BasePresenter<ProductRxPresenter.View>() {
 
-    fun syncSchedule() {
+    fun syncProduct() {
         view?.showLoading()
 
-        getProduct.execute(object : DisposableObserver<ArrayList<ProductViewModel>>() {
+        getProduct.execute(object : DisposableObserver<ArrayList<ProductEntity>>() {
             override fun onComplete() {
                 view?.hideLoading()
             }
 
-            override fun onNext(value: ArrayList<ProductViewModel>) {
+            override fun onNext(value: ArrayList<ProductEntity>) {
                 view?.successSchedule(0, value)
             }
 

@@ -11,6 +11,5 @@ import dagger.Component
 @PresenterScope
 @Component(dependencies = [AppComponent::class], modules = [PresenterModule::class])
 interface PresenterComponent {
-
     fun inject(activity: MainActivity)
 }

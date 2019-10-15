@@ -1,5 +1,6 @@
 package com.example.scrumproyect.domain.usecase
 
+import com.example.scrumproyect.data.entity.ProductEntity
 import com.example.scrumproyect.data.repository.ProductRepository
 import com.example.scrumproyect.domain.usecase.base.UseCase
 import com.example.scrumproyect.domain.model.Product
@@ -11,22 +12,24 @@ class GetProduct(
     executorThread: Scheduler,
     uiThread: Scheduler,
     private var productsRepository: ProductRepository
-) : UseCase<ArrayList<ProductViewModel>>(executorThread, uiThread) {
+) : UseCase<ArrayList<ProductEntity>>(executorThread, uiThread) {
 
 
-    override fun createObservableUseCase(): Observable<ArrayList<ProductViewModel>> {
+    override fun createObservableUseCase(): Observable<ArrayList<ProductEntity>> {
         val product = productsRepository.fetchList()
 
-        return Observable.create<ArrayList<ProductViewModel>> { observable ->
+        return Observable.create<ArrayList<ProductEntity>> { observable ->
             product.addOnSuccessListener {
                 val productList = product.result as List<Product>
-                val list = ArrayList<ProductViewModel>()
+                val list = ArrayList<ProductEntity>()
 
                 productList.forEach { _p ->
                     list.add(
-                        ProductViewModel().apply {
-                            id = _p.id
-                            title = _p.title
+                        ProductEntity().apply {
+                            idM = _p.idM
+                            titleM = _p.titleM
+                            descriptionM = _p.descriptionM
+                            urlImageM = _p.urlImageM
                         }
                     )
                 }

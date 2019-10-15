@@ -20,7 +20,7 @@ abstract class BaseFragment :Fragment(){
 
     override fun getContext(): Context = this.activity?.applicationContext!!
 
-    /*protected val component by lazy { Orchestrator.presenterComponent }*/
+    protected val component by lazy { Orchestrator.presenterComponent }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

@@ -2,8 +2,10 @@ package com.example.scrumproyect
 
 import android.content.Intent
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.scrumproyect.data.entity.ProductEntity
 import com.example.scrumproyect.view.presenter.ProductPresenter
+import com.example.scrumproyect.view.presenter.ProductRxPresenter
 import com.example.scrumproyect.view.ui.activity.AddProductActivity
 import com.example.scrumproyect.view.ui.activity.DetailProductActivity
 import com.example.scrumproyect.view.ui.adapter.ProductAdapter
@@ -13,16 +15,22 @@ import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.Serializable
+import javax.inject.Inject
 
 
 class MainActivity : ScrumBaseActivity(), ProductPresenter.View {
 
     private val presenter = ProductPresenter()
 
+    /*@Inject
+    lateinit var presenter: ProductRxPresenter*/
+
     override fun getView() = R.layout.activity_main
 
     override fun onCreate() {
         super.onCreate()
+
+        /*component.inject(this)*/
         setSupportActionBar("Productos")
     }
 
@@ -47,7 +55,7 @@ class MainActivity : ScrumBaseActivity(), ProductPresenter.View {
     override fun successSchedule(flag: Int, vararg args: Serializable) {
         if (flag == 0) {
             val list = args[0] as ArrayList<ProductEntity>
-            recycler.layoutManager = GridLayoutManager(this, 1)
+            recycler.layoutManager = GridLayoutManager(this, 1) as RecyclerView.LayoutManager?
             recycler.adapter = ProductAdapter(list as List<ProductEntity>) {
                 startActivity(DetailProductActivity::class.java, it)
             }

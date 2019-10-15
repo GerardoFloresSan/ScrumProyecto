@@ -3,9 +3,12 @@ package com.example.scrumproyect.view.ui.base
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.example.scrumproyect.R
+import com.example.scrumproyect.di.Orchestrator
 
 abstract class ScrumBaseActivity : BaseActivity() {
     protected var dialog: MaterialDialog? = null
+
+    protected val component by lazy { Orchestrator.presenterComponent }
 
     fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
