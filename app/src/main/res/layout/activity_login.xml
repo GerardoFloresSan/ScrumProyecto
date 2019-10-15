@@ -9,65 +9,54 @@
         android:gravity="center"
         android:orientation="vertical">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="175dp"
-            android:layout_height="175dp"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/profile_pic"/>
+    <ImageView
+            android:layout_weight="3"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/scrumhelp"/>
 
-    <TextView
+    <LinearLayout
+            android:layout_weight="2"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:layout_height="0dp"
             android:gravity="center"
-            android:textSize="20sp"
-            android:layout_marginTop="20dp"
-            android:id="@+id/profile_name"/>
+            android:padding="20dp">
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/profile_email"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Iniciar sesion con:"
+                android:layout_marginBottom="10dp"
+                android:textSize="16sp"/>
 
-    <com.facebook.login.widget.LoginButton
-            android:id="@+id/loginButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"/>
+        <com.facebook.login.widget.LoginButton
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/loginButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"/>
 
-    <com.google.android.gms.common.SignInButton
-            android:id="@+id/google_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:paddingBottom="10dp"
+        <com.google.android.gms.common.SignInButton
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/google_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
 
-            android:paddingTop="10dp"/>
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/login_test"
+                android:text="test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"/>
 
-    <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:indeterminate="true"
-            android:visibility="gone"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/login_test"
-            android:text="test"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"/>
+    </LinearLayout>
 
 </LinearLayout>
