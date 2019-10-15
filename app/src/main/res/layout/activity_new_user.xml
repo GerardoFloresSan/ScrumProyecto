@@ -48,7 +48,7 @@
                     android:inputType="textAutoComplete|textAutoCorrect|textCapSentences"
                     android:nextFocusDown="@+id/description"
                     android:textSize="16sp"
-                    app:theme="@style/WhiteTheme"/>
+                    app:theme="@style/DarkThemeTheme"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,12 +74,12 @@
                     android:inputType="textAutoComplete|textAutoCorrect|textCapSentences|textPassword"
                     android:nextFocusDown="@+id/description"
                     android:textSize="16sp"
-                    app:theme="@style/WhiteTheme"/>
+                    app:theme="@style/DarkThemeTheme"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/registrarUsuario"
+                android:id="@+id/register_user"
                 android:text="Registrar"
                 android:textColor="@color/colorWhite"
                 android:background="#64b2cd"

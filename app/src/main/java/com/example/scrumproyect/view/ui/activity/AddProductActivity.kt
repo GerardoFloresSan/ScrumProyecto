@@ -55,6 +55,7 @@ class AddProductActivity : ScrumBaseActivity() , ProductPresenter.View{
     }
 
     private fun verify() {
+        hideAllWrappers()
         if (name.isEmpty()) {
             name.showError("Texto Obligatorio")
         }

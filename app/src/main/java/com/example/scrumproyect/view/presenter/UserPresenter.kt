@@ -17,6 +17,7 @@ import java.io.Serializable
 
 class UserPresenter : BasePresenter<UserPresenter.View>() {
     private var fireBaseFireStore =  FirebaseFirestore.getInstance()
+    private var fireBaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     fun login() {
         view?.showLoading()
@@ -76,6 +77,26 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
             }
         }
         userRef.addOnFailureListener(getSimpleFailureListener())
+    }
+
+
+    fun newUser(emailN : String, passwordN : String) {
+        view?.showLoading()
+
+        val newUser = fireBaseAuth.createUserWithEmailAndPassword(emailN, passwordN)
+        newUser.addOnSuccessListener {
+            view.takeIf { view != null }.apply {
+                view?.hideLoading()
+                Paper.book(BuildConfig.FLAVOR).write("user", UserEntity().apply {
+                    id = it.user!!.uid
+                    email = emailN
+                })
+                Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).id)
+                Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).email)
+                view?.successSchedule(0)
+            }
+        }
+        newUser.addOnFailureListener(getSimpleFailureListener())
     }
 
     private fun getSimpleFailureListener(): OnFailureListener {
