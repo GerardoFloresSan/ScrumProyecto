@@ -60,7 +60,7 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
         }
 
         loginButtonEmail.setOnClickListener {
-
+            loginUser()
         }
 
         newUser.setOnClickListener {
@@ -113,7 +113,7 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
     }
     private fun validateEmail(email: String) = Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
-    private fun registerUser() {
+    private fun loginUser() {
         hideAllWrappers()
         if (TextUtils.isEmpty(emailOld.text)){
             emailOld.showError("Se debe ingresar un correo")
