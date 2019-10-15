@@ -80,7 +80,7 @@
                 app:errorTextAppearance="@style/error_appearance_red">
 
             <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/email"
+                    android:id="@+id/emailOld"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Correo"
@@ -106,7 +106,7 @@
                 app:errorTextAppearance="@style/error_appearance_red">
 
             <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/password"
+                    android:id="@+id/passwordOld"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Contraseña"

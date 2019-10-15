@@ -1,12 +1,17 @@
 package com.example.scrumproyect
 
 import android.content.Intent
+import android.text.TextUtils
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import com.example.scrumproyect.view.presenter.UserPresenter
 import com.example.scrumproyect.view.ui.activity.NewUserActivity
 import com.example.scrumproyect.view.ui.base.ScrumBaseActivity
+import com.example.scrumproyect.view.ui.extensions.getString
+import com.example.scrumproyect.view.ui.extensions.isEmpty
+import com.example.scrumproyect.view.ui.extensions.showError
 import com.example.scrumproyect.view.ui.extensions.startActivity
 import com.example.scrumproyect.view.ui.utils.FacebookHelper
 import com.facebook.CallbackManager
@@ -52,6 +57,9 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
         singInFacebook()
         loginButtonFB.setOnClickListener {
             loginButton.performClick()
+        }
+
+        loginButtonEmail.setOnClickListener {
 
         }
 
@@ -101,6 +109,34 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
         } else {
             callbackManager!!.onActivityResult(requestCode, resultCode, data)
         }
+
+    }
+    private fun validateEmail(email: String) = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+
+    private fun registerUser() {
+        hideAllWrappers()
+        if (TextUtils.isEmpty(emailOld.text)){
+            emailOld.showError("Se debe ingresar un correo")
+        }
+
+        if (TextUtils.isEmpty(passwordOld.text)){
+            passwordOld.showError("Falta ingresar la contraseña")
+        }
+
+        if (emailOld.isEmpty() || passwordOld.isEmpty()) {
+            return
+        }
+
+        if (!validateEmail(emailOld.getString())) {
+            emailOld.showError("Correo inválido")
+        }
+
+        if (!validateEmail(emailOld.getString())) {
+            return
+        }
+
+
+        presenter.login(emailOld.getString(), passwordOld.getString())
 
     }
 

@@ -19,10 +19,10 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
     private var fireBaseFireStore =  FirebaseFirestore.getInstance()
     private var fireBaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    fun login() {
+    fun login(emailN : String, passwordN : String) {
         view?.showLoading()
 
-        val loginTask = FirebaseAuth.getInstance().signInWithEmailAndPassword("alonsopantigoso91@gmail.com", "qwerty1234")
+        val loginTask = FirebaseAuth.getInstance().signInWithEmailAndPassword(emailN, passwordN)
         loginTask.addOnSuccessListener {
             view.takeIf { view != null }.apply {
                 view?.hideLoading()
