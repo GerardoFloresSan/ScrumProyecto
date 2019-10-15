@@ -48,10 +48,11 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
         }
 
         FacebookHelper.init(this)
-        configureGoogleSignIn()
+        singInFacebook()
+        loginButtonFB.setOnClickListener {
+            loginButton.performClick()
 
-        loginButtonFB.setOnClickListener { singInFacebook() }
-        loginButtonGmail.setOnClickListener { setupUI() }
+        }
 
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -61,6 +62,8 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
                 goMainScreen()
             }
         }
+        configureGoogleSignIn()
+        setupUI()
 
     }
 
@@ -120,6 +123,8 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
 
     private fun setupUI() {
         google_button.setOnClickListener {
+        }
+        login_button_gmail.setOnClickListener {
             signIn()
         }
     }
