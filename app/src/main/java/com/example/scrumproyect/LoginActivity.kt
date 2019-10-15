@@ -123,6 +123,7 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
 
     private fun setupUI() {
         google_button.setOnClickListener {
+            signIn()
         }
         login_button_gmail.setOnClickListener {
             signIn()
