@@ -11,7 +11,7 @@ import io.paperdb.Paper
 import java.lang.Exception
 import java.util.*
 
-open class ScrumActivity : Application() {
+open class ScrumApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()

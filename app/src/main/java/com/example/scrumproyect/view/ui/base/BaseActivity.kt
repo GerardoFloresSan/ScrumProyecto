@@ -21,10 +21,7 @@ import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
 import android.os.Build
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.afollestad.materialdialogs.MaterialDialog
-import com.example.scrumproyect.di.Orchestrator
-import com.example.scrumproyect.view.ui.application.ScrumActivity
+import com.example.scrumproyect.view.ui.application.ScrumApplication
 import com.example.scrumproyect.view.ui.extensions.enableError
 import com.google.android.material.textfield.TextInputLayout
 
@@ -40,13 +37,13 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(getView())
         onCreate()
-        ScrumActivity.addActivity(this)
+        ScrumApplication.addActivity(this)
     }
 
     @SuppressLint("MissingSuperCall")
     override fun onDestroy() {
         super.onDestroy()
-        ScrumActivity.removeActivity(this)
+        ScrumApplication.removeActivity(this)
     }
 
     @SuppressLint("PrivateResource")

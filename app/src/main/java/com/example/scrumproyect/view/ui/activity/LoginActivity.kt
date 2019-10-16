@@ -1,13 +1,12 @@
-package com.example.scrumproyect
+package com.example.scrumproyect.view.ui.activity
 
 import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
-import android.view.View
 import android.widget.Toast
+import com.example.scrumproyect.R
 import com.example.scrumproyect.view.presenter.UserPresenter
-import com.example.scrumproyect.view.ui.activity.NewUserActivity
 import com.example.scrumproyect.view.ui.base.ScrumBaseActivity
 import com.example.scrumproyect.view.ui.extensions.getString
 import com.example.scrumproyect.view.ui.extensions.isEmpty
@@ -35,7 +34,7 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
     private val presenter = UserPresenter()
     private var callbackManager: CallbackManager? = null
     private var firebaseAuth: FirebaseAuth? = null
-    private var firebaseAuthListener: FirebaseAuth.AuthStateListener? = null
+    /*private var firebaseAuthListener: FirebaseAuth.AuthStateListener? = null*/
     private val googleApiClient: GoogleApiClient? = null
 
     val RC_SIGN_IN: Int = 8767
@@ -48,7 +47,7 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
     override fun onCreate() {
         super.onCreate()
         callbackManager = CallbackManager.Factory.create()
-        loginButton!!.setReadPermissions(Arrays.asList("email"))
+        loginButton!!.setReadPermissions(Arrays.asList("public_profile", "email"))
         /*login_test.setOnClickListener {
             presenter.login()
         }*/
@@ -69,12 +68,12 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
-        firebaseAuthListener = FirebaseAuth.AuthStateListener {
+        /*firebaseAuthListener = FirebaseAuth.AuthStateListener {
             val user = it.currentUser
             if (user != null) {
                 goMainScreen()
             }
-        }
+        }*/
         configureGoogleSignIn()
         setupUI()
 
@@ -142,12 +141,12 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
 
     override fun onStart() {
         super.onStart()
-        firebaseAuth!!.addAuthStateListener(firebaseAuthListener!!)
+        /*firebaseAuth!!.addAuthStateListener(firebaseAuthListener!!)*/
     }
 
     override fun onStop() {
         super.onStop()
-        firebaseAuth!!.removeAuthStateListener(firebaseAuthListener!!)
+        /*firebaseAuth!!.removeAuthStateListener(firebaseAuthListener!!)*/
     }
 
     override fun successSchedule(flag: Int, vararg args: Serializable) {

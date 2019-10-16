@@ -6,11 +6,9 @@ import com.example.scrumproyect.data.entity.CommentEntity
 import com.example.scrumproyect.data.entity.UserEntity
 import com.example.scrumproyect.view.presenter.base.BasePresenter
 import com.facebook.AccessToken
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.OnFailureListener
-import com.google.firebase.auth.FacebookAuthProvider
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthException
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
 import io.paperdb.Paper
 import java.io.Serializable
@@ -44,7 +42,7 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
         view?.showLoading()
 
         val credential = FacebookAuthProvider.getCredential(accessToken.token)
-        val authTask = FirebaseAuth.getInstance().signInWithCredential(credential)
+        val authTask = fireBaseAuth.signInWithCredential(credential)
         authTask.addOnSuccessListener {
             view.takeIf { view != null }.apply {
                 view?.hideLoading()
@@ -55,11 +53,32 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
                     })
                     Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).id)
                     Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).email)
-                    view?.successSchedule(0)
+                    view?.successSchedule(1)
                 }
             }
         }
 
+        authTask.addOnFailureListener(getSimpleFailureListener())
+    }
+
+    fun loginGoogle(acct: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        val authTask = fireBaseAuth.signInWithCredential(credential)
+
+        authTask.addOnSuccessListener {
+            view.takeIf { view != null }.apply {
+                view?.hideLoading()
+                it.user?.let { it1 ->
+                    Paper.book(BuildConfig.FLAVOR).write("user", UserEntity().apply {
+                        id = it1.uid
+                        email = it1.email!!
+                    })
+                    Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).id)
+                    Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).email)
+                    view?.successSchedule(2)
+                }
+            }
+        }
         authTask.addOnFailureListener(getSimpleFailureListener())
     }
 
@@ -78,7 +97,6 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
         }
         userRef.addOnFailureListener(getSimpleFailureListener())
     }
-
 
     fun newUser(emailN : String, passwordN : String) {
         view?.showLoading()
