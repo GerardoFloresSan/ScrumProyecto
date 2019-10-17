@@ -12,6 +12,8 @@ abstract class ScrumBaseFragment : BaseFragment() {
 
     override fun getContext(): Context = this.activity?.applicationContext!!
 
+    protected val googleToken by lazy { getString(R.string.default_web_client_id)}
+
     protected val component by lazy { Orchestrator.presenterComponent }
 
     fun showLoading() {

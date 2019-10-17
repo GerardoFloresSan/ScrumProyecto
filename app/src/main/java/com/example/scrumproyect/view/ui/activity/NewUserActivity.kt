@@ -66,7 +66,7 @@ class NewUserActivity : ScrumBaseActivity() , UserPresenter.View{
         presenter.newUser(emailNew.getString(), passwordNew.getString())
 
     }
-    override fun successSchedule(flag: Int, vararg args: Serializable) {
+    override fun successUser(flag: Int, vararg args: Serializable) {
         ScrumApplication.closeAll()
         startActivity(MainActivity::class.java)
     }

@@ -1,40 +1,31 @@
 package com.example.scrumproyect.view.ui.activity
 
-import android.content.Intent
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.scrumproyect.R
-import com.example.scrumproyect.data.entity.ProductEntity
-import com.example.scrumproyect.view.presenter.ProductPresenter
-import com.example.scrumproyect.view.ui.adapter.ProductAdapter
+import com.example.scrumproyect.view.presenter.UserPresenter
 import com.example.scrumproyect.view.ui.base.ScrumBaseActivity
-import com.example.scrumproyect.view.ui.extensions.startActivity
 import com.example.scrumproyect.view.ui.fragment.HomeFragment
 import com.example.scrumproyect.view.ui.fragment.LoginFragment
 import com.example.scrumproyect.view.ui.fragment.ProfileFragment
-import com.facebook.login.LoginManager
-import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.scrumproyect.view.ui.utils.Methods
+import com.facebook.AccessToken
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import java.io.Serializable
 
 
-class MainActivity : ScrumBaseActivity()/*, ProductPresenter.View */{
+class MainActivity : ScrumBaseActivity(), UserPresenter.View{
+
     private var current = 0
     private var fragments = ArrayList<Fragment>()
-
-    /*private val presenter = ProductPresenter()*/
-
-    /*@Inject
-    lateinit var presenter: ProductRxPresenter*/
+    private val presenterUser = UserPresenter()
 
     override fun getView() = R.layout.activity_main
 
     override fun onCreate() {
         super.onCreate()
 
-        /*component.inject(this)*/
         setSupportActionBar("Productos")
         setupDrawer()
         fragments.add(HomeFragment())
@@ -48,8 +39,8 @@ class MainActivity : ScrumBaseActivity()/*, ProductPresenter.View */{
                     R.id.nav_gallery -> current = 1
                     R.id.nav_slideshow -> current = 2
                     R.id.nav_tools -> current = 0
-                    R.id.nav_share -> current = 1
-                    R.id.nav_send -> current = 2
+                    R.id.nav_share -> Methods.isInternetConnected()
+                    R.id.nav_send -> logout()
                 }
                 replaceFragment(fragments[current])
             }
@@ -64,41 +55,41 @@ class MainActivity : ScrumBaseActivity()/*, ProductPresenter.View */{
 
     override fun onResume() {
         super.onResume()
-        /*presenter.attachView(this)
-        presenter.syncProduct()
-        fab.setOnClickListener {
-            startActivity(AddProductActivity::class.java)
-        }
-        logout.setOnClickListener {
-            logoutSesion()
-        }*/
+        presenterUser.attachView(this)
     }
 
     override fun onPause() {
         super.onPause()
-        /*presenter.detachView()*/
+        presenterUser.detachView()
     }
 
-    /*@Suppress("UNCHECKED_CAST")
-    override fun successSchedule(flag: Int, vararg args: Serializable) {
-        if (flag == 0) {
-            val list = args[0] as ArrayList<ProductEntity>
-            recycler.layoutManager = GridLayoutManager(this, 1) as RecyclerView.LayoutManager?
-            recycler.adapter = ProductAdapter(list as List<ProductEntity>) {
-                startActivity(DetailProductActivity::class.java, it)
+    fun _login(emailN : String, passwordN : String) {
+        presenterUser.login(emailN, passwordN)
+    }
+
+    fun _login(accessToken: AccessToken) {
+        presenterUser.loginFaceBook(accessToken)
+    }
+
+    fun _login(acct: GoogleSignInAccount) {
+        presenterUser.loginGoogle(acct)
+    }
+
+    fun logout() {
+        presenterUser.logout(googleToken)
+    }
+
+    override fun successUser(flag: Int, vararg args: Serializable) {
+        when(flag) {
+            0, 1, 2 -> {
+                replaceFragment(fragments[1])
+            }
+            3, 4, 5 -> {
+                replaceFragment(fragments[2])
+            }
+            else -> {
+
             }
         }
     }
-
-    private fun goLoginScreen() {
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
-    }
-
-    fun logoutSesion() {
-        FirebaseAuth.getInstance().signOut()
-        LoginManager.getInstance().logOut()
-        goLoginScreen()
-    }*/
 }

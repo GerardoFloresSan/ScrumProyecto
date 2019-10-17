@@ -3,7 +3,11 @@ package com.example.scrumproyect.view.ui.utils
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Point
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Environment
+import android.util.Log
 import android.view.WindowManager
 import java.io.File
 import java.util.*
@@ -26,9 +30,6 @@ class Methods(private val context: Context) {
         return dpi * d
     }
 
-    /**
-     * Get Width of screen
-     * */
     fun getWidthScreen(): Int {
         return getPoint().x
     }
@@ -44,6 +45,36 @@ class Methods(private val context: Context) {
 
         fun init(context: Context) {
             methods = Methods(context)
+        }
+
+        @SuppressLint("NewApi")
+        fun isInternetConnected(): Boolean {
+            var isConnected = false
+            val cm = methods?.context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                cm.run {
+                    cm.getNetworkCapabilities(cm.activeNetwork)?.run {
+                        isConnected = when {
+                            hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                            hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                            hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                            else -> false
+                        }
+                    }
+                }
+            } else {
+                cm.run {
+                    cm.activeNetworkInfo?.run {
+                        if (type == ConnectivityManager.TYPE_WIFI) {
+                            isConnected = this.isConnectedOrConnecting
+                        } else if (type == ConnectivityManager.TYPE_MOBILE) {
+                            isConnected = this.isConnectedOrConnecting
+                        }
+                    }
+                }
+            }
+            Log.d("tag-connected", isConnected.toString())
+            return isConnected
         }
 
         /**

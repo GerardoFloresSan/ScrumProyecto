@@ -1,21 +1,23 @@
 package com.example.scrumproyect.view.presenter
 
-import android.util.Log
 import com.example.scrumproyect.BuildConfig
-import com.example.scrumproyect.data.entity.CommentEntity
 import com.example.scrumproyect.data.entity.UserEntity
 import com.example.scrumproyect.view.presenter.base.BasePresenter
+import com.example.scrumproyect.view.ui.utils.PapersManager
 import com.facebook.AccessToken
+import com.facebook.login.LoginManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.*
-import com.google.firebase.firestore.FirebaseFirestore
-import io.paperdb.Paper
 import java.io.Serializable
 
 class UserPresenter : BasePresenter<UserPresenter.View>() {
-    private var fireBaseFireStore =  FirebaseFirestore.getInstance()
     private var fireBaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    lateinit var mGoogleSignInClient: GoogleSignInClient
+    lateinit var mGoogleSignInOptions: GoogleSignInOptions
 
     fun login(emailN : String, passwordN : String) {
         view?.showLoading()
@@ -25,13 +27,13 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
             view.takeIf { view != null }.apply {
                 view?.hideLoading()
                 it.user?.let { it1 ->
-                    Paper.book(BuildConfig.FLAVOR).write("user", UserEntity().apply {
+                    PapersManager.userEntity = UserEntity().apply {
                         id = it1.uid
                         email = it1.email!!
-                    })
-                    Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).id)
-                    Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).email)
-                    view?.successSchedule(0)
+                        type = 0
+                    }
+                    PapersManager.session = true
+                    view?.successUser(0)
                 }
             }
         }
@@ -47,13 +49,13 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
             view.takeIf { view != null }.apply {
                 view?.hideLoading()
                 it.user?.let { it1 ->
-                    Paper.book(BuildConfig.FLAVOR).write("user", UserEntity().apply {
+                    PapersManager.userEntity = UserEntity().apply {
                         id = it1.uid
-                        email = it1.email!!
-                    })
-                    Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).id)
-                    Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).email)
-                    view?.successSchedule(1)
+                        email = if(it1.email != null) it1.email!! else it1.providerData[1].email!!
+                        type = 1
+                    }
+                    PapersManager.session = true
+                    view?.successUser(1)
                 }
             }
         }
@@ -69,33 +71,17 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
             view.takeIf { view != null }.apply {
                 view?.hideLoading()
                 it.user?.let { it1 ->
-                    Paper.book(BuildConfig.FLAVOR).write("user", UserEntity().apply {
+                    PapersManager.userEntity = UserEntity().apply {
                         id = it1.uid
                         email = it1.email!!
-                    })
-                    Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).id)
-                    Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).email)
-                    view?.successSchedule(2)
+                        type = 2
+                    }
+                    PapersManager.session = true
+                    view?.successUser(2)
                 }
             }
         }
         authTask.addOnFailureListener(getSimpleFailureListener())
-    }
-
-    fun getUser(user: FirebaseUser) {
-        val userRef = fireBaseFireStore.collection("user").get()
-
-        userRef.addOnSuccessListener {
-            view.takeIf { view != null }.apply {
-                view?.hideLoading()
-                Paper.book(BuildConfig.FLAVOR).write("user", UserEntity().apply {
-                    id = user.uid
-                    email = user.email!!
-                })
-                view?.successSchedule(0)
-            }
-        }
-        userRef.addOnFailureListener(getSimpleFailureListener())
     }
 
     fun newUser(emailN : String, passwordN : String) {
@@ -105,16 +91,54 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
         newUser.addOnSuccessListener {
             view.takeIf { view != null }.apply {
                 view?.hideLoading()
-                Paper.book(BuildConfig.FLAVOR).write("user", UserEntity().apply {
+                PapersManager.userEntity = UserEntity().apply {
                     id = it.user!!.uid
                     email = emailN
-                })
-                Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).id)
-                Log.d("tag-user", Paper.book(BuildConfig.FLAVOR).read("user", UserEntity()).email)
-                view?.successSchedule(0)
+                }
+                view?.successUser(0)
             }
         }
         newUser.addOnFailureListener(getSimpleFailureListener())
+    }
+
+    fun logout(tokenG: String) {
+        view?.showLoading()
+        when(PapersManager.userEntity.type) {
+            0 -> outFireBase(3)
+            1 -> outFaceBook(4)
+            2 -> outGoogle(tokenG, 5)
+        }
+    }
+
+    private fun outFireBase(type : Int) {
+        view?.hideLoading()
+        PapersManager.userEntity = UserEntity()
+        PapersManager.session = false
+        fireBaseAuth.signOut()
+        view?.hideLoading()
+        view?.successUser(type)
+    }
+
+    private fun outFaceBook(type : Int) {
+        LoginManager.getInstance().logOut()
+        outFireBase(type)
+    }
+
+    private fun outGoogle(tokenG: String, type : Int) {
+        mGoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(tokenG)
+            .requestEmail()
+            .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(view!!.getContext(), mGoogleSignInOptions)
+        val singOut = mGoogleSignInClient.signOut()
+        singOut.addOnSuccessListener {
+            fireBaseAuth.signOut()
+            view.takeIf { view != null }.apply {
+                outFireBase(type)
+            }
+        }
+
+        singOut.addOnFailureListener(getSimpleFailureListener())
     }
 
     private fun getSimpleFailureListener(): OnFailureListener {
@@ -139,6 +163,6 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
     }
 
     interface View : BasePresenter.View {
-        fun successSchedule(flag: Int, vararg args: Serializable)
+        fun successUser(flag: Int, vararg args: Serializable)
     }
 }

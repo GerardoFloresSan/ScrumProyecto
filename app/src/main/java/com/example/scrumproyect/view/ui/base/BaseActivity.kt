@@ -19,6 +19,7 @@ import android.content.res.Configuration
 import com.google.android.material.navigation.NavigationView
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
+import android.graphics.ColorFilter
 import android.os.Build
 import android.view.ViewGroup
 import com.example.scrumproyect.view.ui.application.ScrumApplication
@@ -58,7 +59,7 @@ abstract class BaseActivity : AppCompatActivity() {
         val drawable = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_white_24dp)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            drawable?.colorFilter = BlendModeColorFilter(white, BlendMode.SRC_ATOP)
+            drawable?.colorFilter = BlendModeColorFilter(white, BlendMode.SRC_ATOP) as ColorFilter?
         } else {
             drawable?.setColorFilter(white, PorterDuff.Mode.SRC_ATOP)
         }

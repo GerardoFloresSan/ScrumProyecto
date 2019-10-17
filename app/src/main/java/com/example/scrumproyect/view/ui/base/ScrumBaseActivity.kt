@@ -10,6 +10,10 @@ abstract class ScrumBaseActivity : BaseActivity() {
 
     protected val component by lazy { Orchestrator.presenterComponent }
 
+    protected val googleToken by lazy { getString(R.string.default_web_client_id)}
+
+
+
     fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
     }

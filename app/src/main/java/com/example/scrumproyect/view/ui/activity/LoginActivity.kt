@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import java.io.Serializable
 import java.util.*
 
-class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
+ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
 
     private val presenter = UserPresenter()
     private var callbackManager: CallbackManager? = null
@@ -149,7 +149,7 @@ class LoginActivity : ScrumBaseActivity(), UserPresenter.View {
         /*firebaseAuth!!.removeAuthStateListener(firebaseAuthListener!!)*/
     }
 
-    override fun successSchedule(flag: Int, vararg args: Serializable) {
+    override fun successUser(flag: Int, vararg args: Serializable) {
         startActivity(MainActivity::class.java)
     }
 

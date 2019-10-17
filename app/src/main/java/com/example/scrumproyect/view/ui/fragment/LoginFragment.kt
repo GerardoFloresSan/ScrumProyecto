@@ -4,7 +4,6 @@ import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
-import android.widget.Switch
 import android.widget.Toast
 import com.example.scrumproyect.R
 import com.example.scrumproyect.view.presenter.UserPresenter
@@ -14,7 +13,6 @@ import com.example.scrumproyect.view.ui.base.ScrumBaseFragment
 import com.example.scrumproyect.view.ui.extensions.getString
 import com.example.scrumproyect.view.ui.extensions.isEmpty
 import com.example.scrumproyect.view.ui.extensions.showError
-import com.example.scrumproyect.view.ui.utils.FacebookHelper
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -25,15 +23,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.*
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.fragment_login.*
 import java.io.Serializable
 import java.util.*
 
-class LoginFragment : ScrumBaseFragment(), UserPresenter.View {
+class LoginFragment : ScrumBaseFragment()/*, UserPresenter.View*/ {
 
-    private val presenter = UserPresenter()
+    /*private val presenter = UserPresenter()*/
     private var callbackManager: CallbackManager? = null
 
     @Suppress("PrivatePropertyName")
@@ -49,8 +45,8 @@ class LoginFragment : ScrumBaseFragment(), UserPresenter.View {
         loginButton!!.setReadPermissions(Arrays.asList("email"))
         loginButton.fragment = this
 
-        FacebookHelper.init(context)
-        singInFacebook()
+        singInFaceBook()
+
         loginButtonFB.setOnClickListener {
             loginButton.performClick()
         }
@@ -67,7 +63,7 @@ class LoginFragment : ScrumBaseFragment(), UserPresenter.View {
         setupUI()
     }
 
-    override fun onResume() {
+    /*override fun onResume() {
         super.onResume()
         presenter.attachView(this)
     }
@@ -75,7 +71,7 @@ class LoginFragment : ScrumBaseFragment(), UserPresenter.View {
     override fun onPause() {
         super.onPause()
         presenter.detachView()
-    }
+    }*/
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -116,13 +112,13 @@ class LoginFragment : ScrumBaseFragment(), UserPresenter.View {
         if (!validateEmail(emailOld.getString())) {
             return
         }
-
-        presenter.login(emailOld.getString(), passwordOld.getString())
+        (activity as MainActivity)._login(emailOld.getString(), passwordOld.getString())
+        /*presenter.login(emailOld.getString(), passwordOld.getString())*/
     }
 
     private fun configureGoogleSignIn() {
         mGoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken(googleToken)
             .requestEmail()
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(context, mGoogleSignInOptions)
@@ -142,12 +138,13 @@ class LoginFragment : ScrumBaseFragment(), UserPresenter.View {
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-    fun singInFacebook() {
+    private fun singInFaceBook() {
         callbackManager = CallbackManager.Factory.create()
 
         loginButton!!.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
-                presenter.loginFaceBook(loginResult.accessToken)
+                (activity as MainActivity)._login(loginResult.accessToken)
+                /*presenter.loginFaceBook(loginResult.accessToken)*/
                 /*handleFacebookAccessToken(loginResult.accessToken)*/
             }
 
@@ -164,10 +161,10 @@ class LoginFragment : ScrumBaseFragment(), UserPresenter.View {
     }
 
     private fun fireBaseAuthWithGoogle(acct: GoogleSignInAccount) {
-        presenter.loginGoogle(acct)
+        (activity as MainActivity)._login(acct)
     }
 
-    override fun successSchedule(flag: Int, vararg args: Serializable) {
+    /*override fun successUser(flag: Int, vararg args: Serializable) {
         val msg : String = when(flag) {
             0 -> "Login normal"
             1 -> "Facebook"
@@ -175,5 +172,5 @@ class LoginFragment : ScrumBaseFragment(), UserPresenter.View {
             else -> "error"
         }
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-    }
+    }*/
 }
