@@ -3,12 +3,13 @@ package com.example.scrumproyect.view.ui.adapter
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.scrumproyect.R
-import com.example.scrumproyect.data.entity.ProductEntity
+import com.example.scrumproyect.data.entity.ArticleEntity
 import com.example.scrumproyect.view.ui.extensions.inflate
 import kotlinx.android.synthetic.main.item_product.view.*
 
-class ProductAdapter(private val titles: List<ProductEntity>, private val listener: (ProductEntity) -> Unit) : RecyclerView.Adapter<ProductAdapter.ProductHolder>() {
+class ProductAdapter(private val titles: List<ArticleEntity>, private val listener: (Int, ArticleEntity) -> Unit) : RecyclerView.Adapter<ProductAdapter.ProductHolder>() {
 
     override fun onBindViewHolder(holder: ProductHolder, position: Int) = holder.bind(titles[position], listener)
 
@@ -20,15 +21,18 @@ class ProductAdapter(private val titles: List<ProductEntity>, private val listen
 
     class ProductHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(item: ProductEntity, listener: (ProductEntity) -> Unit) = with(itemView) {
+        fun bind(item: ArticleEntity, listener: (Int, ArticleEntity) -> Unit) = with(itemView) {
             title.text = item.titleM
+            Glide.with(this@with).load(item.urlImageM).into(image)
+            title.setOnClickListener {
+                listener(0, item)
+            }
 
-            com.bumptech.glide.Glide.with(this).load(item.urlImageM).into(image)
-
-            more_info.setOnClickListener { listener(item) }
+            more_info.setOnClickListener { listener(1, item) }
         }
 
         companion object {
+            @Suppress("RemoveRedundantQualifierName", "UNUSED_PARAMETER")
             fun init(parent: ViewGroup, viewType: Int) : ProductAdapter.ProductHolder {
                 val view = parent.inflate(R.layout.item_product)
 

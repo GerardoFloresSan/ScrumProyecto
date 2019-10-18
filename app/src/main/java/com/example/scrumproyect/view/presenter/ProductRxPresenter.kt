@@ -1,9 +1,8 @@
 package com.example.scrumproyect.view.presenter
 
-import com.example.scrumproyect.data.entity.ProductEntity
+import com.example.scrumproyect.data.entity.ArticleEntity
 import com.example.scrumproyect.domain.usecase.GetProduct
 import com.example.scrumproyect.view.presenter.base.BasePresenter
-import com.example.scrumproyect.view.viewModel.ProductViewModel
 import io.reactivex.observers.DisposableObserver
 import java.io.Serializable
 
@@ -12,12 +11,12 @@ class ProductRxPresenter(var getProduct: GetProduct) : BasePresenter<ProductRxPr
     fun syncProduct() {
         view?.showLoading()
 
-        getProduct.execute(object : DisposableObserver<ArrayList<ProductEntity>>() {
+        getProduct.execute(object : DisposableObserver<ArrayList<ArticleEntity>>() {
             override fun onComplete() {
                 view?.hideLoading()
             }
 
-            override fun onNext(value: ArrayList<ProductEntity>) {
+            override fun onNext(value: ArrayList<ArticleEntity>) {
                 view?.successSchedule(0, value)
             }
 

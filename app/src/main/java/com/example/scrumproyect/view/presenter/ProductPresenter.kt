@@ -1,6 +1,6 @@
 package com.example.scrumproyect.view.presenter
 
-import com.example.scrumproyect.data.entity.ProductEntity
+import com.example.scrumproyect.data.entity.ArticleEntity
 import com.example.scrumproyect.view.presenter.base.BasePresenter
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.FirebaseAuthException
@@ -14,13 +14,13 @@ class ProductPresenter : BasePresenter<ProductPresenter.View>() {
         view?.showLoading()
 
         val getTask = fireBaseFireStore.collection("products").get()
-        val products = arrayListOf<ProductEntity>()
+        val products = arrayListOf<ArticleEntity>()
 
         getTask.addOnSuccessListener {
             view.takeIf { view != null }.apply {
                 view?.hideLoading()
                 it.forEach { snapshot ->
-                    val productE = snapshot.toObject(ProductEntity::class.java)
+                    val productE = snapshot.toObject(ArticleEntity::class.java)
                     productE.idM = snapshot.id
                     products.add(productE)
 
@@ -31,10 +31,10 @@ class ProductPresenter : BasePresenter<ProductPresenter.View>() {
         getTask.addOnFailureListener(getSimpleFailureListener())
     }
 
-    fun addProduct(product: ProductEntity) {
+    fun addArticle(article: ArticleEntity) {
         view?.showLoading()
         val refTask = fireBaseFireStore.collection("products")
-            .add(product)
+            .add(article)
 
         refTask.addOnSuccessListener {
             view.takeIf { view != null }.apply {

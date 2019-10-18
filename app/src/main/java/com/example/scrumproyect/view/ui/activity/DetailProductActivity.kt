@@ -1,14 +1,12 @@
 package com.example.scrumproyect.view.ui.activity
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.scrumproyect.R
 import com.example.scrumproyect.data.entity.CommentEntity
-import com.example.scrumproyect.data.entity.ProductEntity
+import com.example.scrumproyect.data.entity.ArticleEntity
 import com.example.scrumproyect.view.presenter.CommentPresenter
 import com.example.scrumproyect.view.ui.adapter.CommentAdapter
 import com.example.scrumproyect.view.ui.base.ScrumBaseActivity
@@ -23,27 +21,26 @@ class DetailProductActivity : ScrumBaseActivity() , CommentPresenter.View{
     private var list = ArrayList<CommentEntity>()
     private lateinit var adapter: CommentAdapter
 
-    private lateinit var entity: ProductEntity
+    private lateinit var entity: ArticleEntity
 
     override fun getView() = R.layout.activity_dertail_product
 
     override fun onCreate() {
         super.onCreate()
-        setSupportActionBar("Detalle del producto")
-        adapter = CommentAdapter {
+        setSupportActionBar("")
+        adapter = CommentAdapter {}
 
-        }
+        entity = intent.getSerializableExtra("extra0") as ArticleEntity
 
-        entity = intent.getSerializableExtra("extra0") as ProductEntity
+        Glide.with(this@DetailProductActivity).load(entity.urlImageM).into(image)
 
-        Glide.with(this).load(entity.urlImageM).into(image)
         title_detail.text = entity.titleM
         description_detail.text = entity.descriptionM
         send.setOnClickListener { verify() }
     }
 
     private fun verify() {
-        if (!input.getString().isEmpty()) {
+        if (input.getString().isNotEmpty()) {
             presenter.addComment(entity.idM, CommentEntity().apply {
                 id = "1"
                 comment = input.getString()
@@ -66,7 +63,7 @@ class DetailProductActivity : ScrumBaseActivity() , CommentPresenter.View{
         presenter.detachView()
     }
 
-    @Suppress("UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST", "USELESS_CAST")
     override fun successSchedule(flag: Int, vararg args: Serializable) {
         if (flag == 0) {
             list = args[0] as ArrayList<CommentEntity>

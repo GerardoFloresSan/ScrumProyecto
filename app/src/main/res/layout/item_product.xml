@@ -27,25 +27,33 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/title"
-                android:text="Pruebas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_item_border"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:padding="10dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textAllCaps="false"
                 android:textColor="@color/colorWhite"
                 android:layout_gravity="center"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/more_info"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:text="@string/see_more"
+                android:gravity="center"
+                android:textSize="12sp"
                 android:layout_gravity="bottom|end"
-                android:background="@color/colorPrimary"
-                android:tint="@color/colorWhite"
-                android:src="@drawable/ic_info_outline_white_24dp"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/paste_border"
                 tools:ignore="ContentDescription"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
