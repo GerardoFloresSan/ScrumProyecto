@@ -62,7 +62,6 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View{
     }
 
     private fun validationUrlMetaData() {
-        showLoading()
         var contains = false
         hideAllWrappers()
 
@@ -83,6 +82,7 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View{
             return
         }
 
+        showLoading()
         ProcessUrl(object :
             ProcessUrl.DoStuff {
             override fun getContext() = context
@@ -140,7 +140,7 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View{
         presenter.addArticle(article)
     }
 
-    fun pasteDataInEditText() {
+    private fun pasteDataInEditText() {
         val clipboard = activity!!.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
         var pasteData = ""
         if (!clipboard!!.hasPrimaryClip()) {
@@ -169,7 +169,7 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View{
             }
         } else {
             resetButtons()
-            
+
         }
     }
 }

@@ -30,9 +30,6 @@
                 android:title="@string/menu_close"/>
     </group>
 
-<!--    <item android:title="Communicate">
-        <menu>
-        </menu>
-    </item>-->
+
 
 </menu>
