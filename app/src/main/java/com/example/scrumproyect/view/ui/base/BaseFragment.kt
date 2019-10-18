@@ -15,13 +15,7 @@ import java.io.Serializable
 
 abstract class BaseFragment :Fragment(){
 
-
     private lateinit var parent: View
-
-    override fun getContext(): Context = this.activity?.applicationContext!!
-
-    protected val component by lazy { Orchestrator.presenterComponent }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -47,6 +41,7 @@ abstract class BaseFragment :Fragment(){
     }
 
     abstract fun getFragmentView(): Int
+
     abstract fun onCreate()
 
     protected fun setTitle(title: String) {

@@ -1,29 +1,25 @@
 package com.example.scrumproyect.view.ui.base
 
+import android.content.Context
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.example.scrumproyect.R
 import com.example.scrumproyect.di.Orchestrator
 
-abstract class ScrumBaseActivity : BaseActivity() {
+abstract class ScrumBaseFragment : BaseFragment() {
+
     protected var dialog: MaterialDialog? = null
 
-    protected val component by lazy { Orchestrator.presenterComponent }
+    override fun getContext(): Context = this.activity?.applicationContext!!
 
     protected val googleToken by lazy { getString(R.string.default_web_client_id)}
 
-
-
-    fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
-    }
-
-    fun getContext() = this
+    protected val component by lazy { Orchestrator.presenterComponent }
 
     fun showLoading() {
         hideLoading()
-        dialog = MaterialDialog.Builder(this)
-            .title("Cargando...")
+        dialog = MaterialDialog.Builder(activity!!)
+            .title("Conectando...")
             .content("Espera un momento")
             .progress(true, 0)
             .cancelable(false)
@@ -36,16 +32,19 @@ abstract class ScrumBaseActivity : BaseActivity() {
         dialog = null
     }
 
-    private fun getErrorDialog(message: String) = MaterialDialog.Builder(this)
-        .title("Advertencia")
-        .content(message)
-        .positiveText("Ok")
-
     fun showError(message: String) {
-        getErrorDialog(message).show()
+        MaterialDialog.Builder(this.activity!!)
+            .title("Advertencia")
+            .content(message)
+            .positiveText("Ok")
+            .show()
     }
 
-    fun showError(message: Int){
+    fun replaceFragment(fragment: Fragment) {
+        fragmentManager!!.beginTransaction().replace(R.id.content, fragment).commit()
+    }
+
+    fun showError(message: Int) {
         showError(getString(message))
     }
 

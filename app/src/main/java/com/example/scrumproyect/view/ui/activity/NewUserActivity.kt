@@ -1,13 +1,10 @@
 package com.example.scrumproyect.view.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
-import com.example.scrumproyect.MainActivity
 import com.example.scrumproyect.R
 import com.example.scrumproyect.view.presenter.UserPresenter
-import com.example.scrumproyect.view.ui.application.ScrumActivity
+import com.example.scrumproyect.view.ui.application.ScrumApplication
 import com.example.scrumproyect.view.ui.base.ScrumBaseActivity
 import com.example.scrumproyect.view.ui.extensions.getString
 import com.example.scrumproyect.view.ui.extensions.isEmpty
@@ -69,8 +66,8 @@ class NewUserActivity : ScrumBaseActivity() , UserPresenter.View{
         presenter.newUser(emailNew.getString(), passwordNew.getString())
 
     }
-    override fun successSchedule(flag: Int, vararg args: Serializable) {
-        ScrumActivity.closeAll()
+    override fun successUser(flag: Int, vararg args: Serializable) {
+        ScrumApplication.closeAll()
         startActivity(MainActivity::class.java)
     }
 

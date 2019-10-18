@@ -6,16 +6,18 @@ import android.content.Intent
 import com.example.scrumproyect.di.component.AppComponent
 import com.example.scrumproyect.di.component.DaggerAppComponent
 import com.example.scrumproyect.di.module.AppModule
+import com.example.scrumproyect.view.ui.utils.Methods
 import com.google.android.gms.security.ProviderInstaller
 import io.paperdb.Paper
 import java.lang.Exception
 import java.util.*
 
-open class ScrumActivity : Application() {
+open class ScrumApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
         Paper.init(this)
+        Methods.init(this)
         appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
 
         ProviderInstaller.installIfNeededAsync(this, object : ProviderInstaller.ProviderInstallListener {

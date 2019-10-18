@@ -1,6 +1,6 @@
 package com.example.scrumproyect.di
 
-import com.example.scrumproyect.view.ui.application.ScrumActivity
+import com.example.scrumproyect.view.ui.application.ScrumApplication
 import com.example.scrumproyect.di.component.PresenterComponent
 import com.example.scrumproyect.di.component.DaggerPresenterComponent
 import javax.inject.Singleton
@@ -13,7 +13,7 @@ object Orchestrator {
     val presenterComponent: PresenterComponent by lazy {
         DaggerPresenterComponent
                 .builder()
-                .appComponent(ScrumActivity.appComponent)
+                .appComponent(ScrumApplication.appComponent)
                 .build()
     }
 }
