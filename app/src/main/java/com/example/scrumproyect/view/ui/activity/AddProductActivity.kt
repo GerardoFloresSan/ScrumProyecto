@@ -5,7 +5,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.example.scrumproyect.R
-import com.example.scrumproyect.data.entity.ProductEntity
+import com.example.scrumproyect.data.entity.ArticleEntity
 import com.example.scrumproyect.view.presenter.ProductPresenter
 import com.example.scrumproyect.view.ui.base.ScrumBaseActivity
 import com.example.scrumproyect.view.ui.extensions.getString
@@ -69,7 +69,7 @@ class AddProductActivity : ScrumBaseActivity() , ProductPresenter.View{
             return
         }
 
-        presenter.addProduct(ProductEntity().apply {
+        presenter.addArticle(ArticleEntity().apply {
             this.idM = "test"
             this.titleM =  name.getString()
             this.descriptionM = description.getString()

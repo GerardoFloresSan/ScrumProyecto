@@ -1,6 +1,7 @@
 package com.example.scrumproyect.view.ui.utils
 
 import com.example.scrumproyect.BuildConfig
+import com.example.scrumproyect.data.entity.MasterEntity
 import com.example.scrumproyect.data.entity.UserEntity
 import io.paperdb.Paper
 
@@ -12,11 +13,20 @@ object PapersManager {
         get() {
             return Paper.book(BuildConfig.FLAVOR).read("user", UserEntity())
         }
+
     var session: Boolean
         set(value) {
             Paper.book(BuildConfig.FLAVOR).write("session", value)
         }
         get() {
             return Paper.book(BuildConfig.FLAVOR).read("session", false)
+        }
+
+    var masters: MasterEntity
+        set(value) {
+            Paper.book(BuildConfig.FLAVOR).write("masters", value)
+        }
+        get() {
+            return Paper.book(BuildConfig.FLAVOR).read("masters", MasterEntity())
         }
 }

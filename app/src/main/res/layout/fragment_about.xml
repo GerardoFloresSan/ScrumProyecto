@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="24dp"
+        tools:context=".view.ui.fragment.AboutFragment">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <com.example.scrumproyect.view.ui.utils.JustifyTextView
+                android:id="@+id/detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginBottom="16dp"
+                android:textSize="14sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/about_link_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/link_about"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_gravity="bottom|center"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/link_about"
+                tools:ignore="ContentDescription"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.core.widget.NestedScrollView>

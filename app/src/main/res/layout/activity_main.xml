@@ -10,7 +10,7 @@
         tools:context=".view.ui.activity.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:uidUser="@+uidUser/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
@@ -21,7 +21,7 @@
             android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler"
+                android:uidUser="@+uidUser/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="none"
@@ -31,7 +31,7 @@
                 tools:listitem="@layout/item_product"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
+                android:uidUser="@+uidUser/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
@@ -40,7 +40,7 @@
                 app:srcCompat="@android:drawable/ic_input_add"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/logout"
+                android:uidUser="@+uidUser/logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tint="@color/colorWhite"
@@ -74,7 +74,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
+            app:itemIconTint="@color/colorPrimaryDark"
+            app:itemTextColor="@color/colorPrimaryDark"
             app:headerLayout="@layout/nav_header_main2"
-            app:menu="@menu/activity_main2_drawer"/>
+            app:menu="@menu/activity_main_drawer"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

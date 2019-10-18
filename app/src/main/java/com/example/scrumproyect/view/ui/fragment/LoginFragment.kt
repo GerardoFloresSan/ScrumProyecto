@@ -6,7 +6,6 @@ import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import com.example.scrumproyect.R
-import com.example.scrumproyect.view.presenter.UserPresenter
 import com.example.scrumproyect.view.ui.activity.MainActivity
 import com.example.scrumproyect.view.ui.activity.NewUserActivity
 import com.example.scrumproyect.view.ui.base.ScrumBaseFragment
@@ -24,23 +23,21 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.*
 import com.google.android.gms.tasks.Task
 import kotlinx.android.synthetic.main.fragment_login.*
-import java.io.Serializable
 import java.util.*
 
-class LoginFragment : ScrumBaseFragment()/*, UserPresenter.View*/ {
+class LoginFragment : ScrumBaseFragment() {
 
-    /*private val presenter = UserPresenter()*/
     private var callbackManager: CallbackManager? = null
 
     @Suppress("PrivatePropertyName")
     private val RC_SIGN_IN: Int = 8767
-    lateinit var mGoogleSignInClient: GoogleSignInClient
-    lateinit var mGoogleSignInOptions: GoogleSignInOptions
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var mGoogleSignInOptions: GoogleSignInOptions
 
     override fun getFragmentView() = R.layout.fragment_login
 
     override fun onCreate() {
-        setTitle("Login")
+        setTitle(getString(R.string.menu_login))
         callbackManager = CallbackManager.Factory.create()
         loginButton!!.setReadPermissions(Arrays.asList("email"))
         loginButton.fragment = this
@@ -62,16 +59,6 @@ class LoginFragment : ScrumBaseFragment()/*, UserPresenter.View*/ {
         configureGoogleSignIn()
         setupUI()
     }
-
-    /*override fun onResume() {
-        super.onResume()
-        presenter.attachView(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        presenter.detachView()
-    }*/
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -112,8 +99,7 @@ class LoginFragment : ScrumBaseFragment()/*, UserPresenter.View*/ {
         if (!validateEmail(emailOld.getString())) {
             return
         }
-        (activity as MainActivity)._login(emailOld.getString(), passwordOld.getString())
-        /*presenter.login(emailOld.getString(), passwordOld.getString())*/
+        (activity as MainActivity).login(emailOld.getString(), passwordOld.getString())
     }
 
     private fun configureGoogleSignIn() {
@@ -143,9 +129,7 @@ class LoginFragment : ScrumBaseFragment()/*, UserPresenter.View*/ {
 
         loginButton!!.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
-                (activity as MainActivity)._login(loginResult.accessToken)
-                /*presenter.loginFaceBook(loginResult.accessToken)*/
-                /*handleFacebookAccessToken(loginResult.accessToken)*/
+                (activity as MainActivity).login(loginResult.accessToken)
             }
 
             override fun onCancel() {
@@ -161,16 +145,6 @@ class LoginFragment : ScrumBaseFragment()/*, UserPresenter.View*/ {
     }
 
     private fun fireBaseAuthWithGoogle(acct: GoogleSignInAccount) {
-        (activity as MainActivity)._login(acct)
+        (activity as MainActivity).login(acct)
     }
-
-    /*override fun successUser(flag: Int, vararg args: Serializable) {
-        val msg : String = when(flag) {
-            0 -> "Login normal"
-            1 -> "Facebook"
-            2 -> "Google"
-            else -> "error"
-        }
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-    }*/
 }

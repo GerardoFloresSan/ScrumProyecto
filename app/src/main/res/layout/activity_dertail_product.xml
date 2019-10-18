@@ -58,6 +58,8 @@
                         android:id="@+id/title_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:padding="15sp"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="25sp" />
