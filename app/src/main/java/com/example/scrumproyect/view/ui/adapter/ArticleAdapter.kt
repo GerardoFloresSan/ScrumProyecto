@@ -7,19 +7,19 @@ import com.bumptech.glide.Glide
 import com.example.scrumproyect.R
 import com.example.scrumproyect.data.entity.ArticleEntity
 import com.example.scrumproyect.view.ui.extensions.inflate
-import kotlinx.android.synthetic.main.item_product.view.*
+import kotlinx.android.synthetic.main.item_article.view.*
 
-class ProductAdapter(private val titles: List<ArticleEntity>, private val listener: (Int, ArticleEntity) -> Unit) : RecyclerView.Adapter<ProductAdapter.ProductHolder>() {
+class ArticleAdapter(private val titles: List<ArticleEntity>, private val listener: (Int, ArticleEntity) -> Unit) : RecyclerView.Adapter<ArticleAdapter.ArticleHolder>() {
 
-    override fun onBindViewHolder(holder: ProductHolder, position: Int) = holder.bind(titles[position], listener)
+    override fun onBindViewHolder(holder: ArticleHolder, position: Int) = holder.bind(titles[position], listener)
 
     override fun getItemCount() = titles.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ProductHolder.init(parent, viewType)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ArticleHolder.init(parent, viewType)
 
     override fun getItemViewType(position: Int) = if (position == 0) 0 else 1
 
-    class ProductHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ArticleHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: ArticleEntity, listener: (Int, ArticleEntity) -> Unit) = with(itemView) {
             title.text = item.titleM
@@ -33,15 +33,15 @@ class ProductAdapter(private val titles: List<ArticleEntity>, private val listen
 
         companion object {
             @Suppress("RemoveRedundantQualifierName", "UNUSED_PARAMETER")
-            fun init(parent: ViewGroup, viewType: Int) : ProductAdapter.ProductHolder {
-                val view = parent.inflate(R.layout.item_product)
+            fun init(parent: ViewGroup, viewType: Int) : ArticleAdapter.ArticleHolder {
+                val view = parent.inflate(R.layout.item_article)
 
                 /*val params = view.layoutParams as RecyclerView.LayoutParams
                 params.setMargins(Methods.toPixels(20f).toInt(), Methods.toPixels(10f).toInt(),
                     Methods.toPixels(20f).toInt(), Methods.toPixels(10f).toInt())
                 view.layoutParams = params*/
 
-                return ProductAdapter.ProductHolder(view)
+                return ArticleAdapter.ArticleHolder(view)
             }
         }
     }

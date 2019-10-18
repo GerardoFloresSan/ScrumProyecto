@@ -7,25 +7,25 @@ import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.firestore.FirebaseFirestore
 import java.io.Serializable
 
-class ProductPresenter : BasePresenter<ProductPresenter.View>() {
+class ArticlePresenter : BasePresenter<ArticlePresenter.View>() {
     private var fireBaseFireStore =  FirebaseFirestore.getInstance()
 
-    fun syncProduct() {
+    fun syncArticles() {
         view?.showLoading()
 
-        val getTask = fireBaseFireStore.collection("products").get()
-        val products = arrayListOf<ArticleEntity>()
+        val getTask = fireBaseFireStore.collection("articles").get()
+        val articles = arrayListOf<ArticleEntity>()
 
         getTask.addOnSuccessListener {
             view.takeIf { view != null }.apply {
                 view?.hideLoading()
                 it.forEach { snapshot ->
-                    val productE = snapshot.toObject(ArticleEntity::class.java)
-                    productE.idM = snapshot.id
-                    products.add(productE)
+                    val articletE = snapshot.toObject(ArticleEntity::class.java)
+                    articletE.idM = snapshot.id
+                    articles.add(articletE)
 
                 }
-                view?.successSchedule(0, products)
+                view?.successArticle(0, articles)
             }
         }
         getTask.addOnFailureListener(getSimpleFailureListener())
@@ -33,13 +33,13 @@ class ProductPresenter : BasePresenter<ProductPresenter.View>() {
 
     fun addArticle(article: ArticleEntity) {
         view?.showLoading()
-        val refTask = fireBaseFireStore.collection("products")
+        val refTask = fireBaseFireStore.collection("articles")
             .add(article)
 
         refTask.addOnSuccessListener {
             view.takeIf { view != null }.apply {
                 view?.hideLoading()
-                view?.successSchedule(1)
+                view?.successArticle(1)
             }
         }
         refTask.addOnFailureListener(getSimpleFailureListener())
@@ -67,6 +67,6 @@ class ProductPresenter : BasePresenter<ProductPresenter.View>() {
     }
 
     interface View : BasePresenter.View {
-        fun successSchedule(flag: Int, vararg args: Serializable)
+        fun successArticle(flag: Int, vararg args: Serializable)
     }
 }

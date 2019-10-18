@@ -28,7 +28,7 @@
                 android:layout_gravity="center"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="1"
-                tools:listitem="@layout/item_product"/>
+                tools:listitem="@layout/item_article"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:uidUser="@+uidUser/fab"

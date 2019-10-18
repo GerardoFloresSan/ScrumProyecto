@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Toast
 import com.example.scrumproyect.R
 import com.example.scrumproyect.data.entity.ArticleEntity
-import com.example.scrumproyect.view.presenter.ProductPresenter
+import com.example.scrumproyect.view.presenter.ArticlePresenter
 import com.example.scrumproyect.view.ui.base.ScrumBaseActivity
 import com.example.scrumproyect.view.ui.extensions.getString
 import com.example.scrumproyect.view.ui.extensions.isEmpty
@@ -14,9 +14,9 @@ import com.example.scrumproyect.view.ui.extensions.showError
 import kotlinx.android.synthetic.main.activity_add_product.*
 import java.io.Serializable
 
-class AddProductActivity : ScrumBaseActivity() , ProductPresenter.View{
+class AddProductActivity : ScrumBaseActivity() , ArticlePresenter.View{
 
-    private val presenter = ProductPresenter()
+    private val presenter = ArticlePresenter()
 
     override fun getView() = R.layout.activity_add_product
 
@@ -77,7 +77,7 @@ class AddProductActivity : ScrumBaseActivity() , ProductPresenter.View{
         })
     }
 
-    override fun successSchedule(flag: Int, vararg args: Serializable) {
+    override fun successArticle(flag: Int, vararg args: Serializable) {
         Toast.makeText(this, "Producto agregada con éxito", Toast.LENGTH_SHORT).show()
         finish()
     }

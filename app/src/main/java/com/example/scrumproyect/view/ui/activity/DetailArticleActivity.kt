@@ -15,7 +15,7 @@ import com.example.scrumproyect.view.ui.extensions.getString
 import kotlinx.android.synthetic.main.activity_dertail_product.*
 import java.io.Serializable
 
-class DetailProductActivity : ScrumBaseActivity() , CommentPresenter.View{
+class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View{
 
     private val presenter = CommentPresenter()
     private var list = ArrayList<CommentEntity>()
@@ -32,7 +32,7 @@ class DetailProductActivity : ScrumBaseActivity() , CommentPresenter.View{
 
         entity = intent.getSerializableExtra("extra0") as ArticleEntity
 
-        Glide.with(this@DetailProductActivity).load(entity.urlImageM).into(image)
+        Glide.with(this@DetailArticleActivity).load(entity.urlImageM).into(image)
 
         title_detail.text = entity.titleM
         description_detail.text = entity.descriptionM

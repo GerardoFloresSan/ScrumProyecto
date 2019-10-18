@@ -4,9 +4,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scrumproyect.R
 import com.example.scrumproyect.data.entity.ArticleEntity
-import com.example.scrumproyect.view.presenter.ProductPresenter
-import com.example.scrumproyect.view.ui.activity.DetailProductActivity
-import com.example.scrumproyect.view.ui.adapter.ProductAdapter
+import com.example.scrumproyect.view.presenter.ArticlePresenter
+import com.example.scrumproyect.view.ui.activity.DetailArticleActivity
+import com.example.scrumproyect.view.ui.adapter.ArticleAdapter
 import com.example.scrumproyect.view.ui.base.ScrumBaseFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.io.Serializable
@@ -14,7 +14,13 @@ import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
 import android.content.Context.CLIPBOARD_SERVICE
 import android.content.ClipboardManager
 import android.content.Intent
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
+import android.graphics.LightingColorFilter
+import android.graphics.PorterDuff
 import android.net.Uri
+import androidx.appcompat.widget.AppCompatImageButton
+import androidx.core.content.ContextCompat
 import com.example.scrumproyect.view.ui.extensions.getString
 import com.example.scrumproyect.view.ui.extensions.isEmpty
 import com.example.scrumproyect.view.ui.extensions.showError
@@ -24,10 +30,10 @@ import com.example.scrumproyect.view.ui.utils.linkpewview.ProcessUrl
 import java.util.*
 
 
-class HomeFragment : ScrumBaseFragment(), ProductPresenter.View{
+class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View{
 
-    private val presenter = ProductPresenter()
-    private val listIgnore : List<String> = listOf("xvideo", "porn")
+    private val presenter = ArticlePresenter()
+    private lateinit var listButtons : List<AppCompatImageButton>
 
     override fun getFragmentView() = R.layout.fragment_home
 
@@ -40,12 +46,14 @@ class HomeFragment : ScrumBaseFragment(), ProductPresenter.View{
         public_url.setOnClickListener {
             validationUrlMetaData()
         }
+        configButtons()
+        listButtons = listOf(sad_button, neutral_button, happy_button)
     }
 
     override fun onResume() {
         super.onResume()
         presenter.attachView(this)
-        presenter.syncProduct()
+        presenter.syncArticles()
     }
 
     override fun onPause() {
@@ -96,6 +104,29 @@ class HomeFragment : ScrumBaseFragment(), ProductPresenter.View{
         }).execute(url_text.getString())
     }
 
+    private fun configButtons() {
+        sad_button.setOnClickListener {
+            resetButtons()
+            sad_button.setColorFilter(ContextCompat.getColor(context, R.color.md_red_700), PorterDuff.Mode.SRC_ATOP)
+        }
+
+        neutral_button.setOnClickListener {
+            resetButtons()
+            neutral_button.setColorFilter(ContextCompat.getColor(context, R.color.md_yellow_700), PorterDuff.Mode.SRC_ATOP)
+        }
+
+        happy_button.setOnClickListener {
+            resetButtons()
+            happy_button.setColorFilter(ContextCompat.getColor(context, R.color.md_green_700), PorterDuff.Mode.SRC_ATOP)
+        }
+    }
+
+    private fun resetButtons() {
+        for(button in listButtons) {
+            button.setColorFilter(ContextCompat.getColor(context, R.color.md_grey_500), PorterDuff.Mode.SRC_ATOP)
+        }
+    }
+
     fun saveDataInServer(metaDataK : MetaDataKotlin) {
         val article = ArticleEntity().apply {
             titleM = url_text.getString()
@@ -109,7 +140,7 @@ class HomeFragment : ScrumBaseFragment(), ProductPresenter.View{
         presenter.addArticle(article)
     }
 
-    private fun pasteDataInEditText() {
+    fun pasteDataInEditText() {
         val clipboard = activity!!.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
         var pasteData = ""
         if (!clipboard!!.hasPrimaryClip()) {
@@ -124,18 +155,21 @@ class HomeFragment : ScrumBaseFragment(), ProductPresenter.View{
     }
 
     @Suppress("UNCHECKED_CAST", "USELESS_CAST")
-    override fun successSchedule(flag: Int, vararg args: Serializable) {
+    override fun successArticle(flag: Int, vararg args: Serializable) {
         if (flag == 0) {
             recycler.layoutManager = GridLayoutManager(context, 1) as RecyclerView.LayoutManager?
-            recycler.adapter = ProductAdapter(args[0] as List<ArticleEntity>) { flag, product ->
+            recycler.adapter = ArticleAdapter(args[0] as List<ArticleEntity>) { flag, product ->
                 if(flag == 0) {
                     val openURL = Intent(Intent.ACTION_VIEW)
                     openURL.data = Uri.parse(product.titleM)
                     startActivity(openURL)
                 } else {
-                    startActivity(DetailProductActivity::class.java, product)
+                    startActivity(DetailArticleActivity::class.java, product)
                 }
             }
+        } else {
+            resetButtons()
+            
         }
     }
 }

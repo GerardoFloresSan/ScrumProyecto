@@ -44,7 +44,7 @@
                 android:windowSoftInputMode="stateHidden"
                 tools:targetApi="n"/>
         <activity
-                android:name=".view.ui.activity.DetailProductActivity"
+                android:name=".view.ui.activity.DetailArticleActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:noHistory="true"
                 android:resizeableActivity="false"
