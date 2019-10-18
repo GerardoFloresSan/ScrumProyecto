@@ -26,7 +26,7 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
     override fun onCreate() {
         super.onCreate()
 
-        setSupportActionBar("Productos")
+        setSupportActionBar("Articulos")
         setupDrawer()
         fragments.add(HomeFragment())
 
