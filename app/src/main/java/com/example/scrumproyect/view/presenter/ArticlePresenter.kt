@@ -1,28 +1,30 @@
 package com.example.scrumproyect.view.presenter
 
 import com.example.scrumproyect.data.entity.ArticleEntity
+import com.example.scrumproyect.data.entity.LikeEntity
 import com.example.scrumproyect.view.presenter.base.BasePresenter
+import com.example.scrumproyect.view.ui.utils.PapersManager
 import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import java.io.Serializable
 
 class ArticlePresenter : BasePresenter<ArticlePresenter.View>() {
     private var fireBaseFireStore =  FirebaseFirestore.getInstance()
 
     fun syncArticles() {
-        view?.showLoading()
-
-        val getTask = fireBaseFireStore.collection("articles").get()
+        //TODO BUSCADOR POR QUERY PARA PAGINADO DE 5 EN 5 PARA REDUCIR LA CARGA DEL APP
+        val getTask = fireBaseFireStore.collection("articles").orderBy("timeCreate", Query.Direction.DESCENDING).get()
         val articles = arrayListOf<ArticleEntity>()
 
         getTask.addOnSuccessListener {
             view.takeIf { view != null }.apply {
-                view?.hideLoading()
                 it.forEach { snapshot ->
-                    val articletE = snapshot.toObject(ArticleEntity::class.java)
-                    articletE.idM = snapshot.id
-                    articles.add(articletE)
+                    val articleE = snapshot.toObject(ArticleEntity::class.java)
+                    articleE.idM = snapshot.id
+                    articles.add(articleE)
 
                 }
                 view?.successArticle(0, articles)
@@ -31,18 +33,42 @@ class ArticlePresenter : BasePresenter<ArticlePresenter.View>() {
         getTask.addOnFailureListener(getSimpleFailureListener())
     }
 
-    fun addArticle(article: ArticleEntity) {
+    fun addArticle(article: ArticleEntity, type: Int) {
         view?.showLoading()
-        val refTask = fireBaseFireStore.collection("articles")
-            .add(article)
+        val key = fireBaseFireStore.collection("articles").document()
+        val like = LikeEntity().apply {
+            this.idUser = PapersManager.userEntity.uidUser
+            this.type = type
+        }
 
-        refTask.addOnSuccessListener {
+        val refTask = fireBaseFireStore.collection("articles").document(key.id).set(article)
+        val setLike = fireBaseFireStore.collection("articles").document(key.id).collection("likes").document(PapersManager.userEntity.uidUser).set(like)
+
+        val allTask = Tasks.whenAll(refTask, setLike)
+        allTask.addOnSuccessListener {
             view.takeIf { view != null }.apply {
                 view?.hideLoading()
                 view?.successArticle(1)
             }
         }
-        refTask.addOnFailureListener(getSimpleFailureListener())
+        allTask.addOnFailureListener(getSimpleFailureListener())
+    }
+
+    private fun addLike(id : String, type: Int) {
+        val like = LikeEntity().apply {
+            this.idUser = PapersManager.userEntity.uidUser
+            this.type = type
+        }
+
+        val setLike = fireBaseFireStore.collection("articles").document(id).collection("likes").document(PapersManager.userEntity.uidUser).set(like)
+
+        setLike.addOnSuccessListener {
+            view.takeIf { view != null }.apply {
+                view?.successArticle(1)
+            }
+        }
+
+        setLike.addOnFailureListener(getSimpleFailureListener())
     }
 
     private fun getSimpleFailureListener(): OnFailureListener {

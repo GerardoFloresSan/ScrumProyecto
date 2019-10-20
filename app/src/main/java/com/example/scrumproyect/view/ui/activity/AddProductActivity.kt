@@ -74,7 +74,7 @@ class AddProductActivity : ScrumBaseActivity() , ArticlePresenter.View{
             this.titleM =  name.getString()
             this.descriptionM = description.getString()
             this.urlImageM = "https://firebasestorage.googleapis.com/v0/b/proyectoscrum-2d2e3.appspot.com/o/background_example.jpg?alt=media&token=db01a943-1352-4382-8299-e96774708537"
-        })
+        }, 0)
     }
 
     override fun successArticle(flag: Int, vararg args: Serializable) {

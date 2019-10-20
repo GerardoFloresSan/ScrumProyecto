@@ -22,8 +22,7 @@ class ProcessUrl(private val doStuff: DoStuff) : AsyncTask<Any, Void, MetaDataKo
             val url = objects[0] as String
             metadata = MetaDataKotlin()
 
-            doc = Jsoup.connect(url).timeout(60 * 1000
-            ).get()
+            doc = Jsoup.connect(url).timeout(60 * 1000).get()
 
             val elements = doc!!.getElementsByTag("meta")
 

@@ -19,8 +19,11 @@ import android.graphics.BlendModeColorFilter
 import android.graphics.LightingColorFilter
 import android.graphics.PorterDuff
 import android.net.Uri
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.ContextCompat
+import com.example.scrumproyect.view.ui.extensions.clean
 import com.example.scrumproyect.view.ui.extensions.getString
 import com.example.scrumproyect.view.ui.extensions.isEmpty
 import com.example.scrumproyect.view.ui.extensions.showError
@@ -34,6 +37,7 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View{
 
     private val presenter = ArticlePresenter()
     private lateinit var listButtons : List<AppCompatImageButton>
+    var selectItem = 10
 
     override fun getFragmentView() = R.layout.fragment_home
 
@@ -46,14 +50,25 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View{
         public_url.setOnClickListener {
             validationUrlMetaData()
         }
-        configButtons()
         listButtons = listOf(sad_button, neutral_button, happy_button)
+        selectItem = 10
+        configButtons()
+        presenter.attachView(this)
+        presenter.syncArticles()
+        linear_loading.visibility = View.VISIBLE
+        linear_error.visibility = View.GONE
+        refresh.visibility = View.GONE
     }
 
     override fun onResume() {
         super.onResume()
         presenter.attachView(this)
-        presenter.syncArticles()
+        add_new_article.visibility = if (PapersManager.session) View.VISIBLE else View.GONE
+        when(selectItem) {
+            0 -> sad_button.setColorFilter(ContextCompat.getColor(context, R.color.md_red_700), PorterDuff.Mode.SRC_ATOP)
+            1 -> neutral_button.setColorFilter(ContextCompat.getColor(context, R.color.md_yellow_700), PorterDuff.Mode.SRC_ATOP)
+            2 -> happy_button.setColorFilter(ContextCompat.getColor(context, R.color.md_green_700), PorterDuff.Mode.SRC_ATOP)
+        }
     }
 
     override fun onPause() {
@@ -82,6 +97,11 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View{
             return
         }
 
+        if (selectItem == 10) {
+            Toast.makeText(context, "Clasifica la Url", Toast.LENGTH_LONG).show()
+            return
+        }
+
         showLoading()
         ProcessUrl(object :
             ProcessUrl.DoStuff {
@@ -107,16 +127,19 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View{
     private fun configButtons() {
         sad_button.setOnClickListener {
             resetButtons()
+            selectItem = 0
             sad_button.setColorFilter(ContextCompat.getColor(context, R.color.md_red_700), PorterDuff.Mode.SRC_ATOP)
         }
 
         neutral_button.setOnClickListener {
             resetButtons()
+            selectItem = 1
             neutral_button.setColorFilter(ContextCompat.getColor(context, R.color.md_yellow_700), PorterDuff.Mode.SRC_ATOP)
         }
 
         happy_button.setOnClickListener {
             resetButtons()
+            selectItem = 2
             happy_button.setColorFilter(ContextCompat.getColor(context, R.color.md_green_700), PorterDuff.Mode.SRC_ATOP)
         }
     }
@@ -134,10 +157,10 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View{
             urlImageM = if (metaDataK.imageUrl.isNotEmpty()) metaDataK.imageUrl else PapersManager.masters.urlGeneral
 
             urlM = url_text.getString()
-            timeCreate = Date().time.toInt()
+            timeCreate = Date().time
             metadata = metaDataK
         }
-        presenter.addArticle(article)
+        presenter.addArticle(article, selectItem)
     }
 
     private fun pasteDataInEditText() {
@@ -157,19 +180,37 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View{
     @Suppress("UNCHECKED_CAST", "USELESS_CAST")
     override fun successArticle(flag: Int, vararg args: Serializable) {
         if (flag == 0) {
-            recycler.layoutManager = GridLayoutManager(context, 1) as RecyclerView.LayoutManager?
-            recycler.adapter = ArticleAdapter(args[0] as List<ArticleEntity>) { flag, product ->
-                if(flag == 0) {
-                    val openURL = Intent(Intent.ACTION_VIEW)
-                    openURL.data = Uri.parse(product.titleM)
-                    startActivity(openURL)
-                } else {
-                    startActivity(DetailArticleActivity::class.java, product)
+            val list = args[0] as List<ArticleEntity>
+            linear_loading.visibility = View.GONE
+            linear_error.visibility = View.GONE
+            refresh.visibility = View.GONE
+
+            if (list.isEmpty()) {
+                linear_loading.visibility = View.GONE
+                linear_error.visibility = View.VISIBLE
+                refresh.visibility = View.GONE
+
+                text_error.text = "No hay articulos"
+            } else {
+                linear_loading.visibility = View.GONE
+                linear_error.visibility = View.GONE
+                refresh.visibility = View.VISIBLE
+
+                recycler.layoutManager = GridLayoutManager(context, 1) as RecyclerView.LayoutManager?
+                recycler.adapter = ArticleAdapter(args[0] as List<ArticleEntity>) { flag, product ->
+                    if(flag == 0) {
+                        val openURL = Intent(Intent.ACTION_VIEW)
+                        openURL.data = Uri.parse(product.titleM)
+                        startActivity(openURL)
+                    } else {
+                        startActivity(DetailArticleActivity::class.java, product)
+                    }
                 }
             }
         } else {
             resetButtons()
-
+            selectItem = 10
+            url_text.clean()
         }
     }
 }
