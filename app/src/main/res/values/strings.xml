@@ -24,6 +24,8 @@
     <string name="url_text">Pegar url</string>
     <string name="description_text">Descripción (Opcional)</string>
     <string name="qualification_text">Calificar</string>
+    <string name="menu_close_session">Cerrar sessión</string>
+
 
     <string name="see_more">Ver más...</string>
     <string name="link_about">Link</string>

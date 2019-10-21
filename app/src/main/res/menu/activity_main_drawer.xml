@@ -24,10 +24,6 @@
                 android:id="@+id/nav_term"
                 android:icon="@drawable/ic_chrome_reader_mode_black_24dp"
                 android:title="@string/menu_terms"/>
-        <item
-                android:id="@+id/nav_close"
-                android:icon="@drawable/ic_input_black_24dp"
-                android:title="@string/menu_close"/>
     </group>
 
 

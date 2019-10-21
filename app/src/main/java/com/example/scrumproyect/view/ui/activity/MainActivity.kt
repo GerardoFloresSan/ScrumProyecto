@@ -2,6 +2,7 @@ package com.example.scrumproyect.view.ui.activity
 
 import android.os.Handler
 import android.view.MenuItem
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.scrumproyect.R
 import com.example.scrumproyect.view.presenter.MasterPresenter
@@ -11,6 +12,7 @@ import com.example.scrumproyect.view.ui.fragment.*
 import com.example.scrumproyect.view.ui.utils.PapersManager
 import com.facebook.AccessToken
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import kotlinx.android.synthetic.main.activity_main.*
 import java.io.Serializable
 
 
@@ -46,11 +48,14 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
                     R.id.nav_me -> current = 3
                     R.id.nav_about -> current = 4
                     R.id.nav_term -> current = 5
-                    R.id.nav_close -> logout()
                 }
                 replaceFragment(fragments[current])
             }
         })
+
+        nav_close.setOnClickListener {
+            logout()
+        }
 
         configurationNavigation()
 
@@ -69,7 +74,7 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
     private fun configurationNavigation() {
         navigationView?.menu?.apply {
             findItem(R.id.nav_user).title = getString(if (PapersManager.session) R.string.menu_profile else R.string.menu_login)
-            findItem(R.id.nav_close).isVisible = PapersManager.session
+            nav_close.visibility = if (PapersManager.session) View.VISIBLE else View.GONE
         }
     }
 
@@ -85,7 +90,7 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
 
     fun login(acct: GoogleSignInAccount) = presenterUser.loginGoogle(acct)
 
-    fun logout() = presenterUser.logout(googleToken)
+    private fun logout() = presenterUser.logout(googleToken)
 
     override fun successUser(flag: Int, vararg args: Serializable) {
         when(flag) {
