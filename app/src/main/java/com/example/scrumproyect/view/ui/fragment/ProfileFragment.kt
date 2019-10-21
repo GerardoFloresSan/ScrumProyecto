@@ -4,7 +4,6 @@ import com.bumptech.glide.Glide
 import com.example.scrumproyect.R
 import com.example.scrumproyect.view.ui.base.ScrumBaseFragment
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 
@@ -38,9 +37,11 @@ class ProfileFragment : ScrumBaseFragment() {
 
             nameTextView.text = name
             emailTextView.text = email
-            Glide.with(context).load(photoUrl).into(profile_image)
+            Glide.with(context).load(photoUrl).error(R.drawable.ic_person_black_36dp).into(profile_image)
+
 
         } else {
+
             //TODO
         }
     }

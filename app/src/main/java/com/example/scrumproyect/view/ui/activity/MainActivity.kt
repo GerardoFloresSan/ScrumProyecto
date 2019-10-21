@@ -11,6 +11,7 @@ import com.example.scrumproyect.view.ui.fragment.*
 import com.example.scrumproyect.view.ui.utils.PapersManager
 import com.facebook.AccessToken
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.firebase.auth.FirebaseAuth
 import java.io.Serializable
 
 
@@ -69,6 +70,7 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
     private fun configurationNavigation() {
         navigationView?.menu?.apply {
             findItem(R.id.nav_user).title = getString(if (PapersManager.session) R.string.menu_profile else R.string.menu_login)
+            findItem(R.id.nav_me).isVisible = PapersManager.session
             findItem(R.id.nav_close).isVisible = PapersManager.session
         }
     }
@@ -102,4 +104,5 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
     override fun successMasters(flag: Int, vararg args: Serializable) {
         if (flag == 1) Handler().postDelayed({ presenterMaster.syncMaster() }, 2000)
     }
+
 }
