@@ -3,6 +3,7 @@
 
     <!-- google's material design colours from
     http://www.google.com/design/spec/style/color.html#color-ui-color-palette -->
+    <color name="transparent">#00000000</color>
 
     <!--reds-->
     <color name="md_red_50">#FFEBEE</color>
