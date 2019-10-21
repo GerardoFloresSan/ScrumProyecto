@@ -74,6 +74,7 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
     private fun configurationNavigation() {
         navigationView?.menu?.apply {
             findItem(R.id.nav_user).title = getString(if (PapersManager.session) R.string.menu_profile else R.string.menu_login)
+            findItem(R.id.nav_me).isVisible = PapersManager.session
             nav_close.visibility = if (PapersManager.session) View.VISIBLE else View.GONE
         }
     }
@@ -107,4 +108,5 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
     override fun successMasters(flag: Int, vararg args: Serializable) {
         if (flag == 1) Handler().postDelayed({ presenterMaster.syncMaster() }, 2000)
     }
+
 }

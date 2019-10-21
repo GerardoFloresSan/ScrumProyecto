@@ -85,7 +85,7 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
         authTask.addOnFailureListener(getSimpleFailureListener())
     }
 
-    fun newUser(emailN : String, passwordN : String) {
+    fun newUser(emailN : String, passwordN : String, nameN : String) {
         view?.showLoading()
         val newUser = fireBaseAuth.createUserWithEmailAndPassword(emailN, passwordN)
         newUser.addOnSuccessListener {
@@ -93,6 +93,7 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
                 PapersManager.userEntity = UserEntity().apply {
                     uidUser = it.user!!.uid
                     email = emailN
+                    name = nameN
                 }
                 getUser(0)
             }

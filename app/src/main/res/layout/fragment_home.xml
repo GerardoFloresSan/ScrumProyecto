@@ -139,13 +139,13 @@
                     android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/sad_button"
+                        android:id="@+id/happy_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="6dp"
-                        android:tint="@color/md_grey_500"
                         android:background="@color/transparent"
-                        android:src="@drawable/sad"/>
+                        android:tint="@color/md_grey_500"
+                        android:src="@drawable/happy"/>
 
                 <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/neutral_button"
@@ -157,13 +157,17 @@
                         android:src="@drawable/neutral"/>
 
                 <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/happy_button"
+                        android:id="@+id/sad_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="6dp"
-                        android:background="@color/transparent"
                         android:tint="@color/md_grey_500"
-                        android:src="@drawable/happy"/>
+                        android:background="@color/transparent"
+                        android:src="@drawable/sad"/>
+
+
+
+
 
                 <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/cancel_public_url"

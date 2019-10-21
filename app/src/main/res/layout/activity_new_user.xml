@@ -26,12 +26,37 @@
                 android:textSize="22sp"/>
 
         <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/emailNew_wrapper"
+                android:id="@+id/name_wrapper"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="100"
+                app:counterOverflowTextAppearance="@style/error_appearance_red"
+                app:counterTextAppearance="@style/error_appearance"
+                app:errorTextAppearance="@style/error_appearance_red">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/nameNew"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ingrese su nombre"
+                    android:imeOptions="actionNext"
+                    android:inputType="textAutoComplete|textAutoCorrect|textCapSentences"
+                    android:nextFocusDown="@+id/description"
+                    android:textSize="16sp"
+                    app:theme="@style/DarkThemeTheme"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailNew_wrapper"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginBottom="10dp"
                 app:counterEnabled="true"
                 app:counterMaxLength="100"

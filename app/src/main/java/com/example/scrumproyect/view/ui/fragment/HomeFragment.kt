@@ -39,13 +39,16 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
 
     override fun onCreate() {
         setTitle(getString(R.string.menu_home))
+
         pasteData.setOnClickListener {
             pasteDataInEditText()
         }
         cardView.setBackgroundResource(R.drawable.card_view_radius)
+
         add_public_url.setOnClickListener {
             validationUrlMetaData()
         }
+
         listButtons = listOf(sad_button, neutral_button, happy_button)
         selectItem = 10
         configButtons()
