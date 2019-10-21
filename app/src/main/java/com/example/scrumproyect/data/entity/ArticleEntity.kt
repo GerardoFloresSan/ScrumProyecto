@@ -13,7 +13,9 @@ data class ArticleEntity (
     var urlM : String = "",
     var timeCreate : Long = 0,
     var metadata: MetaDataKotlin = MetaDataKotlin(),
-    var sad: Long = 0,
-    var neutral: Long = 0,
-    var happy: Long = 0
+    var idUser: String = "",
+    var sad: List<String> = arrayListOf(),
+    var neutral: List<String> = arrayListOf(),
+    var happy: List<String> = arrayListOf(),
+    var status: Int = 0
 ) : Serializable

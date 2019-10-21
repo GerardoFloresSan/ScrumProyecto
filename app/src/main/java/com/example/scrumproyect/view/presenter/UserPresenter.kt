@@ -115,7 +115,6 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
             }
         }
 
-
         getTask.addOnFailureListener(getSimpleFailureListener())
 
     }

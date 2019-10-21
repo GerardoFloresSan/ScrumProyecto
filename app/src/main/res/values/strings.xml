@@ -21,11 +21,16 @@
     <string name="menu_terms">Términos y legales</string>
     <string name="menu_close">Cerrar sesión</string>
 
-    <string name="url">Pegar url</string>
+    <string name="url_text">Pegar url</string>
+    <string name="description_text">Descripción (Opcional)</string>
+    <string name="qualification_text">Calificar</string>
 
     <string name="see_more">Ver más...</string>
     <string name="link_about">Link</string>
-    <string name="public_url">Publicar</string>
+    <string name="open_public_url">¿Desea agregar un artículo?</string>
+
+    <string name="cancel_public_url">Cancelar</string>
+    <string name="add_public_url">Publicar</string>
 
     <string name="welcome">Bienvenido</string>
     <string name="cancel_login">Se canceló la operación</string>

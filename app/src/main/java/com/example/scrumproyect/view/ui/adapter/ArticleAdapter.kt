@@ -58,6 +58,10 @@ class ArticleAdapter(private val titles: List<ArticleEntity>, private val listen
                 listener(0, item)
             }
 
+            sad_number.text = item.sad.size.toString()
+            neutral_number.text = item.neutral.size.toString()
+            happy_number.text = item.happy.size.toString()
+
             more_info.setOnClickListener { listener(1, item) }
         }
 
