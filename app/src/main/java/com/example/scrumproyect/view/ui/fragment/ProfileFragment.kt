@@ -35,7 +35,12 @@ class ProfileFragment : ScrumBaseFragment() {
             val email = user.email
             val photoUrl = user.photoUrl
 
-            nameTextView.text = name
+            if (name!!.isEmpty()){
+                nameTextView.text = "Prueba" //COMO SE LEE EL PAPER PARA OBTENER EL NOMBRE QUE SE GRABO
+            }else{
+                nameTextView.text = name
+            }
+
             emailTextView.text = email
             Glide.with(context).load(photoUrl).error(R.drawable.ic_person_black_36dp).into(profile_image)
 

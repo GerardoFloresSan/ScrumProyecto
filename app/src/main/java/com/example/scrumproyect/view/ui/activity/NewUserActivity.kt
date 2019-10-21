@@ -50,7 +50,11 @@ class NewUserActivity : ScrumBaseActivity() , UserPresenter.View{
             passwordNew.showError("Falta ingresar la contraseña")
         }
 
-        if (emailNew.isEmpty() || passwordNew.isEmpty()) {
+        if (TextUtils.isEmpty(nameNew.text)){
+            nameNew.showError("Falta ingresar la contraseña")
+        }
+
+        if (emailNew.isEmpty() || passwordNew.isEmpty() || nameNew.isEmpty()) {
             return
         }
 
@@ -63,7 +67,7 @@ class NewUserActivity : ScrumBaseActivity() , UserPresenter.View{
         }
 
 
-        presenter.newUser(emailNew.getString(), passwordNew.getString())
+        presenter.newUser(emailNew.getString(), passwordNew.getString(), nameNew.getString())
 
     }
     override fun successUser(flag: Int, vararg args: Serializable) {
