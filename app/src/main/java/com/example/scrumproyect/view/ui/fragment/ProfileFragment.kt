@@ -2,7 +2,9 @@ package com.example.scrumproyect.view.ui.fragment
 
 import com.bumptech.glide.Glide
 import com.example.scrumproyect.R
+import com.example.scrumproyect.data.entity.UserEntity
 import com.example.scrumproyect.view.ui.base.ScrumBaseFragment
+import com.example.scrumproyect.view.ui.utils.PapersManager
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_profile.*
 
@@ -35,8 +37,9 @@ class ProfileFragment : ScrumBaseFragment() {
             val email = user.email
             val photoUrl = user.photoUrl
 
+
             if (name!!.isEmpty()){
-                nameTextView.text = "Prueba" //COMO SE LEE EL PAPER PARA OBTENER EL NOMBRE QUE SE GRABO
+                nameTextView.text = PapersManager.userEntity.name
             }else{
                 nameTextView.text = name
             }
