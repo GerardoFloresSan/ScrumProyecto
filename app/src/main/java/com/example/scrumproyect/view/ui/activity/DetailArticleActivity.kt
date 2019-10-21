@@ -3,13 +3,14 @@ package com.example.scrumproyect.view.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.scrumproyect.R
-import com.example.scrumproyect.data.entity.CommentEntity
 import com.example.scrumproyect.data.entity.ArticleEntity
+import com.example.scrumproyect.data.entity.CommentEntity
 import com.example.scrumproyect.view.presenter.ArticlePresenter
 import com.example.scrumproyect.view.presenter.CommentPresenter
 import com.example.scrumproyect.view.ui.adapter.CommentAdapter
@@ -41,6 +42,12 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
 
         title_detail.text = entity.titleM
         description_detail.text = entity.descriptionM
+
+        if (description_detail.text.isNullOrEmpty()) {
+            description_detail.visibility = View.GONE
+        } else {
+            description_detail.visibility = View.VISIBLE
+        }
         send.setOnClickListener { verify() }
 
         sad_number.text = entity.sad.size.toString()
