@@ -3,6 +3,8 @@ package com.example.scrumproyect.view.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
@@ -81,6 +83,19 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_share, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.share) {
+            share(entity.urlM)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun showLogOutDialog() {
         MaterialDialog.Builder(this)
             .title("Atención")
@@ -91,6 +106,15 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
             .negativeText("No")
             .negativeColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
             .show()
+    }
+
+    private fun share(text : String) {
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
+        startActivity(sendIntent)
     }
 
     private fun verify() {
