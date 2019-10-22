@@ -16,6 +16,7 @@ import com.example.scrumproyect.R
 import com.example.scrumproyect.data.entity.ArticleEntity
 import com.example.scrumproyect.view.presenter.ArticlePresenter
 import com.example.scrumproyect.view.ui.activity.DetailArticleActivity
+import com.example.scrumproyect.view.ui.activity.MainActivity
 import com.example.scrumproyect.view.ui.adapter.ArticleAdapter
 import com.example.scrumproyect.view.ui.base.ScrumBaseFragment
 import com.example.scrumproyect.view.ui.extensions.clean
@@ -36,6 +37,7 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
     var selectItem = 10
     private var openDetail : Boolean = false
     private lateinit var adapter: ArticleAdapter
+    var listArticle : List<ArticleEntity> = arrayListOf()
 
     override fun getFragmentView() = R.layout.fragment_home
 
@@ -248,17 +250,25 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
         presenter.syncArticles()
     }
 
+    fun search(list : List<ArticleEntity>) {
+        adapter.data = list
+        adapter.notifyDataSetChanged()
+    }
+
+    fun getList() : List<ArticleEntity> = listArticle
+
+
     @Suppress("UNCHECKED_CAST", "USELESS_CAST", "UseExpressionBody")
     override fun successArticle(flag: Int, vararg args: Serializable) {
         if (flag == 0) {
             refresh.isRefreshing = false
-            val list = args[0] as List<ArticleEntity>
+            listArticle = args[0] as List<ArticleEntity>
             linear_loading.visibility = View.GONE
             linear_error.visibility = View.GONE
             refresh.visibility = View.GONE
 
             @Suppress("UseExpressionBody")
-            if (list.isEmpty()) {
+            if (listArticle.isEmpty()) {
                 linear_loading.visibility = View.GONE
                 linear_error.visibility = View.VISIBLE
                 refresh.visibility = View.GONE
@@ -276,13 +286,14 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
                     refreshList()
                 }
 
+                (activity as MainActivity).openMenuSearch(true)
                 if (!openDetail) {
                     recycler.layoutManager = GridLayoutManager(context, 1) as RecyclerView.LayoutManager?
-                    adapter.data = args[0] as List<ArticleEntity>
+                    adapter.data = listArticle
                     recycler.adapter = adapter
                 } else {
                     openDetail = false
-                    adapter.data = args[0] as List<ArticleEntity>
+                    adapter.data = listArticle
                     adapter.notifyDataSetChanged()
                 }
             }

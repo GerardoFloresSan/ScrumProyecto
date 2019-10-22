@@ -1,10 +1,15 @@
 package com.example.scrumproyect.view.ui.activity
 
 import android.os.Handler
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.scrumproyect.R
+import com.example.scrumproyect.data.entity.ArticleEntity
 import com.example.scrumproyect.view.presenter.MasterPresenter
 import com.example.scrumproyect.view.presenter.UserPresenter
 import com.example.scrumproyect.view.ui.base.ScrumBaseActivity
@@ -22,6 +27,8 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
     private var fragments = ArrayList<Fragment>()
     private val presenterUser = UserPresenter()
     private val presenterMaster = MasterPresenter()
+    private lateinit var menuG : Menu
+    private var openMenuS = false
 
     override fun getView() = R.layout.activity_main
 
@@ -49,6 +56,7 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
                     R.id.nav_about -> current = 4
                     R.id.nav_term -> current = 5
                 }
+                if(current != 0) openMenuSearch (false)
                 replaceFragment(fragments[current])
             }
         })
@@ -62,6 +70,57 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
         replaceFragment(fragments[current])
         presenterMaster.attachView(this)
         presenterMaster.syncMaster()
+    }
+
+    fun openMenuSearch(b : Boolean){
+        menuG.clear()
+        openMenuS = b
+        onCreateOptionsMenu(menuG)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater?.inflate(R.menu.menu_search, menu)
+        val actionMenu: MenuItem = menu!!.findItem(R.id.action_search)
+        menu?.findItem(R.id.action_search)?.isVisible = openMenuS
+        val searchView = actionMenu.actionView as SearchView
+        searchView.findViewById<EditText>(R.id.search_src_text)
+            .setHintTextColor(resources.getColor(R.color.md_white_1000))
+
+        val white = ContextCompat.getColor(this, R.color.md_white_1000)
+        toolbar!!.setTitleTextColor(white)
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (!searchView.isIconified) {
+                    searchView.setIconifiedByDefault(true)
+                }
+                actionMenu.collapseActionView()
+
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val filterModeList: List<ArticleEntity> = filter((fragments[0] as HomeFragment).getList(), newText!!)
+                (fragments[0] as HomeFragment).search(filterModeList)
+                return true
+            }
+
+        })
+        menuG = menu
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun filter(pl: List<ArticleEntity>, query: String): List<ArticleEntity> {
+        var query = query
+        query = query.toLowerCase()
+        val filteredModelList = arrayListOf<ArticleEntity>()
+        for (model in pl) {
+            val text = model.descriptionM.toLowerCase() + model.metadata.description.toLowerCase() + model.urlM.toLowerCase()
+            if (text.contains(query)) {
+                filteredModelList.add(model)
+            }
+        }
+        return filteredModelList
     }
 
     override fun onResume() {
