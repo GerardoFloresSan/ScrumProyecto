@@ -46,6 +46,8 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
         entity = intent.getSerializableExtra("extra0") as ArticleEntity
 
         Glide.with(this@DetailArticleActivity).load(entity.urlImageM).into(image)
+        collapsing.setExpandedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleColor)
+        collapsing.setCollapsedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleColor)
 
         title_detail.text = entity.titleM
         description_detail.text = entity.descriptionM

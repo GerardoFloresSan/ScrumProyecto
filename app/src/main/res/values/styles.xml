@@ -36,6 +36,10 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="collapsingToolbarLayoutTitleColor" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/md_white_1000</item>
+    </style>
+
     <style name="WhiteTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorWhite</item>
         <item name="colorPrimaryDark">@color/colorWhite</item>
