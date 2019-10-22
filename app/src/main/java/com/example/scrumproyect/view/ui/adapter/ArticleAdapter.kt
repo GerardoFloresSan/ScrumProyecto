@@ -21,11 +21,12 @@ import com.example.scrumproyect.view.ui.extensions.inflate
 import com.example.scrumproyect.view.ui.utils.PapersManager
 import kotlinx.android.synthetic.main.item_article.view.*
 
-class ArticleAdapter(private val titles: List<ArticleEntity>, private val listener: (Int, ArticleEntity) -> Unit) : RecyclerView.Adapter<ArticleAdapter.ArticleHolder>() {
+class ArticleAdapter(private val listener: (Int, ArticleEntity) -> Unit) : RecyclerView.Adapter<ArticleAdapter.ArticleHolder>() {
+    var data: List<ArticleEntity> = arrayListOf()
 
-    override fun onBindViewHolder(holder: ArticleHolder, position: Int) = holder.bind(titles[position], listener)
+    override fun onBindViewHolder(holder: ArticleHolder, position: Int) = holder.bind(data[position], listener)
 
-    override fun getItemCount() = titles.size
+    override fun getItemCount() = data.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ArticleHolder.init(parent, viewType)
 
@@ -63,6 +64,7 @@ class ArticleAdapter(private val titles: List<ArticleEntity>, private val listen
             happy_number.text = item.happy.size.toString()
 
             more_info.setOnClickListener { listener(1, item) }
+            share_data.setOnClickListener { listener(2, item) }
         }
 
         companion object {

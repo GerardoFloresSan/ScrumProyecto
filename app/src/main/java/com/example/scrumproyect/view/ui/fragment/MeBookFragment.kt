@@ -23,17 +23,47 @@ import java.io.Serializable
 class MeBookFragment : ScrumBaseFragment(), ArticlePresenter.View{
 
     private val presenter = ArticlePresenter()
+    private var openDetail : Boolean = false
+    private lateinit var adapter: ArticleAdapter
 
     override fun getFragmentView() = R.layout.fragment_me_book
 
     override fun onCreate() {
         setTitle(getString(R.string.menu_me))
+
+        adapter = ArticleAdapter { flag, article ->
+            when (flag) {
+                0 -> {
+                    val openURL = Intent(Intent.ACTION_VIEW)
+                    openURL.data = Uri.parse(article.titleM)
+                    startActivity(openURL)
+                }
+                1 -> {
+                    openDetail = true
+                    startActivity(DetailArticleActivity::class.java, article)
+                }
+                2 -> share(article.urlM)
+            }
+        }
+        presenter.attachView(this)
+        presenter.syncMeArticles()
+    }
+
+    private fun share(text : String) {
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
+        startActivity(sendIntent)
     }
 
     override fun onResume() {
         super.onResume()
         presenter.attachView(this)
-        presenter.syncMeArticles()
+        if(openDetail) {
+            presenter.syncMeArticles()
+        }
     }
 
     override fun onPause() {
@@ -43,6 +73,7 @@ class MeBookFragment : ScrumBaseFragment(), ArticlePresenter.View{
 
     private fun refreshList() {
         refresh.isRefreshing = true
+        openDetail = false
         presenter.syncMeArticles()
     }
 
@@ -75,15 +106,14 @@ class MeBookFragment : ScrumBaseFragment(), ArticlePresenter.View{
                     refreshList()
                 }
 
-                recycler.layoutManager = GridLayoutManager(context, 1) as RecyclerView.LayoutManager?
-                recycler.adapter = ArticleAdapter(args[0] as List<ArticleEntity>) { flag, product ->
-                    if (flag == 0) {
-                        val openURL = Intent(Intent.ACTION_VIEW)
-                        openURL.data = Uri.parse(product.titleM)
-                        startActivity(openURL)
-                    } else {
-                        startActivity(DetailArticleActivity::class.java, product)
-                    }
+                if (!openDetail) {
+                    recycler.layoutManager = GridLayoutManager(context, 1) as RecyclerView.LayoutManager?
+                    adapter.data = args[0] as List<ArticleEntity>
+                    recycler.adapter = adapter
+                }
+                else {
+                    adapter.data = args[0] as List<ArticleEntity>
+                    adapter?.notifyDataSetChanged()
                 }
             }
         }

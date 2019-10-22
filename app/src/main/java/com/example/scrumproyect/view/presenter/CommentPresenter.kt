@@ -5,6 +5,7 @@ import com.example.scrumproyect.view.presenter.base.BasePresenter
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import java.io.Serializable
 
 class CommentPresenter : BasePresenter<CommentPresenter.View>() {
@@ -13,7 +14,7 @@ class CommentPresenter : BasePresenter<CommentPresenter.View>() {
     fun syncComment(id: String) {
         view?.showLoading()
 
-        val getTask = fireBaseFireStore.collection("products").document(id).collection("comments").get()
+        val getTask = fireBaseFireStore.collection("articles").document(id).collection("comments").orderBy("time", Query.Direction.DESCENDING).get()
         val comments = arrayListOf<CommentEntity>()
 
         getTask.addOnSuccessListener {
@@ -33,7 +34,7 @@ class CommentPresenter : BasePresenter<CommentPresenter.View>() {
 
     fun addComment(id: String, comment: CommentEntity) {
         view?.showLoading()
-        val refTask = fireBaseFireStore.collection("products").document(id).collection("comments").add(comment)
+        val refTask = fireBaseFireStore.collection("articles").document(id).collection("comments").add(comment)
 
         refTask.addOnSuccessListener {
             view.takeIf { view != null }.apply {

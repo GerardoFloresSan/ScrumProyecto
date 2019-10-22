@@ -53,6 +53,7 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
                         uidUser = it1.uid
                         email = if(it1.providerData.first().email != null) it1.providerData.first().email!! else it1.providerData.last().email!!
                         type = 1
+                        name = if(it1.providerData.first().displayName != null) it1.providerData.first().displayName!! else it1.providerData.last().displayName!!
                     }
                     PapersManager.session = true
                     getUser(1)
@@ -76,6 +77,7 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
                         uidUser = it1.uid
                         email = if(it1.providerData.first().email != null) it1.providerData.first().email!! else it1.providerData.last().email!!
                         type = 2
+                        name = if(it1.providerData.first().displayName != null) it1.providerData.first().displayName!! else it1.providerData.last().displayName!!
                     }
                     PapersManager.session = true
                     getUser(2)

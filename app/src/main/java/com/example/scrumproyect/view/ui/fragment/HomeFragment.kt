@@ -34,6 +34,8 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
     private val presenter = ArticlePresenter()
     private lateinit var listButtons: List<AppCompatImageButton>
     var selectItem = 10
+    private var openDetail : Boolean = false
+    private lateinit var adapter: ArticleAdapter
 
     override fun getFragmentView() = R.layout.fragment_home
 
@@ -47,6 +49,21 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
 
         add_public_url.setOnClickListener {
             validationUrlMetaData()
+        }
+
+        adapter = ArticleAdapter { flag, article ->
+            when (flag) {
+                0 -> {
+                    val openURL = Intent(Intent.ACTION_VIEW)
+                    openURL.data = Uri.parse(article.titleM)
+                    startActivity(openURL)
+                }
+                1 -> {
+                    openDetail = true
+                    startActivity(DetailArticleActivity::class.java, article)
+                }
+                2 -> share(article.urlM)
+            }
         }
 
         listButtons = listOf(sad_button, neutral_button, happy_button)
@@ -68,10 +85,21 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
         }
     }
 
+    private fun share(text : String) {
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
+        startActivity(sendIntent)
+    }
+
     override fun onResume() {
         super.onResume()
         presenter.attachView(this)
+
         add_new_article.visibility = if (PapersManager.session) View.VISIBLE else View.GONE
+
         when (selectItem) {
             0 -> sad_button.setColorFilter(
                 ContextCompat.getColor(context, R.color.md_red_700),
@@ -86,9 +114,13 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
                 PorterDuff.Mode.SRC_ATOP
             )
         }
+
+        if(openDetail) {
+            presenter.syncArticles()
+        }
     }
 
-    fun config(type : Boolean) {
+    private fun config(type : Boolean) {
         add_new_article.visibility = if(type) View.GONE else View.VISIBLE
         linear_add_post.visibility = if(type) View.VISIBLE else View.GONE
         linear_data.visibility = if(type) View.GONE else View.VISIBLE
@@ -210,8 +242,9 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
         }
     }
 
-    fun refreshList() {
+    private fun refreshList() {
         refresh.isRefreshing = true
+        openDetail = false
         presenter.syncArticles()
     }
 
@@ -243,15 +276,14 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
                     refreshList()
                 }
 
-                recycler.layoutManager = GridLayoutManager(context, 1) as RecyclerView.LayoutManager?
-                recycler.adapter = ArticleAdapter(args[0] as List<ArticleEntity>) { flag, product ->
-                    if (flag == 0) {
-                        val openURL = Intent(Intent.ACTION_VIEW)
-                        openURL.data = Uri.parse(product.titleM)
-                        startActivity(openURL)
-                    } else {
-                        startActivity(DetailArticleActivity::class.java, product)
-                    }
+                if (!openDetail) {
+                    recycler.layoutManager = GridLayoutManager(context, 1) as RecyclerView.LayoutManager?
+                    adapter.data = args[0] as List<ArticleEntity>
+                    recycler.adapter = adapter
+                } else {
+                    openDetail = false
+                    adapter.data = args[0] as List<ArticleEntity>
+                    adapter.notifyDataSetChanged()
                 }
             }
         } else {

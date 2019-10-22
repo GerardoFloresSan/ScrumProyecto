@@ -3,10 +3,14 @@ package com.example.scrumproyect.view.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.Glide
 import com.example.scrumproyect.R
 import com.example.scrumproyect.data.entity.ArticleEntity
@@ -17,8 +21,11 @@ import com.example.scrumproyect.view.ui.adapter.CommentAdapter
 import com.example.scrumproyect.view.ui.base.ScrumBaseActivity
 import com.example.scrumproyect.view.ui.extensions.clean
 import com.example.scrumproyect.view.ui.extensions.getString
+import com.example.scrumproyect.view.ui.utils.PapersManager
 import kotlinx.android.synthetic.main.activity_dertail_product.*
 import java.io.Serializable
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, ArticlePresenter.View {
 
@@ -42,12 +49,6 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
 
         title_detail.text = entity.titleM
         description_detail.text = entity.descriptionM
-
-        if (description_detail.text.isNullOrEmpty()) {
-            description_detail.visibility = View.GONE
-        } else {
-            description_detail.visibility = View.VISIBLE
-        }
         send.setOnClickListener { verify() }
 
         sad_number.text = entity.sad.size.toString()
@@ -71,6 +72,49 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
         happy_button.setOnClickListener {
             presenterArticle.removeLike(2, entity.idM)
         }
+
+
+        description_detail.visibility = if (description_detail.text.isNullOrEmpty()) View.INVISIBLE else View.VISIBLE
+
+        delete_post.visibility = if(entity.idUser == PapersManager.userEntity.uidUser) View.VISIBLE else View.GONE
+
+        delete_post.setOnClickListener {
+            showLogOutDialog()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_share, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.share) {
+            share(entity.urlM)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showLogOutDialog() {
+        MaterialDialog.Builder(this)
+            .title("Atención")
+            .content("¿Estás seguro que deseas eliminar esta solicitud?")
+            .positiveText("Si")
+            .positiveColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            .onPositive { _, _ -> presenterArticle.removeArticle(entity.idM)}
+            .negativeText("No")
+            .negativeColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+            .show()
+    }
+
+    private fun share(text : String) {
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
+        startActivity(sendIntent)
     }
 
     private fun verify() {
@@ -78,6 +122,9 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
             presenterComment.addComment(entity.idM, CommentEntity().apply {
                 id = "1"
                 comment = input.getString()
+                nameUser= if (PapersManager.userEntity.name.isEmpty()) "Anónimo" else PapersManager.userEntity.name
+                time = Date().time
+                urlUser = PapersManager.userEntity.urlUser
             })
             input.clean()
 
@@ -114,6 +161,35 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
     }
 
     override fun successArticle(flag: Int, vararg args: Serializable) {
-
+        if(flag == 2) {
+            finish()
+        } else if(flag == 1) {
+            when(args[0]) {
+                0 -> {
+                    (entity.sad as ArrayList).add(PapersManager.userEntity.uidUser)
+                    (entity.neutral as ArrayList).remove(PapersManager.userEntity.uidUser)
+                    (entity.happy as ArrayList).remove(PapersManager.userEntity.uidUser)
+                    sad_number.text = entity.sad.size.toString()
+                    neutral_number.text = entity.neutral.size.toString()
+                    happy_number.text = entity.happy.size.toString()
+                }
+                1 -> {
+                    (entity.sad as ArrayList).remove(PapersManager.userEntity.uidUser)
+                    (entity.neutral as ArrayList).add(PapersManager.userEntity.uidUser)
+                    (entity.happy as ArrayList).remove(PapersManager.userEntity.uidUser)
+                    sad_number.text = entity.sad.size.toString()
+                    neutral_number.text = entity.neutral.size.toString()
+                    happy_number.text = entity.happy.size.toString()
+                }
+                2 -> {
+                    (entity.sad as ArrayList).remove(PapersManager.userEntity.uidUser)
+                    (entity.neutral as ArrayList).remove(PapersManager.userEntity.uidUser)
+                    (entity.happy as ArrayList).add(PapersManager.userEntity.uidUser)
+                    sad_number.text = entity.sad.size.toString()
+                    neutral_number.text = entity.neutral.size.toString()
+                    happy_number.text = entity.happy.size.toString()
+                }
+            }
+        }
     }
 }

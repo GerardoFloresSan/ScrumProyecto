@@ -28,6 +28,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/share_data"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:layout_gravity="top|end"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/transparent"
+                android:src="@drawable/ic_share_white_24dp"
+                tools:ignore="ContentDescription"/>
+
         <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
