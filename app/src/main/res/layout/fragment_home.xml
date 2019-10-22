@@ -42,8 +42,6 @@
                 android:id="@+id/cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_item_border"
-                app:cardCornerRadius="0dp"
                 app:cardElevation="5dp">
 
             <LinearLayout
@@ -107,8 +105,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="8dp"
                     app:errorTextAppearance="@style/error_appearance"
                     app:theme="@style/DarkThemeTheme">
 
@@ -117,8 +115,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/description_text"
-                        android:lines="5"
-                        android:maxLines="5"
+                        android:lines="4"
+                        android:maxLines="4"
                         android:ellipsize="end"
                         android:imeOptions="actionDone"
                         android:textColor="@color/colorPrimaryDark"
@@ -144,7 +142,7 @@
                         android:layout_height="wrap_content"
                         android:padding="6dp"
                         android:background="@color/transparent"
-                        android:tint="@color/md_grey_500"
+                        android:tint="@color/md_green_700"
                         android:src="@drawable/happy"/>
 
                 <androidx.appcompat.widget.AppCompatImageButton
@@ -153,7 +151,7 @@
                         android:layout_height="wrap_content"
                         android:padding="6dp"
                         android:background="@color/transparent"
-                        android:tint="@color/md_grey_500"
+                        android:tint="@color/md_yellow_700"
                         android:src="@drawable/neutral"/>
 
                 <androidx.appcompat.widget.AppCompatImageButton
@@ -161,7 +159,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="6dp"
-                        android:tint="@color/md_grey_500"
+                        android:tint="@color/md_red_700"
                         android:background="@color/transparent"
                         android:src="@drawable/sad"/>
 
