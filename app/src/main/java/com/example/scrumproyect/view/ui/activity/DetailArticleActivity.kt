@@ -40,7 +40,7 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
 
     override fun onCreate() {
         super.onCreate()
-        setSupportActionBar("")
+        setSupportActionBar("Detalle del artículo")
         adapter = CommentAdapter {}
 
         entity = intent.getSerializableExtra("extra0") as ArticleEntity
@@ -76,15 +76,16 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
 
         description_detail.visibility = if (description_detail.text.isNullOrEmpty()) View.INVISIBLE else View.VISIBLE
 
-        delete_post.visibility = if(entity.idUser == PapersManager.userEntity.uidUser) View.VISIBLE else View.GONE
+        delete_post.visibility = /*if(entity.idUser == PapersManager.userEntity.uidUser) View.VISIBLE else*/ View.GONE
 
         delete_post.setOnClickListener {
-            showLogOutDialog()
+            showDeleteArticle()
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_share, menu)
+        menu?.findItem(R.id.i_delete)?.isVisible = entity.idUser == PapersManager.userEntity.uidUser
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -93,10 +94,14 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
             share(entity.urlM)
             return true
         }
+        if (item?.itemId == R.id.i_delete) {
+            showDeleteArticle()
+            return true
+        }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showLogOutDialog() {
+    private fun showDeleteArticle() {
         MaterialDialog.Builder(this)
             .title("Atención")
             .content("¿Estás seguro que deseas eliminar esta solicitud?")
