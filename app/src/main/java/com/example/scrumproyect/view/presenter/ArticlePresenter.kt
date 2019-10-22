@@ -86,7 +86,7 @@ class ArticlePresenter : BasePresenter<ArticlePresenter.View>() {
         addLike.addOnSuccessListener {
             view.takeIf { view != null }.apply {
                 view?.hideLoading()
-                view?.successArticle(1)
+                view?.successArticle(1, type)
             }
         }
 

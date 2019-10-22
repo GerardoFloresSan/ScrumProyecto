@@ -34,6 +34,7 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
     private val presenter = ArticlePresenter()
     private lateinit var listButtons: List<AppCompatImageButton>
     var selectItem = 10
+    private var openDetail : Boolean = false
 
     override fun getFragmentView() = R.layout.fragment_home
 
@@ -85,6 +86,11 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
                 ContextCompat.getColor(context, R.color.md_green_700),
                 PorterDuff.Mode.SRC_ATOP
             )
+        }
+
+        if(openDetail) {
+            openDetail = false
+            presenter.syncArticles()
         }
     }
 
@@ -250,6 +256,7 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
                         openURL.data = Uri.parse(product.titleM)
                         startActivity(openURL)
                     } else {
+                        openDetail = true
                         startActivity(DetailArticleActivity::class.java, product)
                     }
                 }

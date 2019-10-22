@@ -3,12 +3,17 @@ package com.example.scrumproyect.view.ui.utils
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Point
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Environment
 import android.util.Log
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
+import com.example.scrumproyect.R
+import de.hdodenhof.circleimageview.CircleImageView
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -134,20 +139,22 @@ class Methods(private val context: Context) {
             }
         }
 
+        fun drawable(avatar: CircleImageView): Drawable? {
+            val img = ContextCompat.getDrawable(methods!!.context, R.drawable.ic_person_white_24dp)
+            avatar.setColorFilter(ContextCompat.getColor(avatar.context, R.color.colorPrimaryDark), PorterDuff.Mode.SRC_ATOP)
+            return img
+        }
+
         fun getTime(time: Long): String {
 
             val minutes: Int = TimeUnit.MINUTES.convert(Date().time - time, TimeUnit.MILLISECONDS).toInt()
 
-            if (minutes == 0) {
-                return "ahora"
-            } else if (minutes < 60) {
-                return "hace $minutes min"
-            } else if (minutes < (60 * 24)) {
-                return "hace " + (minutes / 60) + " hrs"
-            } else if (minutes < (60 * 24 * 30)) {
-                return "hace " + (minutes / (60 * 24)) + " días"
-            } else {
-                return "hace " + (minutes / (60 * 24 * 30)) + " meses"
+            return when {
+                minutes == 0 -> "ahora"
+                minutes < 60 -> "hace $minutes min"
+                minutes < (60 * 24) -> "hace " + (minutes / 60) + " hrs"
+                minutes < (60 * 24 * 30) -> "hace " + (minutes / (60 * 24)) + " días"
+                else -> "hace " + (minutes / (60 * 24 * 30)) + " meses"
             }
         }
     }

@@ -42,16 +42,16 @@ class NewUserActivity : ScrumBaseActivity() , UserPresenter.View{
 
     private fun registerUser() {
         hideAllWrappers()
-        if (TextUtils.isEmpty(emailNew.text)){
+        if (emailNew.isEmpty()){
             emailNew.showError("Se debe ingresar un correo")
         }
 
-        if (TextUtils.isEmpty(passwordNew.text)){
+        if (passwordNew.isEmpty()){
             passwordNew.showError("Falta ingresar la contraseña")
         }
 
-        if (TextUtils.isEmpty(nameNew.text)){
-            nameNew.showError("Falta ingresar la contraseña")
+        if (nameNew.isEmpty()){
+            nameNew.showError("Falta ingresar su nombre")
         }
 
         if (emailNew.isEmpty() || passwordNew.isEmpty() || nameNew.isEmpty()) {

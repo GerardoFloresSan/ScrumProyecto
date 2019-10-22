@@ -32,7 +32,7 @@
     </style>
 
     <style name="error_appearance_red" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/red</item>
         <item name="android:textSize">12sp</item>
     </style>
 
