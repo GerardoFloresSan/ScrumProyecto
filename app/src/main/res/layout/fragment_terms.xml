@@ -1,14 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".view.ui.fragment.TermsFragment">
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                                       xmlns:tools="http://schemas.android.com/tools"
+                                       android:layout_width="match_parent"
+                                       android:layout_height="match_parent"
+                                       android:orientation="vertical"
+                                       tools:context=".view.ui.fragment.TermsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="12dp">
 
-</FrameLayout>
+        <TextView
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="26sp"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content"
+                android:text="Términos y Condiciones"/>
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text="La aplicación Agilidad sin Humo ha sido desarrollada para aportar al mundo de la agilidad de habla hispana."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        <TextView    android:layout_marginBottom="6dp"
+                     android:textColor="@color/black"
+                android:text="Los comentarios vertidos dentro de la aplicación Agilidad sin Humo, no es responsabilidad de los creadores de la aplicación Agilidad sin Humo, salvo que quede expresamente especificado en esta."
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text="Los usuarios que usen la aplicación Agilidad sin Humo, solo pueden utilizar el contenido en un dispositivo móvil que posean o controlen sin fines comerciales."
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text="Ningún otro uso está permitido sin previa autorización por escrito otorgada por la compañía."
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+
+        <TextView
+
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text="Todos los link publicados en la aplicación Agilidad sin Humo deberán respetar los derechos de autor u otros derechos legales."
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text="Aparte del derecho de uso no exclusivo, no sublicenciable, intransferible, personal y limitado de los usuarios tal como se especifica en la presente, no se confiere ningún derecho a dicho contenido ni a porciones del mismo, sin importar la forma en que aparezca, mediante su inclusión en la aplicación Agilidad sin Humo o mediante el acceso al mismo por parte del usuario. Un usuario no puede: "
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+
+        <LinearLayout
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent" android:layout_height="wrap_content">
+
+            <TextView
+                    android:layout_marginBottom="6dp"
+                    android:textColor="@color/black"
+                    android:text="- Separar ningún contenido individual o componente de la aplicación Agilidad sin Humo para otro uso que el indicado en relación a la aplicación Agilidad sin Humo."
+                    android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+
+            <TextView
+                    android:layout_marginBottom="6dp"
+                    android:textColor="@color/black"
+                    android:text="-	Incorporar una porción del mismo a los propios programas del usuario o recopilar cualquier porción en combinación con los propios programas del usuario."
+                    android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+
+            <TextView
+                    android:layout_marginBottom="6dp"
+                    android:textColor="@color/black"
+                    android:text="-	Transferirlo para ser utilizado por otro servicio."
+                    android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+
+            <TextView
+                    android:layout_marginBottom="6dp"
+                    android:textColor="@color/black"
+                    android:text="-	Vender, arrendar, ceder, prestar, distribuir, comunicar públicamente, transformar o sublicenciar la Aplicación Móvil o conceder en modo alguno cualquier derecho a la Aplicación Móvil absoluta o parcialmente. "
+                    android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text="Los creadores  de la aplicación Agilidad sin Humo serán responsable de todo mantenimiento o soporte técnico de la aplicación Agilidad sin Humo; ningún tercero será responsable de brindar servicios de mantenimiento o soporte técnico para la aplicación Agilidad sin Humo."
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text="Los creadores  de la aplicación Agilidad sin Humo, se reservan el derecho de enmendar, complementar o suspender total o parcialmente la aplicación Agilidad sin Humo en forma ocasional. Asimismo, los creadores de la aplicación Agilidad sin Humo se reservan el derecho de cambiar los Términos y Condiciones en cualquier momento, con vigencia inmediata a partir del momento que se actualiza la aplicación Agilidad sin Humo. Los términos “usuario” y “usuarios” se refieren a todo individuo o entidad que use, acceda, descargue, instale, obtenga o brinde información desde y hacia la aplicación Agilidad sin Humo. Todas las referencias al plural en la presente incluirán al singular y las referencias al singular incluirán al plural salvo que se desprenda otra interpretación del contexto."
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text="En caso de que un visitante crea que sus derechos de propiedad intelectual o marcas registradas puedan estar siendo violados por materiales publicados o almacenados en esta aplicación móvil, deberá solicitar el formato “Notificación de violación de derechos al correo consultas@agilidadsinhumo.com, llenar la información y enviarlo por correo electrónico a consultas@agilidadsinhumo.com."
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text="Al usar, acceder, descargar, instalar, obtener o brindar información desde y hacia la aplicación Agilidad sin Humo, se considerará que los usuarios han leído y aceptado estos Términos y Condiciones que se incorpora al presente documento."
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text="Los usuarios deben suspender el uso de la aplicación Agilidad sin Humo inmediatamente si no están de acuerdo o no aceptan todos estos Términos y Condiciones. Los creadores de la aplicación Agilidad sin Humo, se reservan el derecho de eliminar o prohibir a cualquier usuario la utilización de la aplicación Agilidad sin Humo a su sola discreción."
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <TextView
+
+                android:layout_marginBottom="16dp"
+                android:textColor="@color/black"
+                android:text="Los creadores  de la aplicación Agilidad sin Humo, pueden solicitar a los usuarios que actualicen su versión de la aplicación Agilidad sin Humo en cualquier momento. Aunque se harán todos los esfuerzos por conservar las configuraciones y preferencias personales de los usuarios, seguirá existiendo la posibilidad de que las mismas se pierdan."
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>
