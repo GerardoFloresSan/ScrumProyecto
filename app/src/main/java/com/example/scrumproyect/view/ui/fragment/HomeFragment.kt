@@ -6,6 +6,7 @@ import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.net.Uri
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageButton
@@ -29,6 +30,7 @@ import com.example.scrumproyect.view.ui.utils.linkpewview.ProcessUrl
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.io.Serializable
 import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
 
@@ -41,6 +43,7 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
 
     override fun getFragmentView() = R.layout.fragment_home
 
+    @Suppress("USELESS_CAST")
     override fun onCreate() {
         setTitle(getString(R.string.menu_home))
 
@@ -64,9 +67,27 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
                     openDetail = true
                     startActivity(DetailArticleActivity::class.java, article)
                 }
-                2 -> share(article.urlM)
+                2 -> {
+                    share(article.urlM)
+                }
+                3 -> {
+                    //sad
+                    presenter.addUpdateLike(0, article.idM)
+                }
+                4 -> {
+                    //neutral
+                    presenter.addUpdateLike(1, article.idM)
+                }
+                5 -> {
+                    //happy
+                    presenter.addUpdateLike(2, article.idM)
+                }
             }
         }
+        recycler.layoutManager = GridLayoutManager(context, 1) as RecyclerView.LayoutManager?
+
+        adapter.data = listArticle
+        recycler.adapter = adapter
 
         listButtons = listOf(sad_button, neutral_button, happy_button)
         selectItem = 10
@@ -79,11 +100,20 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
         refresh.visibility = View.GONE
 
         open_public_url.setOnClickListener {
-            config(true)
+            if (PapersManager.session) {
+                config(true)
+            } else {
+                (activity as MainActivity).openLoginConfig()
+            }
         }
 
         cancel_public_url.setOnClickListener {
             config(false)
+        }
+
+        if (PapersManager.openAddArticle) {
+            PapersManager.openAddArticle = false
+            config(true)
         }
     }
 
@@ -91,7 +121,7 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
         val sendIntent = Intent().apply {
             action = Intent.ACTION_SEND
             type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, text)
+            putExtra(Intent.EXTRA_TEXT, "Hola mira lo que encontre en ....\n $text")
         }
         startActivity(sendIntent)
     }
@@ -100,7 +130,6 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
         super.onResume()
         presenter.attachView(this)
 
-        add_new_article.visibility = if (PapersManager.session) View.VISIBLE else View.GONE
 
         when (selectItem) {
             0 -> sad_button.setColorFilter(
@@ -122,7 +151,7 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
         }
     }
 
-    private fun config(type : Boolean) {
+    fun config(type : Boolean) {
         add_new_article.visibility = if(type) View.GONE else View.VISIBLE
         linear_add_post.visibility = if(type) View.VISIBLE else View.GONE
         linear_data.visibility = if(type) View.GONE else View.VISIBLE
@@ -172,8 +201,12 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
                         return
                     }
                     else -> {
-                        url_text.showError("La url podría ser no válida")
-                        return
+                        if (Patterns.WEB_URL.matcher(url_text.getString()).find()) {
+                            saveDataInServer(result)
+                        } else {
+                            url_text.showError("Url no valida")
+                            return
+                        }
                     }
                 }
             }
@@ -186,21 +219,21 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
             resetButtons()
             selectItem = 0
             sad_button.setColorFilter(ContextCompat.getColor(context, R.color.md_red_700), PorterDuff.Mode.SRC_ATOP)
-            sad_button.background = ContextCompat.getDrawable(context, R.drawable.circle_border)
+            /*sad_button.background = ContextCompat.getDrawable(context, R.drawable.circle_border)*/
         }
 
         neutral_button.setOnClickListener {
             resetButtons()
             selectItem = 1
             neutral_button.setColorFilter(ContextCompat.getColor(context, R.color.md_yellow_700), PorterDuff.Mode.SRC_ATOP)
-            neutral_button.background = ContextCompat.getDrawable(context, R.drawable.circle_border)
+            /*neutral_button.background = ContextCompat.getDrawable(context, R.drawable.circle_border)*/
         }
 
         happy_button.setOnClickListener {
             resetButtons()
             selectItem = 2
             happy_button.setColorFilter(ContextCompat.getColor(context, R.color.md_green_700), PorterDuff.Mode.SRC_ATOP)
-            happy_button.background = ContextCompat.getDrawable(context, R.drawable.circle_border)
+            /*happy_button.background = ContextCompat.getDrawable(context, R.drawable.circle_border)*/
         }
     }
 
@@ -227,7 +260,8 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
                 2 -> happy = arrayListOf(PapersManager.userEntity.uidUser)
             }
         }
-        presenter.addArticle(article, selectItem)
+        presenter.existUrl(article, selectItem)
+        // presenter.addArticle(article, selectItem)
     }
 
     private fun pasteDataInEditText() {
@@ -257,50 +291,119 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
 
     fun getList() : List<ArticleEntity> = listArticle
 
-
     @Suppress("UNCHECKED_CAST", "USELESS_CAST", "UseExpressionBody")
     override fun successArticle(flag: Int, vararg args: Serializable) {
-        if (flag == 0) {
-            refresh.isRefreshing = false
-            listArticle = args[0] as List<ArticleEntity>
-            linear_loading.visibility = View.GONE
-            linear_error.visibility = View.GONE
-            refresh.visibility = View.GONE
-
-            @Suppress("UseExpressionBody")
-            if (listArticle.isEmpty()) {
-                linear_loading.visibility = View.GONE
-                linear_error.visibility = View.VISIBLE
-                refresh.visibility = View.GONE
-
-                text_error.text = "No hay articulos"
-            } else {
+        when (flag) {
+            0 -> {
+                refresh.isRefreshing = false
+                listArticle = args[0] as List<ArticleEntity>
                 linear_loading.visibility = View.GONE
                 linear_error.visibility = View.GONE
-                refresh.visibility = View.VISIBLE
+                refresh.visibility = View.GONE
 
-                refresh.setOnRefreshListener {
-                    linear_loading.visibility = View.VISIBLE
-                    linear_error.visibility = View.GONE
+                @Suppress("UseExpressionBody")
+                if (listArticle.isEmpty()) {
+                    linear_loading.visibility = View.GONE
+                    linear_error.visibility = View.VISIBLE
                     refresh.visibility = View.GONE
-                    refreshList()
-                }
 
-                (activity as MainActivity).openMenuSearch(true)
-                if (!openDetail) {
-                    recycler.layoutManager = GridLayoutManager(context, 1) as RecyclerView.LayoutManager?
-                    adapter.data = listArticle
-                    recycler.adapter = adapter
+                    text_error.text = "No hay articulos"
                 } else {
+                    linear_loading.visibility = View.GONE
+                    linear_error.visibility = View.GONE
+                    refresh.visibility = View.VISIBLE
+
+                    refresh.setOnRefreshListener {
+                        linear_loading.visibility = View.VISIBLE
+                        linear_error.visibility = View.GONE
+                        refresh.visibility = View.GONE
+                        refreshList()
+                    }
+
                     openDetail = false
+                    (activity as MainActivity).openMenuSearch(true)
                     adapter.data = listArticle
                     adapter.notifyDataSetChanged()
                 }
             }
-        } else {
-            resetButtons()
-            selectItem = 10
-            url_text.clean()
+            1 -> {
+                openDetail = false
+                (activity as MainActivity).openMenuSearch(true)
+                for (item in listArticle) {
+                    if (item.idM == args[1] as String) {
+                        (item.sad as ArrayList).remove(PapersManager.userEntity.uidUser)
+                        (item.neutral as ArrayList).remove(PapersManager.userEntity.uidUser)
+                        (item.happy as ArrayList).remove(PapersManager.userEntity.uidUser)
+                        when(args[0]) {
+                            0 -> {
+                                (item.sad as ArrayList).add(PapersManager.userEntity.uidUser)
+                            }
+                            1 -> {
+                                (item.neutral as ArrayList).add(PapersManager.userEntity.uidUser)
+                            }
+                            2 -> {
+                                (item.happy as ArrayList).add(PapersManager.userEntity.uidUser)
+                            }
+                        }
+                    }
+                }
+
+                adapter.data = listArticle
+                adapter.notifyDataSetChanged()
+            }
+            2 -> {
+                resetButtons()
+                selectItem = 10
+                url_text.clean()
+                config(false)
+                (listArticle as ArrayList).add(0, (args[0] as ArticleEntity))
+                adapter.data = listArticle
+                adapter.notifyDataSetChanged()
+            }
+            10 -> {
+                val articleTemp = args[0] as ArticleEntity
+                val selectItemTemp = args[1] as Int
+                presenter.addArticle(articleTemp, selectItemTemp)
+            }
+            11 -> {
+                val articleTemp = args[0] as ArticleEntity
+                val selectItemTemp = args[1] as Int
+                presenter.addUpdateLikeTwo(selectItemTemp, articleTemp)
+            }
+            13 -> {
+                var articleTemp = args[0] as ArticleEntity
+                val selectItemTemp = args[1] as Int
+                for (item in listArticle) {
+                    if (item.idM == articleTemp.idM) {
+                        (item.sad as ArrayList).remove(PapersManager.userEntity.uidUser)
+                        (item.neutral as ArrayList).remove(PapersManager.userEntity.uidUser)
+                        (item.happy as ArrayList).remove(PapersManager.userEntity.uidUser)
+                        when(selectItemTemp) {
+                            0 -> {
+                                (item.sad as ArrayList).add(PapersManager.userEntity.uidUser)
+                            }
+                            1 -> {
+                                (item.neutral as ArrayList).add(PapersManager.userEntity.uidUser)
+                            }
+                            2 -> {
+                                (item.happy as ArrayList).add(PapersManager.userEntity.uidUser)
+                            }
+                        }
+                        articleTemp = item
+                    }
+                }
+
+                (listArticle as ArrayList).remove(articleTemp)
+                (listArticle as ArrayList).add(0, articleTemp)
+                resetButtons()
+                selectItem = 10
+                url_text.clean()
+                config(false)
+
+                adapter.data = listArticle
+                adapter.notifyDataSetChanged()
+                startActivity(DetailArticleActivity::class.java, articleTemp)
+            }
         }
     }
 }

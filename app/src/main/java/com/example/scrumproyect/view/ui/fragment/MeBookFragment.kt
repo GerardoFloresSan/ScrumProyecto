@@ -3,11 +3,7 @@ package com.example.scrumproyect.view.ui.fragment
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -17,6 +13,7 @@ import com.example.scrumproyect.view.presenter.ArticlePresenter
 import com.example.scrumproyect.view.ui.activity.DetailArticleActivity
 import com.example.scrumproyect.view.ui.adapter.ArticleAdapter
 import com.example.scrumproyect.view.ui.base.ScrumBaseFragment
+import com.example.scrumproyect.view.ui.utils.PapersManager
 import kotlinx.android.synthetic.main.fragment_me_book.*
 import java.io.Serializable
 
@@ -25,9 +22,11 @@ class MeBookFragment : ScrumBaseFragment(), ArticlePresenter.View{
     private val presenter = ArticlePresenter()
     private var openDetail : Boolean = false
     private lateinit var adapter: ArticleAdapter
+    var listArticle : List<ArticleEntity> = arrayListOf()
 
     override fun getFragmentView() = R.layout.fragment_me_book
 
+    @Suppress("USELESS_CAST")
     override fun onCreate() {
         setTitle(getString(R.string.menu_me))
 
@@ -42,9 +41,27 @@ class MeBookFragment : ScrumBaseFragment(), ArticlePresenter.View{
                     openDetail = true
                     startActivity(DetailArticleActivity::class.java, article)
                 }
-                2 -> share(article.urlM)
+                2 -> {
+                    share(article.urlM)
+                }
+                3 -> {
+                    //sad
+                    presenter.addUpdateLike(0, article.idM)
+                }
+                4 -> {
+                    //neutral
+                    presenter.addUpdateLike(1, article.idM)
+                }
+                5 -> {
+                    //happy
+                    presenter.addUpdateLike(2, article.idM)
+                }
             }
         }
+        recycler.layoutManager = GridLayoutManager(context, 1) as RecyclerView.LayoutManager?
+        adapter.data = listArticle
+        recycler.adapter = adapter
+
         presenter.attachView(this)
         presenter.syncMeArticles()
     }
@@ -53,7 +70,7 @@ class MeBookFragment : ScrumBaseFragment(), ArticlePresenter.View{
         val sendIntent = Intent().apply {
             action = Intent.ACTION_SEND
             type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, text)
+            putExtra(Intent.EXTRA_TEXT, "Hola mira lo que encontre en ....\n $text")
         }
         startActivity(sendIntent)
     }
@@ -80,42 +97,64 @@ class MeBookFragment : ScrumBaseFragment(), ArticlePresenter.View{
 
     @Suppress("UNCHECKED_CAST", "USELESS_CAST", "UseExpressionBody")
     override fun successArticle(flag: Int, vararg args: Serializable) {
-        if (flag == 0) {
-            refresh.isRefreshing = false
-            val list = args[0] as List<ArticleEntity>
-            linear_loading.visibility = View.GONE
-            linear_error.visibility = View.GONE
-            refresh.visibility = View.GONE
-
-            @Suppress("UseExpressionBody")
-            if (list.isEmpty()) {
-                linear_loading.visibility = View.GONE
-                linear_error.visibility = View.VISIBLE
-                refresh.visibility = View.GONE
-
-                text_error.text = "No hay articulos"
-            } else {
+        when (flag) {
+            0 -> {
+                refresh.isRefreshing = false
+                listArticle = args[0] as List<ArticleEntity>
                 linear_loading.visibility = View.GONE
                 linear_error.visibility = View.GONE
-                refresh.visibility = View.VISIBLE
+                refresh.visibility = View.GONE
 
-                refresh.setOnRefreshListener {
-                    linear_loading.visibility = View.VISIBLE
-                    linear_error.visibility = View.GONE
+                @Suppress("UseExpressionBody")
+                if (listArticle.isEmpty()) {
+                    linear_loading.visibility = View.GONE
+                    linear_error.visibility = View.VISIBLE
                     refresh.visibility = View.GONE
-                    refreshList()
-                }
 
-                if (!openDetail) {
-                    recycler.layoutManager = GridLayoutManager(context, 1) as RecyclerView.LayoutManager?
-                    adapter.data = args[0] as List<ArticleEntity>
-                    recycler.adapter = adapter
-                }
-                else {
-                    adapter.data = args[0] as List<ArticleEntity>
-                    adapter?.notifyDataSetChanged()
+                    text_error.text = "No hay articulos"
+                } else {
+                    linear_loading.visibility = View.GONE
+                    linear_error.visibility = View.GONE
+                    refresh.visibility = View.VISIBLE
+
+                    refresh.setOnRefreshListener {
+                        linear_loading.visibility = View.VISIBLE
+                        linear_error.visibility = View.GONE
+                        refresh.visibility = View.GONE
+                        refreshList()
+                    }
+
+                    openDetail = false
+                    adapter.data = listArticle
+                    adapter.notifyDataSetChanged()
                 }
             }
+            1 -> {
+                openDetail = false
+                /*(activity as MainActivity).openMenuSearch(true)*/
+                for (item in listArticle) {
+                    if (item.idM == args[1] as String) {
+                        (item.sad as ArrayList).remove(PapersManager.userEntity.uidUser)
+                        (item.neutral as ArrayList).remove(PapersManager.userEntity.uidUser)
+                        (item.happy as ArrayList).remove(PapersManager.userEntity.uidUser)
+                        when(args[0]) {
+                            0 -> {
+                                (item.sad as ArrayList).add(PapersManager.userEntity.uidUser)
+                            }
+                            1 -> {
+                                (item.neutral as ArrayList).add(PapersManager.userEntity.uidUser)
+                            }
+                            2 -> {
+                                (item.happy as ArrayList).add(PapersManager.userEntity.uidUser)
+                            }
+                        }
+                    }
+                }
+
+                adapter.data = listArticle
+                adapter.notifyDataSetChanged()
+            }
+            2 -> {}
         }
     }
 }

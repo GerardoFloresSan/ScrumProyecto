@@ -2,7 +2,12 @@ package com.example.scrumproyect.view.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
+import android.graphics.ColorFilter
+import android.graphics.PorterDuff
 import android.net.Uri
+import android.os.Build
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -12,6 +17,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.request.RequestOptions
 import com.example.scrumproyect.R
 import com.example.scrumproyect.data.entity.ArticleEntity
 import com.example.scrumproyect.data.entity.CommentEntity
@@ -45,7 +52,18 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
 
         entity = intent.getSerializableExtra("extra0") as ArticleEntity
 
-        Glide.with(this@DetailArticleActivity).load(entity.urlImageM).into(image)
+        Glide.with(this@DetailArticleActivity).load(entity.urlImageM)
+            .apply(
+                RequestOptions()
+                    .centerCrop()
+                    .error(ContextCompat.getDrawable(this, R.drawable.background_example))
+                    .priority(Priority.HIGH)).into(image)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            image?.colorFilter = BlendModeColorFilter(ContextCompat.getColor(this, R.color.transparent_gray), BlendMode.SRC_ATOP) as ColorFilter?
+        } else {
+            image?.setColorFilter(ContextCompat.getColor(this, R.color.transparent_gray), PorterDuff.Mode.SRC_ATOP)
+        }
         collapsing.setExpandedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleColor)
         collapsing.setCollapsedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleColor)
 
@@ -64,15 +82,15 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
         }
 
         sad_button.setOnClickListener {
-            presenterArticle.removeLike(0, entity.idM)
+            presenterArticle.addUpdateLike(0, entity.idM)
         }
 
         neutral_button.setOnClickListener {
-            presenterArticle.removeLike(1, entity.idM)
+            presenterArticle.addUpdateLike(1, entity.idM)
         }
 
         happy_button.setOnClickListener {
-            presenterArticle.removeLike(2, entity.idM)
+            presenterArticle.addUpdateLike(2, entity.idM)
         }
 
 
@@ -119,7 +137,7 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
         val sendIntent = Intent().apply {
             action = Intent.ACTION_SEND
             type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, text)
+            putExtra(Intent.EXTRA_TEXT, "Hola mira lo que encontre en ....\n $text")
         }
         startActivity(sendIntent)
     }
@@ -171,26 +189,23 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
         if(flag == 2) {
             finish()
         } else if(flag == 1) {
+            (entity.sad as ArrayList).remove(PapersManager.userEntity.uidUser)
+            (entity.neutral as ArrayList).remove(PapersManager.userEntity.uidUser)
+            (entity.happy as ArrayList).remove(PapersManager.userEntity.uidUser)
             when(args[0]) {
                 0 -> {
                     (entity.sad as ArrayList).add(PapersManager.userEntity.uidUser)
-                    (entity.neutral as ArrayList).remove(PapersManager.userEntity.uidUser)
-                    (entity.happy as ArrayList).remove(PapersManager.userEntity.uidUser)
                     sad_number.text = entity.sad.size.toString()
                     neutral_number.text = entity.neutral.size.toString()
                     happy_number.text = entity.happy.size.toString()
                 }
                 1 -> {
-                    (entity.sad as ArrayList).remove(PapersManager.userEntity.uidUser)
                     (entity.neutral as ArrayList).add(PapersManager.userEntity.uidUser)
-                    (entity.happy as ArrayList).remove(PapersManager.userEntity.uidUser)
                     sad_number.text = entity.sad.size.toString()
                     neutral_number.text = entity.neutral.size.toString()
                     happy_number.text = entity.happy.size.toString()
                 }
                 2 -> {
-                    (entity.sad as ArrayList).remove(PapersManager.userEntity.uidUser)
-                    (entity.neutral as ArrayList).remove(PapersManager.userEntity.uidUser)
                     (entity.happy as ArrayList).add(PapersManager.userEntity.uidUser)
                     sad_number.text = entity.sad.size.toString()
                     neutral_number.text = entity.neutral.size.toString()

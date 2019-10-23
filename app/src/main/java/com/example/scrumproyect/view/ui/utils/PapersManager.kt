@@ -22,6 +22,14 @@ object PapersManager {
             return Paper.book(BuildConfig.FLAVOR).read("session", false)
         }
 
+    var openAddArticle: Boolean
+        set(value) {
+            Paper.book(BuildConfig.FLAVOR).write("open", value)
+        }
+        get() {
+            return Paper.book(BuildConfig.FLAVOR).read("open", false)
+        }
+
     var masters: MasterEntity
         set(value) {
             Paper.book(BuildConfig.FLAVOR).write("masters", value)

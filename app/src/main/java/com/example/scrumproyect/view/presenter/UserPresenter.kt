@@ -119,7 +119,6 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
         }
 
         getTask.addOnFailureListener(getSimpleFailureListener())
-
     }
 
     private fun saveUser(flag : Int) {

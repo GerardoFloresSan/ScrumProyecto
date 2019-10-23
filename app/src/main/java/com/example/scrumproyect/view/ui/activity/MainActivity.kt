@@ -8,12 +8,14 @@ import android.widget.EditText
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.afollestad.materialdialogs.MaterialDialog
 import com.example.scrumproyect.R
 import com.example.scrumproyect.data.entity.ArticleEntity
 import com.example.scrumproyect.view.presenter.MasterPresenter
 import com.example.scrumproyect.view.presenter.UserPresenter
 import com.example.scrumproyect.view.ui.base.ScrumBaseActivity
 import com.example.scrumproyect.view.ui.fragment.*
+import com.example.scrumproyect.view.ui.utils.FacebookHelper
 import com.example.scrumproyect.view.ui.utils.PapersManager
 import com.facebook.AccessToken
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -57,6 +59,7 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
                     R.id.nav_term -> current = 5
                 }
                 if(current != 0) openMenuSearch (false)
+                PapersManager.openAddArticle = false
                 replaceFragment(fragments[current])
             }
         })
@@ -144,6 +147,23 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
         presenterMaster.detachView()
     }
 
+    fun openLoginConfig() {
+        MaterialDialog.Builder(this)
+            .title("¿Desea agregar nuevos articulo a la lista?")
+            .content("Logee o Registrese con su cuenta para poder continuar")
+            .positiveText("Si")
+            .positiveColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            .onPositive { _, _ -> configResultIfHome()}
+            .negativeText("No")
+            .negativeColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+            .show()
+    }
+
+    private fun configResultIfHome() {
+        PapersManager.openAddArticle = true
+        replaceFragment(fragments[1])
+    }
+
     fun login(emailN : String, passwordN : String) = presenterUser.login(emailN, passwordN)
 
     fun login(accessToken: AccessToken) = presenterUser.loginFaceBook(accessToken)
@@ -156,11 +176,14 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
         when(flag) {
             0, 1, 2 -> {
                 configurationNavigation()
-                replaceFragment(fragments[2])
+                replaceFragment(fragments[0])
             }
             3, 4, 5 -> {
                 configurationNavigation()
-                replaceFragment(fragments[1])
+                when(current) {
+                    0 -> (fragments[0] as HomeFragment).config(false)
+                    2, 3 -> replaceFragment(fragments[0])
+                }
             }
         }
     }

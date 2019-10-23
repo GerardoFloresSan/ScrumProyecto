@@ -2,6 +2,8 @@ package com.example.scrumproyect.view.ui.activity
 
 import android.text.TextUtils
 import android.util.Patterns
+import androidx.core.content.ContextCompat
+import com.afollestad.materialdialogs.MaterialDialog
 import com.example.scrumproyect.R
 import com.example.scrumproyect.view.presenter.UserPresenter
 import com.example.scrumproyect.view.ui.application.ScrumApplication
@@ -70,9 +72,25 @@ class NewUserActivity : ScrumBaseActivity() , UserPresenter.View{
         presenter.newUser(emailNew.getString(), passwordNew.getString(), nameNew.getString())
 
     }
+
+    private fun dialogCreateUser() {
+        MaterialDialog.Builder(this)
+            .title("¡Felicitaciones!")
+            .cancelable(false)
+            .content("Tu registro fue exitoso")
+            .neutralText("OK")
+            .neutralColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            .onPositive { _, _ ->
+                run {
+                    ScrumApplication.closeAll()
+                    startActivity(MainActivity::class.java)
+                }
+            }
+            .show()
+    }
+
     override fun successUser(flag: Int, vararg args: Serializable) {
-        ScrumApplication.closeAll()
-        startActivity(MainActivity::class.java)
+        dialogCreateUser()
     }
 
 }
