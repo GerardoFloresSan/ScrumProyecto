@@ -114,7 +114,12 @@ class ArticlePresenter : BasePresenter<ArticlePresenter.View>() {
     fun addArticle(article: ArticleEntity, type: Int) {
         view?.showLoading()
         val key = fireBaseFireStore.collection("articles").document()
-        article.apply { idM = key.id }
+
+        article.apply {
+            idM = key.id
+            idUser = PapersManager.userEntity.uidUser
+        }
+
         val like = LikeEntity().apply {
             this.idUser = PapersManager.userEntity.uidUser
             this.type = type
