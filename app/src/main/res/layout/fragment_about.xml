@@ -4,7 +4,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="24dp"
         tools:context=".view.ui.fragment.AboutFragment">
 
     <LinearLayout
@@ -12,16 +11,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_margin="12dp">
-
-        <TextView
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="26sp"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_marginBottom="10dp"
-                android:layout_height="wrap_content"
-                android:text="¿Quienes Somos?"/>
 
         <TextView
                 android:layout_marginBottom="6dp"
@@ -38,7 +27,25 @@
         <TextView
                 android:layout_marginBottom="6dp"
                 android:textColor="@color/black"
-                android:text="Por tal razón, hemos decidido desarrollar la aplicación Agilidad sin Humo, en la cual, todos los usuarios puedan emitir su opinión sobre un artículo que hayan leído en tres simples pasos: 1) pegar la URL en la aplicación Agilidad sin Humo, 2) seleccionar la calificación que le dan a dicho artículo (cara felíz -> No es Humo, cara sin gesto -> Es Humo y cara triste -> Es Tóxico), pueden escribir un comentario (opcional) y 3) seleccionar la opción publicar."
+                android:text="Por tal razón, hemos decidido desarrollar la aplicación Agilidad sin Humo, en la cual, todos los usuarios puedan emitir su opinión sobre un artículo que hayan leído en tres simples pasos: "
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text=" 1) Pegar la URL en la aplicación Agilidad sin Humo, "
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text=" 2) Seleccionar la calificación que le dan a dicho artículo (cara felíz -> No es Humo, cara sin gesto -> Es Humo y cara triste -> Es Tóxico), pueden escribir un comentario (opcional)"
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text=" 3) Seleccionar la opción publicar."
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
         <TextView

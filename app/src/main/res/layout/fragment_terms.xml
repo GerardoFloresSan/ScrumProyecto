@@ -14,16 +14,6 @@
             android:layout_margin="12dp">
 
         <TextView
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="26sp"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_marginBottom="10dp"
-                android:layout_height="wrap_content"
-                android:text="Términos y Condiciones"/>
-
-        <TextView
                 android:layout_marginBottom="6dp"
                 android:textColor="@color/black"
                 android:text="La aplicación Agilidad sin Humo ha sido desarrollada para aportar al mundo de la agilidad de habla hispana."

@@ -150,7 +150,7 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
     fun openLoginConfig() {
         MaterialDialog.Builder(this)
             .title("¿Desea agregar nuevos articulo a la lista?")
-            .content("Logee o Registrese con su cuenta para poder continuar")
+            .content("Debe iniciar sesion ó registrese con su cuenta para poder continuar")
             .positiveText("Si")
             .positiveColor(ContextCompat.getColor(this, R.color.colorPrimary))
             .onPositive { _, _ -> configResultIfHome()}
