@@ -14,6 +14,7 @@ class AboutFragment : ScrumBaseFragment() {
     override fun onCreate() {
         setTitle(getString(R.string.menu_about))
 
+        /**
         detail.text = PapersManager.masters.about
 
         about_link_video.setOnClickListener {
@@ -21,5 +22,7 @@ class AboutFragment : ScrumBaseFragment() {
             openURL.data = Uri.parse(PapersManager.masters.link)
             startActivity(openURL)
         }
+
+        */
     }
 }
