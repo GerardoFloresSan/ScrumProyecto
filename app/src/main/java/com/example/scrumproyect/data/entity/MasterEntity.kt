@@ -16,5 +16,5 @@ data class MasterEntity (
     ),
     var urlGeneral : String = "https://firebasestorage.googleapis.com/v0/b/proyectoscrum-2d2e3.appspot.com/o/background_example.jpg?alt=media",
     var about : String = "",
-    var link : String = "https://www.youtube.com"
+    var link : String = "SYUKZqLPN88"
 ): Serializable

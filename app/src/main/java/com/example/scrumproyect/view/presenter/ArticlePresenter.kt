@@ -25,9 +25,31 @@ class ArticlePresenter : BasePresenter<ArticlePresenter.View>() {
                     val articleE = snapshot.toObject(ArticleEntity::class.java)
                     articleE.idM = snapshot.id
                     articles.add(articleE)
-
                 }
-                view?.successArticle(0, articles)
+                val sortedList = articles.sortedByDescending { article -> article.sad.size; article.neutral.size; article.happy.size }
+                val articles2 = arrayListOf<ArticleEntity>()
+                articles2.addAll(sortedList)
+                view?.successArticle(0, articles2)
+            }
+        }
+        getTask.addOnFailureListener(getSimpleFailureListener())
+    }
+
+    fun syncMeArticles() {
+        val getTask = fireBaseFireStore.collection("articles").orderBy("timeCreate", Query.Direction.DESCENDING).whereEqualTo("idUser", PapersManager.userEntity.uidUser).whereEqualTo("status", 0).get()
+        val articles = arrayListOf<ArticleEntity>()
+
+        getTask.addOnSuccessListener {
+            view.takeIf { view != null }.apply {
+                it.forEach { snapshot ->
+                    val articleE = snapshot.toObject(ArticleEntity::class.java)
+                    articleE.idM = snapshot.id
+                    articles.add(articleE)
+                }
+                val sortedList = articles.sortedByDescending { article -> article.sad.size; article.neutral.size; article.happy.size }
+                val articles2 = arrayListOf<ArticleEntity>()
+                articles2.addAll(sortedList)
+                view?.successArticle(0, articles2)
             }
         }
         getTask.addOnFailureListener(getSimpleFailureListener())
@@ -175,23 +197,6 @@ class ArticlePresenter : BasePresenter<ArticlePresenter.View>() {
         }
 
         addLike.addOnFailureListener(getSimpleFailureListener())
-    }
-
-    fun syncMeArticles() {
-        val getTask = fireBaseFireStore.collection("articles").orderBy("timeCreate", Query.Direction.DESCENDING).whereEqualTo("idUser", PapersManager.userEntity.uidUser).whereEqualTo("status", 0).get()
-        val articles = arrayListOf<ArticleEntity>()
-
-        getTask.addOnSuccessListener {
-            view.takeIf { view != null }.apply {
-                it.forEach { snapshot ->
-                    val articleE = snapshot.toObject(ArticleEntity::class.java)
-                    articleE.idM = snapshot.id
-                    articles.add(articleE)
-                }
-                view?.successArticle(0, articles)
-            }
-        }
-        getTask.addOnFailureListener(getSimpleFailureListener())
     }
 
     fun addArticle(article: ArticleEntity, type: Int) {
