@@ -21,9 +21,6 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.textfield.TextInputLayout
 import java.io.Serializable
 
-/**
- * @author @briansalvattore on 24/01/2018.
- */
 fun Context.postDelayed(unit: () -> Unit, delay: Long) {
     Handler().postDelayed(unit, delay)
 }

@@ -13,10 +13,6 @@ import com.example.scrumproyect.BuildConfig;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
- * @author @briansalvattore on 16/01/2018.
- */
-
 public class FacebookHelper {
 
     @SuppressLint("PackageManagerGetSignatures")
