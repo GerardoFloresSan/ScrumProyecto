@@ -1,42 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="24dp"
-        tools:context=".view.ui.fragment.AboutFragment">
+                                       xmlns:tools="http://schemas.android.com/tools"
+                                       android:layout_width="match_parent"
+                                       android:layout_height="match_parent"
+                                       android:orientation="vertical"
+                                       tools:context=".view.ui.fragment.AboutFragment">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="12dp">
 
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text="Somos Harvey Aquino Más y Harol Alejandría Silva, creadores de la aplicación Agilidad sin Humo,  dos profesionales apasionados por el mindset de la agilidad y por la capacidad de proponer y adaptarse al cambio rápidamente."
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
-        <com.example.scrumproyect.view.ui.utils.JustifyTextView
-                android:id="@+id/detail"
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text="Sin embargo, en este ecosistema de la agilidad, hemos sido testigos del desarrollo exponencial de artículos que hablan de agilidad, que en su tenor aseguran algo, pero en su contenido, no se evidencia lo mismo, o no se concreta nada, quedando ideas sueltas que terminan confundiendo aún más al lector."
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text="Por tal razón, hemos decidido desarrollar la aplicación Agilidad sin Humo, en la cual, todos los usuarios puedan emitir su opinión sobre un artículo que hayan leído en tres simples pasos: "
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text=" 1) Pegar la URL en la aplicación Agilidad sin Humo, "
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text=" 2) Seleccionar la calificación que le dan a dicho artículo (cara felíz -> No es Humo, cara sin gesto -> Es Humo y cara triste -> Es Tóxico), pueden escribir un comentario (opcional)"
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text=" 3) Seleccionar la opción publicar."
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text="El objetivo de la aplicación Agilidad sin Humo, es brindarles al mundo de la agilidad de habla hispana, una alternativa donde podamos disponer de un gran bagaje de artículos, en los cuales podamos invertir nuestro tiempo leyendo aquellos que agreguen valor a nuestras actividades diarias."
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <TextView
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="26sp"
+                android:textAlignment="textStart"
                 android:layout_width="match_parent"
+                android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_marginBottom="16dp"
-                android:textSize="14sp" />
+                android:text="Visión"/>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text="Ser un referente en el mundo de la agilidad de habla hispana."
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <TextView
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="26sp"
+                android:textAlignment="textStart"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content"
+                android:text="Misión"/>
+
+        <TextView
+                android:layout_marginBottom="6dp"
+                android:textColor="@color/black"
+                android:text="Ayudar al mundo de la agilidad de habla hispana, brindándoles la aplicación Agilidad sin Humo, en la cual puedan dar a conocer su apreciación respecto de un artículo, calificarlo y centrarse en los artículos que le agreguen valor. "
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/about_link_video"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/link_about"
-                android:gravity="center"
-                android:textSize="16sp"
+                android:paddingStart="36dp"
+                android:paddingEnd="36dp"
+                android:paddingTop="18dp"
+                android:paddingBottom="18dp"
                 android:layout_gravity="center"
-                android:textAllCaps="false"
-                android:textColor="@color/colorWhite"
-                android:background="@drawable/link_about"
-                tools:ignore="ContentDescription"/>
+                android:background="@drawable/youtube_border"
+                android:src="@drawable/ic_play_arrow_white_24dp"/>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
+    </LinearLayout>
 </androidx.core.widget.NestedScrollView>
