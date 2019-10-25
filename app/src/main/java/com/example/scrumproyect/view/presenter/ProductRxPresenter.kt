@@ -10,7 +10,7 @@ class ProductRxPresenter(var getProduct: GetProduct) : BasePresenter<ProductRxPr
 
     fun syncProduct() {
         view?.showLoading()
-
+        //TODO gerardo debia migrarlo todo a Clean que no te engañe XD
         getProduct.execute(object : DisposableObserver<ArrayList<ArticleEntity>>() {
             override fun onComplete() {
                 view?.hideLoading()
