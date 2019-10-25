@@ -78,8 +78,6 @@ class YoutubeViewerActivity : AppCompatActivity(), YouTubePlayer.OnInitializedLi
         override fun onLoading() {}
 
         override fun onVideoEnded() {
-            /*AmaApplication.closeAll()
-            startActivity(Intent(this@YouTubeActivity, EndActivity::class.java))*/
             this@YoutubeViewerActivity.finish()
         }
 
