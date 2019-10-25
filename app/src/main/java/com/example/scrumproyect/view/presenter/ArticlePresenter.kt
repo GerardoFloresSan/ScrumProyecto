@@ -85,18 +85,15 @@ class ArticlePresenter : BasePresenter<ArticlePresenter.View>() {
         val removeTask = fireBaseFireStore.collection("articles").document(idArticle).update(
             "status", 1
         )
-        val removeUrl = fireBaseFireStore.collection("urls").document(idArticle).delete()
 
-        val allTask = Tasks.whenAll(removeTask, removeUrl)
-
-        allTask.addOnSuccessListener {
+        removeTask.addOnSuccessListener {
             view.takeIf { view != null }.apply {
                 view?.hideLoading()
                 view?.successArticle(2)
             }
         }
 
-        allTask.addOnFailureListener(getSimpleFailureListener())
+        removeTask.addOnFailureListener(getSimpleFailureListener())
     }
 
     fun addUpdateLike(type : Int, idArticle : String) {

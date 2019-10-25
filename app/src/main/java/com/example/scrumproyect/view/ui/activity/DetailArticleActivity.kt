@@ -82,15 +82,15 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
         }
 
         sad_button.setOnClickListener {
-            presenterArticle.addUpdateLike(0, entity.idM)
+            if (PapersManager.session) presenterArticle.addUpdateLike(0, entity.idM)
         }
 
         neutral_button.setOnClickListener {
-            presenterArticle.addUpdateLike(1, entity.idM)
+            if (PapersManager.session) presenterArticle.addUpdateLike(1, entity.idM)
         }
 
         happy_button.setOnClickListener {
-            presenterArticle.addUpdateLike(2, entity.idM)
+            if (PapersManager.session) presenterArticle.addUpdateLike(2, entity.idM)
         }
 
 
@@ -101,6 +101,8 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
         delete_post.setOnClickListener {
             showDeleteArticle()
         }
+
+        box.visibility = if(PapersManager.session) View.VISIBLE else View.GONE
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

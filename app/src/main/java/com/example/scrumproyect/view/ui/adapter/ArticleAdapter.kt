@@ -63,9 +63,15 @@ class ArticleAdapter(private val listener: (Int, ArticleEntity) -> Unit) : Recyc
             neutral_number.text = item.neutral.size.toString()
             happy_number.text = item.happy.size.toString()
 
-            sad_button.setOnClickListener { listener(3, item)  }
-            neutral_button.setOnClickListener { listener(4, item)  }
-            happy_button.setOnClickListener { listener(5, item)  }
+            sad_button.setOnClickListener {
+                if (PapersManager.session) listener(3, item)
+            }
+            neutral_button.setOnClickListener {
+                if (PapersManager.session) listener(4, item)
+            }
+            happy_button.setOnClickListener {
+                if (PapersManager.session) listener(5, item)
+            }
 
             more_info.setOnClickListener { listener(1, item) }
             share_data.setOnClickListener { listener(2, item) }
