@@ -20,21 +20,6 @@ open class ScrumApplication : Application() {
         Methods.init(this)
         appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
 
-        println("   - - - - - - - -       - - - - - - - -  ")
-        println("  //             \\     //              \\")
-        println(" //               \\ _ //                \\")
-        println("//                                       \\")
-        println(" \\                                     //")
-        println("   \\                                 //")
-        println("     \\     Ella si tiene corazon   //")
-        println("       \\     Pero no para ti     //")
-        println("         \\                     //")
-        println("           \\                 //")
-        println("             \\             //")
-        println("               \\         //")
-        println("                 \\     //")
-        println("                   \\ //")
-
         ProviderInstaller.installIfNeededAsync(this, object : ProviderInstaller.ProviderInstallListener {
 
             @Suppress("MayBeConstant")

@@ -80,13 +80,13 @@ class NewUserActivity : ScrumBaseActivity() , UserPresenter.View{
             .content("Tu registro fue exitoso")
             .neutralText("OK")
             .neutralColor(ContextCompat.getColor(this, R.color.colorPrimary))
-            .onPositive { _, _ ->
-                run {
-                    ScrumApplication.closeAll()
-                    startActivity(MainActivity::class.java)
-                }
-            }
+            .onPositive { _, _ -> open()}
             .show()
+    }
+
+    fun open() {
+        ScrumApplication.closeAll()
+        startActivity(MainActivity::class.java)
     }
 
     override fun successUser(flag: Int, vararg args: Serializable) {
