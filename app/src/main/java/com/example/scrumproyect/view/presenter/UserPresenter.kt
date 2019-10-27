@@ -112,6 +112,7 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
                 } else {
                     view?.hideLoading()
                     val user = it.toObject(UserEntity::class.java)
+                    PapersManager.session = true
                     PapersManager.userEntity = user!!
                     view?.successUser(flag)
                 }
@@ -127,6 +128,7 @@ class UserPresenter : BasePresenter<UserPresenter.View>() {
         refTask.addOnSuccessListener {
             view.takeIf { view != null }.apply {
                 view?.hideLoading()
+                PapersManager.session = true
                 view?.successUser(flag)
             }
         }
