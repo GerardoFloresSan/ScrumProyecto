@@ -15,43 +15,43 @@
         <TextView
                 android:layout_marginBottom="6dp"
                 android:textColor="@color/black"
-                android:text="Somos Harvey Aquino Más y Harol Alejandría Silva, creadores de la aplicación Agilidad sin Humo,  dos profesionales apasionados por el mindset de la agilidad y por la capacidad de proponer y adaptarse al cambio rápidamente."
+                android:text="Somos Harvey Aquino Mas y Harol Alejandría Silva, creadores de la aplicación Agilidad sin Humo, dos profesionales apasionados por el mindset de la agilidad y la capacidad de proponer y adaptarse al cambio rápidamente."
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
         <TextView
                 android:layout_marginBottom="6dp"
                 android:textColor="@color/black"
-                android:text="Sin embargo, en este ecosistema de la agilidad, hemos sido testigos del desarrollo exponencial de artículos que hablan de agilidad, que en su tenor aseguran algo, pero en su contenido, no se evidencia lo mismo, o no se concreta nada, quedando ideas sueltas que terminan confundiendo aún más al lector."
+                android:text="Sin embargo, en este ecosistema de la agilidad, hemos sido testigos del desarrollo exponencial de artículos que hablan de agilidad, pero en su contenido no se evidencia lo mismo, o no se dice nada concreto, quedando ideas sueltas que terminan confundiendo aún más al lector."
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
         <TextView
                 android:layout_marginBottom="6dp"
                 android:textColor="@color/black"
-                android:text="Por tal razón, hemos decidido desarrollar la aplicación Agilidad sin Humo, en la cual, todos los usuarios puedan emitir su opinión sobre un artículo que hayan leído en tres simples pasos: "
+                android:text="Por tal razón, hemos decidido crear la aplicación Agilidad sin Humo, en la cual, todos los usuarios puedan emitir su opinión sobre un artículo que hayan leído en tres simples pasos: "
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
         <TextView
                 android:layout_marginBottom="6dp"
                 android:textColor="@color/black"
-                android:text=" 1) Pegar la URL en la aplicación Agilidad sin Humo, "
+                android:text="1) pegar la URL en la aplicación Agilidad sin Humo. "
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
         <TextView
                 android:layout_marginBottom="6dp"
                 android:textColor="@color/black"
-                android:text=" 2) Seleccionar la calificación que le dan a dicho artículo (cara felíz -> No es Humo, cara sin gesto -> Es Humo y cara triste -> Es Tóxico), pueden escribir un comentario (opcional)"
+                android:text="2) seleccionar la calificación que le dan a dicho artículo\nCara feliz  No es Humo \nCara sin gesto  Es Humo \nCara triste Es Tóxico\nSe pueden escribir un comentario (opcional) "
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
         <TextView
                 android:layout_marginBottom="6dp"
                 android:textColor="@color/black"
-                android:text=" 3) Seleccionar la opción publicar."
+                android:text="3) seleccionar la opción publicar."
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
         <TextView
                 android:layout_marginBottom="6dp"
                 android:textColor="@color/black"
-                android:text="El objetivo de la aplicación Agilidad sin Humo, es brindarles al mundo de la agilidad de habla hispana, una alternativa donde podamos disponer de un gran bagaje de artículos, en los cuales podamos invertir nuestro tiempo leyendo aquellos que agreguen valor a nuestras actividades diarias."
+                android:text="El objetivo de la aplicación Agilidad sin Humo, es brindar al mundo de la agilidad de habla hispana, una alternativa donde podamos disponer de información calificada por nosotros que sirvan como referencia al momento de revisar un contenido; y así, poder aprovechar nuestro tiempo revisando contenidos que agreguen valor."
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
         <TextView
@@ -83,7 +83,7 @@
         <TextView
                 android:layout_marginBottom="6dp"
                 android:textColor="@color/black"
-                android:text="Ayudar al mundo de la agilidad de habla hispana, brindándoles la aplicación Agilidad sin Humo, en la cual puedan dar a conocer su apreciación respecto de un artículo, calificarlo y centrarse en los artículos que le agreguen valor. "
+                android:text="Ayudar al mundo de la agilidad de habla hispana, brindándoles la aplicación Agilidad sin Humo, en la cual puedan dar a conocer su apreciación respecto de un contenido, calificarlo y centrarse en los artículos que le agreguen valor."
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
         <androidx.appcompat.widget.AppCompatImageButton
