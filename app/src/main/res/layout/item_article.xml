@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:padding="4dp"
                     android:backgroundTint="@android:color/transparent"
-                    android:tint="@color/md_green_700"
+                    android:tint="#00A242"
                     android:src="@drawable/happy"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -103,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:padding="4dp"
                     android:backgroundTint="@android:color/transparent"
-                    android:tint="@color/md_yellow_700"
+                    android:tint="#FFB600"
                     android:src="@drawable/neutral"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:padding="4dp"
                     android:backgroundTint="@android:color/transparent"
-                    android:tint="@color/md_red_700"
+                    android:tint="#FF3C25"
                     android:src="@drawable/sad"/>
 
             <androidx.appcompat.widget.AppCompatTextView

@@ -20,6 +20,7 @@ import com.example.scrumproyect.view.ui.utils.PapersManager
 import com.facebook.AccessToken
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.nav_header_main2.*
 import java.io.Serializable
 
 
@@ -37,7 +38,7 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
     override fun onCreate() {
         super.onCreate()
 
-        setSupportActionBar("Articulos")
+        setSupportActionBar("Agilidad sin humo")
         setupDrawer()
         fragments.add(HomeFragment())
 
@@ -73,6 +74,7 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
         replaceFragment(fragments[current])
         presenterMaster.attachView(this)
         presenterMaster.syncMaster()
+
     }
 
     fun openMenuSearch(b : Boolean){
@@ -131,6 +133,8 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
         presenterUser.attachView(this)
         presenterMaster.attachView(this)
         if (PapersManager.masters.forbiddenWords.isEmpty()) presenterMaster.syncMaster()
+
+        //welcome_user.text = "Bienvenido " + PapersManager.userEntity.name
     }
 
     private fun configurationNavigation() {
@@ -190,5 +194,6 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
     override fun successMasters(flag: Int, vararg args: Serializable) {
         if (flag == 1) Handler().postDelayed({ presenterMaster.syncMaster() }, 2000)
     }
+
 
 }

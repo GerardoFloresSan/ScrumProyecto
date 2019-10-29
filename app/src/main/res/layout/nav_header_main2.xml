@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="@dimen/nav_header_height"
         android:background="@drawable/side_nav_bar"
@@ -14,22 +13,18 @@
         android:gravity="bottom">
 
 
-
-    <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profileImageMain"
-            android:layout_width="76dp"
-            android:layout_height="76dp"
-            app:civ_border_width="2dp"
-            android:src="@drawable/logoscrum"
-            app:civ_border_color="@color/white"/>
+    <androidx.appcompat.widget.AppCompatImageView
+            android:src="@drawable/logo_header"
+            android:layout_width="146dp"
+            android:layout_height="wrap_content"/>
 
 
     <TextView
+            android:id="@+id/welcome_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:text="@string/nav_header_title"
+            android:textColor="@color/white"
+            android:text=""
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
 

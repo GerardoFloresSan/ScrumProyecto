@@ -152,6 +152,7 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
     }
 
     fun config(type : Boolean) {
+        setTitle("Calificar publicación")
         add_new_article.visibility = if(type) View.GONE else View.VISIBLE
         linear_add_post.visibility = if(type) View.VISIBLE else View.GONE
         linear_data.visibility = if(type) View.GONE else View.VISIBLE
