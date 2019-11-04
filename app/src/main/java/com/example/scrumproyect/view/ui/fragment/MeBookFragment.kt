@@ -11,6 +11,7 @@ import com.example.scrumproyect.R
 import com.example.scrumproyect.data.entity.ArticleEntity
 import com.example.scrumproyect.view.presenter.ArticlePresenter
 import com.example.scrumproyect.view.ui.activity.DetailArticleActivity
+import com.example.scrumproyect.view.ui.activity.MainActivity
 import com.example.scrumproyect.view.ui.adapter.ArticleAdapter
 import com.example.scrumproyect.view.ui.base.ScrumBaseFragment
 import com.example.scrumproyect.view.ui.utils.PapersManager
@@ -55,6 +56,9 @@ class MeBookFragment : ScrumBaseFragment(), ArticlePresenter.View{
                 5 -> {
                     //happy
                     presenter.addUpdateLike(2, article.idM)
+                }
+                11 -> {
+                    (activity as MainActivity).openLoginConfigCalif()
                 }
             }
         }

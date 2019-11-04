@@ -157,14 +157,26 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
             .content("Debe iniciar sesion ó registrese con su cuenta para poder continuar")
             .positiveText("Si")
             .positiveColor(ContextCompat.getColor(this, R.color.colorPrimary))
-            .onPositive { _, _ -> configResultIfHome()}
+            .onPositive { _, _ -> configResultIfHome(true)}
+            .negativeText("No")
+            .negativeColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+            .show()
+    }
+    
+    fun openLoginConfigCalif() {
+        MaterialDialog.Builder(this)
+            .title("¿Desea calificar un articulo de la lista?")
+            .content("Debe iniciar sesion ó registrese con su cuenta para poder continuar")
+            .positiveText("Si")
+            .positiveColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            .onPositive { _, _ -> configResultIfHome(false)}
             .negativeText("No")
             .negativeColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
             .show()
     }
 
-    private fun configResultIfHome() {
-        PapersManager.openAddArticle = true
+    private fun configResultIfHome(type : Boolean) {
+        PapersManager.openAddArticle = type
         replaceFragment(fragments[1])
     }
 

@@ -82,6 +82,9 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
                     //happy
                     presenter.addUpdateLike(2, article.idM)
                 }
+                11 -> {
+                    (activity as MainActivity).openLoginConfigCalif()
+                }
             }
         }
         recycler.layoutManager = GridLayoutManager(context, 1) as RecyclerView.LayoutManager?
