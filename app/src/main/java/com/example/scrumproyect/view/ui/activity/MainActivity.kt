@@ -71,7 +71,13 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
 
         configurationNavigation()
 
-        replaceFragment(fragments[current])
+
+        if(!PapersManager.openLoginWithDetail) {
+            replaceFragment(fragments[current])
+        } else {
+            PapersManager.openLoginWithDetail = false
+            configResultIfHome(false)
+        }
         presenterMaster.attachView(this)
         presenterMaster.syncMaster()
 

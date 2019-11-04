@@ -25,9 +25,11 @@ import com.example.scrumproyect.data.entity.CommentEntity
 import com.example.scrumproyect.view.presenter.ArticlePresenter
 import com.example.scrumproyect.view.presenter.CommentPresenter
 import com.example.scrumproyect.view.ui.adapter.CommentAdapter
+import com.example.scrumproyect.view.ui.application.ScrumApplication
 import com.example.scrumproyect.view.ui.base.ScrumBaseActivity
 import com.example.scrumproyect.view.ui.extensions.clean
 import com.example.scrumproyect.view.ui.extensions.getString
+import com.example.scrumproyect.view.ui.extensions.startActivity
 import com.example.scrumproyect.view.ui.utils.PapersManager
 import kotlinx.android.synthetic.main.activity_dertail_product.*
 import java.io.Serializable
@@ -82,15 +84,27 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
         }
 
         sad_button.setOnClickListener {
-            if (PapersManager.session) presenterArticle.addUpdateLike(0, entity.idM)
+            if (PapersManager.session) {
+                presenterArticle.addUpdateLike(0, entity.idM)
+            } else {
+                openLoginConfigCalif()
+            }
         }
 
         neutral_button.setOnClickListener {
-            if (PapersManager.session) presenterArticle.addUpdateLike(1, entity.idM)
+            if (PapersManager.session) {
+                presenterArticle.addUpdateLike(1, entity.idM)
+            } else {
+                openLoginConfigCalif()
+            }
         }
 
         happy_button.setOnClickListener {
-            if (PapersManager.session) presenterArticle.addUpdateLike(2, entity.idM)
+            if (PapersManager.session) {
+                presenterArticle.addUpdateLike(2, entity.idM)
+            } else {
+                openLoginConfigCalif()
+            }
         }
 
 
@@ -103,6 +117,24 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
         }
 
         box.visibility = if(PapersManager.session) View.VISIBLE else View.GONE
+    }
+
+    private fun openLogin() {
+        ScrumApplication.closeAll()
+        startActivity(MainActivity::class.java)
+        PapersManager.openLoginWithDetail = true
+    }
+
+    fun openLoginConfigCalif() {
+        MaterialDialog.Builder(this)
+            .title("¿Desea calificar un articulo de la lista?")
+            .content("Debe iniciar sesion ó registrese con su cuenta para poder continuar")
+            .positiveText("Si")
+            .positiveColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            .onPositive { _, _ -> openLogin()}
+            .negativeText("No")
+            .negativeColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+            .show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

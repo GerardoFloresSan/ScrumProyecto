@@ -22,6 +22,14 @@ object PapersManager {
             return Paper.book(BuildConfig.FLAVOR).read("session", false)
         }
 
+    var openLoginWithDetail: Boolean
+        set(value) {
+            Paper.book(BuildConfig.FLAVOR).write("openLogin", value)
+        }
+        get() {
+            return Paper.book(BuildConfig.FLAVOR).read("openLogin", false)
+        }
+
     var openAddArticle: Boolean
         set(value) {
             Paper.book(BuildConfig.FLAVOR).write("open", value)
