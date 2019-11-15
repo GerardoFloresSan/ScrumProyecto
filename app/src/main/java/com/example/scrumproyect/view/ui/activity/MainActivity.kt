@@ -39,6 +39,7 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
         super.onCreate()
 
         setSupportActionBar("Agilidad sin humo")
+
         setupDrawer()
         fragments.add(HomeFragment())
 

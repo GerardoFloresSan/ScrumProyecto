@@ -25,7 +25,7 @@
                 android:textColorHighlight="@color/transparent"
                 android:backgroundTint="@color/md_white_1000"
                 android:layout_gravity="bottom|end"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/text_color"
                 android:shadowColor="@color/colorPrimary"
                 tools:ignore="ContentDescription"/>
 

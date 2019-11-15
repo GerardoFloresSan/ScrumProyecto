@@ -38,7 +38,7 @@
                         android:ellipsize="end"
                         android:lines="1"
                         android:maxLines="1"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="@color/text_color"
                         android:textSize="17sp" />
 
                 <TextView

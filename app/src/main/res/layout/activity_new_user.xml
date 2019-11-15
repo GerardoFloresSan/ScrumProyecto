@@ -106,7 +106,7 @@
         <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/register_user"
                 android:text="Registrar"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/text_color"
                 android:background="@color/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_marginStart="24dp"

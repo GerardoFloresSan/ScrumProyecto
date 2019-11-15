@@ -52,16 +52,16 @@ abstract class BaseActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val white = ContextCompat.getColor(this, android.R.color.white)
+        val green = ContextCompat.getColor(this, R.color.text_color)
 
-        toolbar?.setTitleTextColor(white)
+        toolbar?.setTitleTextColor(green)
 
         val drawable = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_white_24dp)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            drawable?.colorFilter = BlendModeColorFilter(white, BlendMode.SRC_ATOP) as ColorFilter?
+            drawable?.colorFilter = BlendModeColorFilter(green, BlendMode.SRC_ATOP) as ColorFilter?
         } else {
-            drawable?.setColorFilter(white, PorterDuff.Mode.SRC_ATOP)
+            drawable?.setColorFilter(green, PorterDuff.Mode.SRC_ATOP)
         }
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)

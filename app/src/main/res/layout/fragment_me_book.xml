@@ -18,7 +18,7 @@
                 android:id="@+id/pBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:progressTint="@color/colorPrimaryDark"
+                android:progressTint="@color/text_color"
                 style="?android:attr/progressBackgroundTint"/>
 
     </LinearLayout>
@@ -33,6 +33,7 @@
 
         <TextView
                 android:id="@+id/text_error"
+                android:textColor="@color/text_color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

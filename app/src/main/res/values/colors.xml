@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00BCD4</color>
-    <color name="colorPrimaryDark">#0097A7</color>
-    <color name="colorLightGray">#B2EBF2</color>
+    <color name="colorPrimary">#F4F4F4</color>
+    <color name="colorPrimaryDark">#cecece</color>
+    <color name="colorLightGray">#F4F4F4</color>
     <color name="colorAccent">#FFC107</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorDivision">#e0e0e0</color>
@@ -42,5 +42,9 @@
     <color name="perla">#db9e8a</color>
     <color name="topacio">#2d7ab0</color>
     <color name="brillante">#b19260</color>
+
+
+    <color name="text_color">#00A242</color>
+
 
 </resources>

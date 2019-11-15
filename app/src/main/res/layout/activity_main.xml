@@ -27,8 +27,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 android:fitsSystemWindows="true"
-                app:itemIconTint="@color/colorPrimaryDark"
-                app:itemTextColor="@color/colorPrimaryDark"
+                app:itemIconTint="@color/text_color"
+                app:itemTextColor="@color/text_color"
                 app:headerLayout="@layout/nav_header_main2"
                 app:menu="@menu/activity_main_drawer">
 
@@ -40,13 +40,13 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:drawablePadding="28dp"
                 android:drawableStart="@drawable/ic_input_black_24dp"
-                android:drawableTint="@color/colorPrimaryDark"
+                android:drawableTint="@color/text_color"
                 android:gravity="center_vertical"
                 android:paddingEnd="16dp"
                 android:paddingStart="16dp"
                 android:text="@string/menu_close_session"
                 android:textAllCaps="false"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/text_color"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
 

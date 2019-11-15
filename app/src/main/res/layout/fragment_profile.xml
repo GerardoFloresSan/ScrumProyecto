@@ -40,12 +40,12 @@
                 android:layout_centerVertical="true"
                 android:text="Nombre"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                android:textColor="@color/text_color"
                 android:textSize="20sp"
                 android:layout_margin="10dp"/>
 
         <TextView
-                android:textColor="@color/black"
+                android:textColor="@color/text_color"
                 android:id="@+id/emailTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

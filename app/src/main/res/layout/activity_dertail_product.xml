@@ -31,7 +31,6 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:titleTextColor="@color/colorWhite"
                     app:layout_collapseMode="pin"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -63,7 +62,7 @@
                         android:maxLines="1"
                         android:ellipsize="end"
                         android:textAllCaps="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_color"
                         android:layout_gravity="center"
                         android:textSize="16sp"/>
 
