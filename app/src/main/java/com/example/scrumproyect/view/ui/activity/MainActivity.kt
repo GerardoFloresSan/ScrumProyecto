@@ -96,9 +96,9 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
         menu?.findItem(R.id.action_search)?.isVisible = openMenuS
         val searchView = actionMenu.actionView as SearchView
         searchView.findViewById<EditText>(R.id.search_src_text)
-            .setHintTextColor(resources.getColor(R.color.md_white_1000))
+            .setHintTextColor(resources.getColor(R.color.text_color))
 
-        val white = ContextCompat.getColor(this, R.color.md_white_1000)
+        val white = ContextCompat.getColor(this, R.color.text_color)
         toolbar!!.setTitleTextColor(white)
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

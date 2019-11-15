@@ -56,7 +56,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
         toolbar?.setTitleTextColor(green)
 
-        val drawable = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_white_24dp)
+        val drawable = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_black_24dp)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             drawable?.colorFilter = BlendModeColorFilter(green, BlendMode.SRC_ATOP) as ColorFilter?
