@@ -130,7 +130,7 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
             .title("¿Desea calificar un articulo de la lista?")
             .content("Debe iniciar sesion ó registrese con su cuenta para poder continuar")
             .positiveText("Si")
-            .positiveColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            .positiveColor(ContextCompat.getColor(this, R.color.text_color))
             .onPositive { _, _ -> openLogin()}
             .negativeText("No")
             .negativeColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))

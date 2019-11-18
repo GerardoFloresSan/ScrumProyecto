@@ -163,7 +163,7 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
             .title("¿Desea agregar nuevos articulo a la lista?")
             .content("Debe iniciar sesion ó registrese con su cuenta para poder continuar")
             .positiveText("Si")
-            .positiveColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            .positiveColor(ContextCompat.getColor(this, R.color.text_color))
             .onPositive { _, _ -> configResultIfHome(true)}
             .negativeText("No")
             .negativeColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
@@ -175,7 +175,7 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
             .title("¿Desea calificar un articulo de la lista?")
             .content("Debe iniciar sesion ó registrese con su cuenta para poder continuar")
             .positiveText("Si")
-            .positiveColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            .positiveColor(ContextCompat.getColor(this, R.color.text_color))
             .onPositive { _, _ -> configResultIfHome(false)}
             .negativeText("No")
             .negativeColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
