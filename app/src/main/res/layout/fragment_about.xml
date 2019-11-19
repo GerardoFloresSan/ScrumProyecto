@@ -39,7 +39,7 @@
         <TextView
                 android:layout_marginBottom="6dp"
                 android:textColor="@color/black"
-                android:text="2) seleccionar la calificación que le dan a dicho artículo\nCara feliz  No es Humo \nCara sin gesto  Es Humo \nCara triste Es Tóxico\nSe pueden escribir un comentario (opcional) "
+                android:text="2) seleccionar la calificación que le dan a dicho artículo\nCara feliz -> No es Humo \nCara sin gesto -> Es Humo \nCara triste -> Es Tóxico\nSe pueden escribir un comentario (opcional) "
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
         <TextView
