@@ -24,7 +24,7 @@ android {
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders = [IS_DEBUGGABLE: "true"]
+        manifestPlaceholders = [IS_DEBUGGABLE: "false"]
     }
 
     signingConfigs {
