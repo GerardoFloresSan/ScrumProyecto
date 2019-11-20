@@ -139,7 +139,7 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_share, menu)
-        menu?.findItem(R.id.i_delete)?.isVisible = entity.idUser == PapersManager.userEntity.uidUser
+        menu?.findItem(R.id.i_delete)?.isVisible = if (PapersManager.session) entity.idUser == PapersManager.userEntity.uidUser else false
         return super.onCreateOptionsMenu(menu)
     }
 

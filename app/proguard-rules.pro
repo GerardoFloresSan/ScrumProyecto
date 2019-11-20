@@ -19,3 +19,29 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-dontwarn org.apache.**
+-dontwarn okio.**
+-dontwarn retrofit2.**
+
+#
+#-flattenpackagehierarchy 'myobfuscated'
+
+-keep class kotlin.Metadata { *; }
+-keep class kotlin.** { *; }
+-keep class * implements java.io.Serializable
+-keep class kotlin.reflect.jvm.internal.impl.builtins.BuiltInsLoaderImpl
+
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep class com.bumptech.glide.integration.okhttp3.OkHttpGlideModule
+
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+-keepclassmembers class com.example.scrumproyect.view.viewModel.** { *; }
+-keepclassmembers class com.example.scrumproyect.domain.model.** { *; }
+-keepclassmembers class com.example.scrumproyect.data.entity.** { *; }
+-keepclassmembers class com.example.scrumproyect.view.ui.utils.linkpewview.** { *; }
+-keep class com.example.scrumproyect.view.ui.adapter** { *; }
