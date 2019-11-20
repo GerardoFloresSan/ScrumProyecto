@@ -40,7 +40,7 @@ android {
             shrinkResources true
             minifyEnabled true
             useProguard false
-            manifestPlaceholders = [IS_DEBUGGABLE: "true"]
+            manifestPlaceholders = [IS_DEBUGGABLE: "false"]
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
