@@ -66,7 +66,7 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
         } else {
             image?.setColorFilter(ContextCompat.getColor(this, R.color.transparent_gray), PorterDuff.Mode.SRC_ATOP)
         }
-        collapsing.setExpandedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleColor)
+        collapsing.setExpandedTitleTextAppearance(R.style.expandedToolbarLayoutTitleColor)
         collapsing.setCollapsedTitleTextAppearance(R.style.collapsingToolbarLayoutTitleColor)
 
         title_detail.text = entity.titleM
