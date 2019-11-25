@@ -45,3 +45,10 @@
 -keepclassmembers class com.example.scrumproyect.data.entity.** { *; }
 -keepclassmembers class com.example.scrumproyect.view.ui.utils.linkpewview.** { *; }
 -keep class com.example.scrumproyect.view.ui.adapter** { *; }
+
+#gmail
+-keepclassmembers class * {
+  @com.google.api.client.util.Key <fields>;
+}
+
+-keepattributes Signature,RuntimeVisibleAnnotations,AnnotationDefault
