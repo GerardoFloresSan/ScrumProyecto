@@ -79,7 +79,7 @@ class NewUserActivity : ScrumBaseActivity() , UserPresenter.View{
             .cancelable(false)
             .content("Tu registro fue exitoso")
             .neutralText("OK")
-            .neutralColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            .neutralColor(ContextCompat.getColor(this, R.color.text_color))
             .onNeutral { _, _ -> open()}
             .show()
     }

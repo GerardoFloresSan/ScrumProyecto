@@ -50,6 +50,7 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
     override fun onCreate() {
         super.onCreate()
         setSupportActionBar("Detalle del artículo")
+
         adapter = CommentAdapter {}
 
         entity = intent.getSerializableExtra("extra0") as ArticleEntity
@@ -160,7 +161,7 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
             .title("Atención")
             .content("¿Estás seguro que deseas eliminar esta solicitud?")
             .positiveText("Si")
-            .positiveColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            .positiveColor(ContextCompat.getColor(this, R.color.text_color))
             .onPositive { _, _ -> presenterArticle.removeArticle(entity.idM)}
             .negativeText("No")
             .negativeColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
