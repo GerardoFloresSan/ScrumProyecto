@@ -93,10 +93,11 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater?.inflate(R.menu.menu_search, menu)
         val actionMenu: MenuItem = menu!!.findItem(R.id.action_search)
+
         menu?.findItem(R.id.action_search)?.isVisible = openMenuS
+
         val searchView = actionMenu.actionView as SearchView
-        searchView.findViewById<EditText>(R.id.search_src_text)
-            .setHintTextColor(resources.getColor(R.color.text_color))
+        searchView.findViewById<EditText>(R.id.search_src_text).setHintTextColor(resources.getColor(R.color.text_color))
 
         val white = ContextCompat.getColor(this, R.color.text_color)
         toolbar!!.setTitleTextColor(white)

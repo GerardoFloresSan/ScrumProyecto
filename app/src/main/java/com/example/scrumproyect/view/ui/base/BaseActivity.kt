@@ -59,7 +59,7 @@ abstract class BaseActivity : AppCompatActivity() {
         val drawable = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_black_24dp)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            drawable?.colorFilter = BlendModeColorFilter(green, BlendMode.SRC_ATOP) as ColorFilter?
+            drawable?.colorFilter = BlendModeColorFilter(green, BlendMode.SRC_ATOP)
         } else {
             drawable?.setColorFilter(green, PorterDuff.Mode.SRC_ATOP)
         }
