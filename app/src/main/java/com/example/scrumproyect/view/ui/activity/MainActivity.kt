@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -98,9 +99,10 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
 
         val searchView = actionMenu.actionView as SearchView
         searchView.findViewById<EditText>(R.id.search_src_text).setHintTextColor(resources.getColor(R.color.text_color))
+        searchView.findViewById<EditText>(R.id.search_src_text).setTextColor(resources.getColor(R.color.text_color))
 
-        val white = ContextCompat.getColor(this, R.color.text_color)
-        toolbar!!.setTitleTextColor(white)
+        val green = ContextCompat.getColor(this, R.color.text_color)
+        toolbar!!.setTitleTextColor(green)
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

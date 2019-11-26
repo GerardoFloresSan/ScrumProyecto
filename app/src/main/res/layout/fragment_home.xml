@@ -33,7 +33,7 @@
 
     <LinearLayout
             android:id="@+id/linear_add_post"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -60,7 +60,7 @@
                         android:paddingTop="4dp"
                         android:paddingBottom="4dp"
                         app:errorTextAppearance="@style/error_appearance"
-                        app:theme="@style/WhiteTheme">
+                        app:theme="@style/GreenTheme">
 
                     <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/url_text"
@@ -71,9 +71,9 @@
                             android:maxLines="1"
                             android:ellipsize="end"
                             android:imeOptions="actionDone"
-                            android:textColor="@color/colorWhite"
+                            android:textColor="@color/text_color"
                             android:textSize="14sp"
-                            app:theme="@style/WhiteTheme"/>
+                            app:theme="@style/GreenTheme"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:padding="8dp"
-                        android:tint="@color/md_white_1000"
+                        android:tint="@color/text_color"
                         android:background="@drawable/paste_border"
                         android:src="@drawable/ic_content_paste_black_24dp"
                         tools:ignore="UnusedAttribute"/>
@@ -108,7 +108,7 @@
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="8dp"
                     app:errorTextAppearance="@style/error_appearance"
-                    app:theme="@style/DarkThemeTheme">
+                    app:theme="@style/LoginTheme">
 
                 <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/description_text"
@@ -119,9 +119,9 @@
                         android:maxLines="4"
                         android:ellipsize="end"
                         android:imeOptions="actionDone"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="@color/gray_4"
                         android:textSize="14sp"
-                        app:theme="@style/DarkThemeTheme"/>
+                        app:theme="@style/LoginTheme"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -177,7 +177,7 @@
                         android:textSize="12sp"
                         android:layout_gravity="bottom|end"
                         android:backgroundTint="@color/md_white_1000"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="@color/gray_4"
                         android:textColorHighlight="@color/transparent"
                         tools:ignore="ContentDescription"/>
 
@@ -191,7 +191,7 @@
                         android:textSize="12sp"
                         android:layout_gravity="bottom|end"
                         android:backgroundTint="@color/md_white_1000"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="@color/gray_4"
                         android:textColorHighlight="@color/transparent"
                         tools:ignore="ContentDescription"/>
 
