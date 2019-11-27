@@ -367,11 +367,15 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
                 adapter.notifyDataSetChanged()
             }
             10 -> {
+                url_text.clean()
+                description_text.clean()
                 val articleTemp = args[0] as ArticleEntity
                 val selectItemTemp = args[1] as Int
                 presenter.addArticle(articleTemp, selectItemTemp)
             }
             11 -> {
+                url_text.clean()
+                description_text.clean()
                 val articleTemp = args[0] as ArticleEntity
                 val selectItemTemp = args[1] as Int
                 presenter.addUpdateLikeTwo(selectItemTemp, articleTemp)
