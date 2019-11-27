@@ -213,6 +213,7 @@ class MainActivity : ScrumBaseActivity(), UserPresenter.View, MasterPresenter.Vi
             }
         }
     }
+
     override fun successMasters(flag: Int, vararg args: Serializable) {
         if (flag == 1) Handler().postDelayed({ presenterMaster.syncMaster() }, 2000)
     }

@@ -84,12 +84,12 @@
 
 
     <style name="LoginTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/gray_4</item>
-        <item name="colorPrimaryDark">@color/gray_4</item>
-        <item name="colorAccent">@color/gray_4</item>
-        <item name="colorControlNormal">@color/gray_4</item>
-        <item name="colorControlActivated">@color/gray_4</item>
-        <item name="colorControlHighlight">@color/gray_4</item>
+        <item name="colorPrimary">@color/text_color</item>
+        <item name="colorPrimaryDark">@color/text_color</item>
+        <item name="colorAccent">@color/text_color</item>
+        <item name="colorControlNormal">@color/text_color</item>
+        <item name="colorControlActivated">@color/text_color</item>
+        <item name="colorControlHighlight">@color/text_color</item>
     </style>
 
 </resources>

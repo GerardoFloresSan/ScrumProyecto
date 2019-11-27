@@ -30,7 +30,6 @@ import com.example.scrumproyect.view.ui.utils.linkpewview.ProcessUrl
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.io.Serializable
 import java.util.*
-import kotlin.collections.ArrayList
 
 class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
 
@@ -148,6 +147,9 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
                 PorterDuff.Mode.SRC_ATOP
             )
         }
+
+        url_text.setText("")
+        description_text.setText("")
 
         if(openDetail) {
             presenter.syncArticles()

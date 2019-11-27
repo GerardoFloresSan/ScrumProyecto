@@ -115,11 +115,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/description_text"
+                        android:textColorHint="@color/text_color"
                         android:lines="4"
                         android:maxLines="4"
                         android:ellipsize="end"
                         android:imeOptions="actionDone"
-                        android:textColor="@color/gray_4"
+                        android:textColor="@color/text_color"
                         android:textSize="14sp"
                         app:theme="@style/LoginTheme"/>
 
