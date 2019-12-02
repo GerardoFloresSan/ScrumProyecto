@@ -80,7 +80,8 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
 
         title_detail.setOnClickListener {
             val openURL = Intent(Intent.ACTION_VIEW)
-            openURL.data = Uri.parse(entity.titleM)
+            val url : String = if (!entity.titleM.startsWith("http://") && !entity.titleM.startsWith("https://")) "http://" + entity.titleM else entity.titleM
+            openURL.data = Uri.parse(url)
             startActivity(openURL)
         }
 
@@ -172,7 +173,7 @@ class DetailArticleActivity : ScrumBaseActivity() , CommentPresenter.View, Artic
         val sendIntent = Intent().apply {
             action = Intent.ACTION_SEND
             type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, "Hola mira lo que encontre en ....\n $text")
+            putExtra(Intent.EXTRA_TEXT, "Hola mira lo que encontre en el app Agilidad sin Humo $text , si te interesó puedes ir a Google Play descargar el app Agilidad sin Humo encontrar más información y calificar su contenido")
         }
         startActivity(sendIntent)
     }

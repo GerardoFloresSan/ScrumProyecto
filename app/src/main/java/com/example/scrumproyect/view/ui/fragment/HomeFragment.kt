@@ -59,7 +59,8 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
             when (flag) {
                 0 -> {
                     val openURL = Intent(Intent.ACTION_VIEW)
-                    openURL.data = Uri.parse(article.titleM)
+                    val url : String = if (!article.titleM.startsWith("http://") && !article.titleM.startsWith("https://")) "http://" + article.titleM else article.titleM
+                    openURL.data = Uri.parse(url)
                     startActivity(openURL)
                 }
                 1 -> {
@@ -123,7 +124,7 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
         val sendIntent = Intent().apply {
             action = Intent.ACTION_SEND
             type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, "Hola mira lo que encontre en ....\n $text")
+            putExtra(Intent.EXTRA_TEXT, "Hola mira lo que encontre en el app Agilidad sin Humo $text , si te interesó puedes ir a Google Play descargar el app Agilidad sin Humo encontrar más información y calificar su contenido")
         }
         startActivity(sendIntent)
     }
@@ -161,6 +162,8 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
         add_new_article.visibility = if(type) View.GONE else View.VISIBLE
         linear_add_post.visibility = if(type) View.VISIBLE else View.GONE
         linear_data.visibility = if(type) View.GONE else View.VISIBLE
+        url_text.clean()
+        description_text.clean()
     }
 
     override fun onPause() {
@@ -360,22 +363,19 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
             2 -> {
                 resetButtons()
                 selectItem = 10
-                url_text.clean()
                 config(false)
                 (listArticle as ArrayList).add(0, (args[0] as ArticleEntity))
                 adapter.data = listArticle
                 adapter.notifyDataSetChanged()
             }
             10 -> {
-                url_text.clean()
-                description_text.clean()
+                config(false)
                 val articleTemp = args[0] as ArticleEntity
                 val selectItemTemp = args[1] as Int
                 presenter.addArticle(articleTemp, selectItemTemp)
             }
             11 -> {
-                url_text.clean()
-                description_text.clean()
+                config(false)
                 val articleTemp = args[0] as ArticleEntity
                 val selectItemTemp = args[1] as Int
                 presenter.addUpdateLikeTwo(selectItemTemp, articleTemp)
@@ -407,7 +407,6 @@ class HomeFragment : ScrumBaseFragment(), ArticlePresenter.View {
                 (listArticle as ArrayList).add(0, articleTemp)
                 resetButtons()
                 selectItem = 10
-                url_text.clean()
                 config(false)
 
                 adapter.data = listArticle

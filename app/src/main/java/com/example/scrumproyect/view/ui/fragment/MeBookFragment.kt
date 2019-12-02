@@ -35,7 +35,8 @@ class MeBookFragment : ScrumBaseFragment(), ArticlePresenter.View{
             when (flag) {
                 0 -> {
                     val openURL = Intent(Intent.ACTION_VIEW)
-                    openURL.data = Uri.parse(article.titleM)
+                    val url : String = if (!article.titleM.startsWith("http://") && !article.titleM.startsWith("https://")) "http://" + article.titleM else article.titleM
+                    openURL.data = Uri.parse(url)
                     startActivity(openURL)
                 }
                 1 -> {
@@ -74,7 +75,7 @@ class MeBookFragment : ScrumBaseFragment(), ArticlePresenter.View{
         val sendIntent = Intent().apply {
             action = Intent.ACTION_SEND
             type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, "Hola mira lo que encontre en ....\n $text")
+            putExtra(Intent.EXTRA_TEXT, "Hola mira lo que encontre en el app Agilidad sin Humo $text , si te interesó puedes ir a Google Play descargar el app Agilidad sin Humo encontrar más información y calificar su contenido")
         }
         startActivity(sendIntent)
     }
