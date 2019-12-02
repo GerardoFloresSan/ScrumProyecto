@@ -75,7 +75,7 @@ class MeBookFragment : ScrumBaseFragment(), ArticlePresenter.View{
         val sendIntent = Intent().apply {
             action = Intent.ACTION_SEND
             type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, "Hola mira lo que encontre en el app Agilidad sin Humo $text , si te interesó puedes ir a Google Play descargar el app Agilidad sin Humo encontrar más información y calificar su contenido")
+            putExtra(Intent.EXTRA_TEXT, "Hola mira lo que encontre en el app \"Agilidad sin Humo\" $text , si te interesó puedes ir a Google Play descargar el app \"Agilidad sin Humo\" encontrar más información y calificar su contenido")
         }
         startActivity(sendIntent)
     }
